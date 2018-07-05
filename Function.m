@@ -16,7 +16,7 @@
 %Function will calculate and output d/dt for each c(i)
 % d/dt of c(i) will be determined by state of c
 
-function Function = cellular(c)
+function Function["ToDo"] = cellular(c)
 if ~isvector(c)
     error('Input must be a vector')
 end
