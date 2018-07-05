@@ -13,10 +13,11 @@
 %   c(4): [AI-2] outside cell in M(x,y)
 %   c(5)...c(m): other molecular concentrations
 %
-%Function will calculate and output d/dt for each c(i)
-% d/dt of c(i) will be determined by state of c
+%Function will calculate d/dt for each c(i)
+%Function will output d/dt for each
+dt = 1
 
-function Function = cellular(c)
+function cell = cellular(c)
 if ~isvector(c)
     error('Input must be a vector')
 end
