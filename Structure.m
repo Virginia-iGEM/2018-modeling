@@ -50,6 +50,11 @@ n_snapshots = 50;   % How many snapshots of the simulation do we want to write o
 Psi = ones(m, n);   % Matrix of cell column vectors with m rows and n columns
 M = zeros(w, h);     % w x h discrete diffusion matrix
 
+% Assign all A_0 in the cell to the initial value in M
+for col=1:size(Psi, 2)
+    Psi(Psi_a, col) = M(col);
+end
+
 %%% Setup variables needed for snapshot saving %%%
 
 steps = t_i:dt:t_f;
@@ -120,5 +125,5 @@ end
 
 % Dummy diff function, halves all matrix values
 function m = diff(m, D, dt)
-    m = m.*0.5;
+    m = m + 1;
 end
