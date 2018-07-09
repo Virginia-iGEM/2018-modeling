@@ -4,23 +4,23 @@ function dYdt = autocomplex2_001(t,Y)
 %Y(2) = Ai
 %Y(3) = Ao
 %Y(4) = B
-%Y(5) = B|mrna
+%Y(5) = B_mrna
 %Y(6) = F
-%Y(7) = F|mrna
+%Y(7) = F_mrna
 %Y(8) = G
-%Y(9) = G|mrna
+%Y(9) = G_mrna
 %Y(10) = K
-%Y(11) = K|mrna
+%Y(11) = K_mrna
 %Y(12) = P
-%Y(13) = P|mrna
+%Y(13) = P_mrna
 %Y(14) = R
-%Y(15) = R|mrna
+%Y(15) = R_mrna
 %Y(16) = S
-%Y(17) = S|mrna
+%Y(17) = S_mrna
 %Y(18) = T
-%Y(19) = T|mrna
+%Y(19) = T_mrna
 %Y(20) = Y
-%Y(21) = Y|mrna
+%Y(21) = Y_mrna
 
 B = 1.225; %Transcription bias towards lsrA-side of lsr
 
@@ -41,26 +41,24 @@ k_S = 1;    d_S = 1;
 k_T = 1;    d_T = 1;
 k_Y = 1;    d_Y = 1;
 
-k_B|mrna = 1;d_B|mrna = 1;
-k_F|mrna = 1;d_F|mrna = 1;
-             d_G|mrna = 1;
-k_K|mrna = 1;d_K|mrna = 1;
-k_P|mrna = 1;d_P|mrna = 1;
-k_R|mrna = 1;d_R|mrna = 1;
-k_S|mrna = 1;d_S|mrna = 1;
-             d_T|mrna = 1;
-k_Y|mrna = 1;d_Y|mrna = 1;
+k_B_mrna = 1;d_B_mrna = 1;
+k_F_mrna = 1;d_F_mrna = 1;
+             d_G_mrna = 1;
+k_K_mrna = 1;d_K_mrna = 1;
+k_P_mrna = 1;d_P_mrna = 1;
+k_R_mrna = 1;d_R_mrna = 1;
+k_S_mrna = 1;d_S_mrna = 1;
+             d_T_mrna = 1;
+k_Y_mrna = 1;d_Y_mrna = 1;
 
-kp_B|mrna = 1;
-kp_F|mrna = 1;
-kp_G|mrna = 1;
-kp_K|mrna = 1;
-kp_S|mrna = 1;
-kp_T|mrna = 1;
-kp_Y|mrna = 1;
+kp_B_mrna = 1;
+kp_F_mrna = 1;
+kp_G_mrna = 1;
+kp_K_mrna = 1;
+kp_S_mrna = 1;
+kp_T_mrna = 1;
+kp_Y_mrna = 1;
 
-r_R
-r_T
 
 n_1 = 
 n_2 = 
