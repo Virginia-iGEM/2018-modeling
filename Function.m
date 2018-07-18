@@ -91,12 +91,12 @@ n_2 = 1;
 
 %{
 Function will calculate and output d/dt for each c(i)
- d/dt of c(i) will be determined by state of c
+ d/dt of c(i) will be determined by state of c and differential equations
+ relating how the species concentrations affect each other
 %}
 if ~isvector(c)
     error('Input must be a vector')
 end
-%insert code for function
 ddt = zeros(23,1);
 ddt(3,1) = k_AiK*c(12)*c(4) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
 ddt(4,1) = k_XS*c(20) - k_AiK*c(12)*c(4) - k_AiY*c(22)*c(4) + k_AoP*c(14)*c(5) + k_AoB*c(6)*c(5);
