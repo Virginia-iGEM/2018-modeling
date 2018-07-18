@@ -8,7 +8,7 @@
 %
 %Function will calculate diffusion dynamics of the medium
 %Function will compute change d[AI2]/dt for each Mxy
-%Function will output either dM/dt or an updated M
+%Function will output either dM/dt
 
 function dM = Diffusion(M,d)
 if ~ismatrix(M)
