@@ -10,9 +10,22 @@
 %Function will compute change d[AI2]/dt for each Mxy
 %Function will output either dM/dt or an updated M
 
-function Diffusion = Diffusion(M,D,dt)
+function dM = Diffusion(M,d)
 if ~ismatrix(M)
     error('Input must be a matrix')
 end
-%insert code for function
+
+%initialize variables    
+    [w,h] = size(M);
+    x = 2:w-1;
+    y = 2:h-1;
+    dM = zeros(w,h);
+%Dirichlet Boundary Conditions
+    dM(1,:)= -M(1,:);
+    dM(w,:)= -M(w,:);
+    dM(:,1)= -M(:,1);
+    dM(:,h)= -M(:,h);
+%Explicit Method for Finite Element Diffusion
+    dM(x,y) = (d*(M(x+1,y)-2*M(x,y)+M(x-1,y)))+(d*(M(x,y+1)-2*M(x,y)+M(x,y-1)));
+
 end
