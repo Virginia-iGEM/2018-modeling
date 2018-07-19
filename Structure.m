@@ -12,38 +12,40 @@
 %%% Matrices %%%
 
 %%% Cell Matrix %%%
-n = 10;           % Number of Cells
-m = 5;              % Number of Parameters for each Cell
+n = 1000;           % Number of Cells
+m = 4;              % Number of Parameters for each Cell
 
 %%% Diffusion Matrix %%%
-w = 100;            % Medium/Diffusion Grid Width
-h = 100;            % Medium/Diffusion Grid height
+w = 1000;            % Medium/Diffusion Grid Width
+h = 1000;            % Medium/Diffusion Grid height
 
 %%% Constants %%%
 
 t_i = 0;            % Set initial time to 0
-t_f = 100;          % Final time
-dt = 1;             % Constant timestep 
+t_f = 10;          % Final time
+dt = 0.1;             % Constant timestep 
 D = 10^-10;         % Diffusion coefficient
 
 %%% Settings %%%
 
-Psi_x = 1;          % The row of Psi which contains the x positions of cells
-Psi_y = 2;          % The row of Psi which contains the y position of cells
-Psi_Ao = 3;        % The row of Psi which contains the A_0 value for cells
+Psi_indices = [1,2,3,4]
+%Psi_x = 1;          % The row of Psi which contains the x positions of cells
+%Psi_y = 2;          % The row of Psi which contains the y position of cells
+%Psi_Ai = 3;         % The row of Psi which contains the A_o value for cells
+%Psi_Ao = 4;         % The row of Psi which contains the A_i value for cells
 
 % The number of different workers to use for the simulation.
 % This value should be equal to the number of cores, *not* the number of
 % threads you have available. For most consumer computers this is 2-4, for
 % clusters, consult your sysadmin or documentation.
-workers = 0;
+workers = 4;
 
 print = 1;       % Print progress reports?
 n_prints = 4;
 write = 1;       % Should we write out data?
 n_snapshots = 50;   % How many snapshots of the simulation do we want to write out for analysis
 
-config = [workers, Psi_x, Psi_y, Psi_Ao, print, n_prints, write, n_snapshots];
+config = [workers, Psi_indices, print, n_prints, write, n_snapshots];
 
 %%%%%%%%%%%%%%%%%
 % Initial Setup %
@@ -57,8 +59,8 @@ function [Psi, M] = setup(n, m, w, h, config)
     % Assign all A_0 in the cell to the initial value in M
     for col=1:size(Psi, 2)
         column = Psi(:, col);
-        % Pass in every value of M at x, y row, columns to the cell
-        Psi(config(4), col) = M(column(config(2)), column(config(3))); 
+        % Pass in every value of M at (x, y) (row, columns) to the cell
+        Psi(config(2,4), col) = M(column(config(2,1)), column(config(2,2))); 
     end
 end
 
@@ -82,15 +84,15 @@ function [Psi_snapshots, M_snapshots] = simulate(Psi, M, t_i, t_f, dt, d, config
 
     for i=1:size(steps,2) % For each timestep
         t = steps(i);
-        if config(7) == 1 && mod(i, writestep) == 0 % If enabled, write data to console
+        if config(5) == 1 && mod(i, writestep) == 0 % If enabled, write data to console
             snapshot(Psi, M, t);
         end
-        if config(5) == 1 && mod(i, printstep) == 0 % If enabled, print snapshots to .csv
+        if config(3) == 1 && mod(i, printstep) == 0 % If enabled, print snapshots to .csv
             fprintf("Simulation is %d%% done\n", ceil(100 * (t + dt) / t_f))
         end
         Psi_snapshots{i} = Psi;
         M_snapshots{i} = M;
-        [Psi, M] = mapcell(Psi, M, dt, config(1:4)); % Update cell columns and diffusion matrix using cellular model
+        [Psi, M] = mapcell(Psi, M, dt, config(1:2)); % Update cell columns and diffusion matrix using cellular model
         M = M + diff(M, d, dt)*dt;             % Call diffusion solver on M
     end
 
