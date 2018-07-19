@@ -2,14 +2,14 @@
 % Expected Predefined Functions %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% diff(M, D, dt)
-% cell(c, dt)
+% Diffusion(M, D, dt)
+% Function(c)
 
 %%%%%%%%%%%%%%
 % Parameters %
 %%%%%%%%%%%%%%
 
-%%% Matrices %%%
+% Simulation %
 
 %%% Cell Matrix %%%
 n = 1000;           % Number of Cells
@@ -26,26 +26,33 @@ t_f = 10;          % Final time
 dt = 0.1;             % Constant timestep 
 D = 10^-10;         % Diffusion coefficient
 
-%%% Settings %%%
+% Settings %
 
-Psi_indices = [1,2,3,4]
-%Psi_x = 1;          % The row of Psi which contains the x positions of cells
-%Psi_y = 2;          % The row of Psi which contains the y position of cells
-%Psi_Ai = 3;         % The row of Psi which contains the A_o value for cells
-%Psi_Ao = 4;         % The row of Psi which contains the A_i value for cells
-
+% Config file to be passed into setup and simulate functions
+config = containers.Map;
 % The number of different workers to use for the simulation.
 % This value should be equal to the number of cores, *not* the number of
 % threads you have available. For most consumer computers this is 2-4, for
 % clusters, consult your sysadmin or documentation.
-workers = 4;
+config('workers') = 4; 
 
-print = 1;       % Print progress reports?
-n_prints = 4;
-write = 1;       % Should we write out data?
-n_snapshots = 50;   % How many snapshots of the simulation do we want to write out for analysis
+% Should progress reports be printed to console?
+config('print') = 1;
 
-config = [workers, Psi_indices, print, n_prints, write, n_snapshots];
+% How many times should we print progress reports?
+config('n_prints') = 4;
+
+% Should .csv files be written to the data folder?
+config('write') = 0;
+
+% How many times should we write .csv files?
+config('n_writes') = 50;
+
+% Which rows are the different variables in the cell matrix?o
+config('Psi_x') = 1;    % The row of Psi which contains the x positions of cells
+config('Psi_y') = 2;    % The row of Psi which contains the y position of cells
+config('Psi_Ai') = 3;   % The row of Psi which contains the A_o value for cells
+config('Psi_Ao') = 4;   % The row of Psi which contains the A_i value for cells
 
 %%%%%%%%%%%%%%%%%
 % Initial Setup %
@@ -60,7 +67,7 @@ function [Psi, M] = setup(n, m, w, h, config)
     for col=1:size(Psi, 2)
         column = Psi(:, col);
         % Pass in every value of M at (x, y) (row, columns) to the cell
-        Psi(config(2,4), col) = M(column(config(2,1)), column(config(2,2))); 
+        Psi(config('Psi_Ao'), col) = M(column(config('Psi_x')), column(config('Psi_y'))); 
     end
 end
 
@@ -75,8 +82,8 @@ function [Psi_snapshots, M_snapshots] = simulate(Psi, M, t_i, t_f, dt, d, config
     Psi_snapshots = cell(1, steps);
     M_snapshots = cell(1, steps);
 
-    writestep = round(size(steps, 2) / config(8)); % Calculates how often to write files
-    printstep = round(size(steps, 2) / config(6));
+    writestep = round(size(steps, 2) / config('n_writes')); % Calculates how often to write files
+    printstep = round(size(steps, 2) / config('n_prints'));
 
     %%%%%%%%%%%%%%
     % Simulation %
@@ -84,16 +91,16 @@ function [Psi_snapshots, M_snapshots] = simulate(Psi, M, t_i, t_f, dt, d, config
 
     for i=1:size(steps,2) % For each timestep
         t = steps(i);
-        if config(5) == 1 && mod(i, writestep) == 0 % If enabled, write data to console
+        if config('write') == 1 && mod(i, writestep) == 0 % If enabled, write data to console
             snapshot(Psi, M, t);
         end
-        if config(3) == 1 && mod(i, printstep) == 0 % If enabled, print snapshots to .csv
+        if config('print') == 1 && mod(i, printstep) == 0 % If enabled, print snapshots to .csv
             fprintf("Simulation is %d%% done\n", ceil(100 * (t + dt) / t_f))
         end
         Psi_snapshots{i} = Psi;
         M_snapshots{i} = M;
-        [Psi, M] = mapcell(Psi, M, dt, config(1:2)); % Update cell columns and diffusion matrix using cellular model
-        M = M + diff(M, d, dt)*dt;             % Call diffusion solver on M
+        [Psi, M] = mapcell(Psi, M, dt, config); % Update cell columns and diffusion matrix using cellular model
+        M = M + Diffusion(M, d)*dt;             % Call diffusion solver on M
     end
 
 end
@@ -103,10 +110,10 @@ end
 
 % Run cell function on each column of Psi with paralellization
 function [Psi, M] = mapcell(Psi, M, dt, config)
-    if config(1) > 0
+    if config('workers') > 0
         % Parallelized for loop of all independent cell model calculations
-        parfor (col=1:size(Psi,2), config(1))
-            Psi(:, col) = Psi(:, col) + cell(Psi(:, col), dt)*dt;
+        parfor (col=1:size(Psi,2), config('workers'))
+            Psi(:, col) = Psi(:, col) + Function(Psi(:, col))*dt;
         end
         % Update m_0's A_0 values for each occupied location. This must be
         % done outside of parfor as it would otherwise require passing in
@@ -114,14 +121,14 @@ function [Psi, M] = mapcell(Psi, M, dt, config)
         % in terms of overhead.
         for col=1:size(Psi,2) 
             column = Psi(:, col);
-            M(column(config(2)), column(config(3))) = column(config(4));
+            M(column(config('Psi_x')), column(config('Psi_y'))) = column(config('Psi_Ao'));
         end
     else
         % For a nonparallel simulation we can just do all of this at once
         for col=1:size(Psi,2)
             column = Psi(:, col);
-            Psi(:, col) = column + cell(column, dt)*dt;
-            M(column(config(2)), column(config(3))) = column(config(4));
+            Psi(:, col) = column + Function(column)*dt;
+            M(column(config('Psi_x')), column(config('Psi_y'))) = column(config('Psi_Ao'));
             %Psi
         end
     end
