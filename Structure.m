@@ -11,20 +11,21 @@
 
 % Simulation %
 
+variables = containers.Map;
 %%% Cell Matrix %%%
-n = 1000;           % Number of Cells
-m = 4;              % Number of Parameters for each Cell
+variables('n') = 1000;           % Number of Cells
+variables('m') = 4;              % Number of Parameters for each Cell
 
 %%% Diffusion Matrix %%%
-w = 1000;            % Medium/Diffusion Grid Width
-h = 1000;            % Medium/Diffusion Grid height
+variables('w') = 1000;            % Medium/Diffusion Grid Width
+variables('h') = 1000;            % Medium/Diffusion Grid height
 
 %%% Constants %%%
 
-t_i = 0;            % Set initial time to 0
-t_f = 10;          % Final time
-dt = 0.1;             % Constant timestep 
-D = 10^-10;         % Diffusion coefficient
+variables('t_i') = 0;            % Set initial time to 0
+variables('t_f') = 10;          % Final time
+variables('dt') = 0.1;             % Constant timestep 
+variables('D') = 10^-10;         % Diffusion coefficient
 
 % Settings %
 
@@ -59,9 +60,9 @@ config('Psi_Ao') = 4;   % The row of Psi which contains the A_i value for cells
 %%%%%%%%%%%%%%%%%
 
 % Temporary setup function
-function [Psi, M] = setup(n, m, w, h, config)
-    Psi = ones(m, n);   % Matrix of cell column vectors with m rows and n columns
-    M = zeros(w, h);     % w x h discrete diffusion matrix
+function [Psi, M] = setup(variables, config)
+    Psi = ones(variables('m'), variables('n'));   % Matrix of cell column vectors with m rows and n columns
+    M = zeros(variables('w'), variables('h'));     % w x h discrete diffusion matrix
 
     % Assign all A_0 in the cell to the initial value in M
     for col=1:size(Psi, 2)
@@ -73,11 +74,11 @@ end
 
 
 
-function [Psi_snapshots, M_snapshots] = simulate(Psi, M, t_i, t_f, dt, d, config)
+function [Psi_snapshots, M_snapshots] = simulate(Psi, M, variables, config)
 
     %%% Setup variables needed for snapshot saving %%%
 
-    steps = t_i:dt:t_f;
+    steps = variables('t_i'):variables('dt'):variables('t_f');
     
     Psi_snapshots = cell(1, steps);
     M_snapshots = cell(1, steps);
@@ -95,12 +96,12 @@ function [Psi_snapshots, M_snapshots] = simulate(Psi, M, t_i, t_f, dt, d, config
             snapshot(Psi, M, t);
         end
         if config('print') == 1 && mod(i, printstep) == 0 % If enabled, print snapshots to .csv
-            fprintf("Simulation is %d%% done\n", ceil(100 * (t + dt) / t_f))
+            fprintf("Simulation is %d%% done\n", ceil(100 * (t + variables('dt')) / variables('t_f')))
         end
         Psi_snapshots{i} = Psi;
         M_snapshots{i} = M;
-        [Psi, M] = mapcell(Psi, M, dt, config); % Update cell columns and diffusion matrix using cellular model
-        M = M + Diffusion(M, d)*dt;             % Call diffusion solver on M
+        [Psi, M] = mapcell(Psi, M, variables('dt'), config); % Update cell columns and diffusion matrix using cellular model
+        M = M + Diffusion(M, variables('d'))*variables('dt');             % Call diffusion solver on M
         for col=1:size(Psi,2) % Send M Ao to Psi to ensure that diffusion changes are saved to cells
             column = Psi(:, col);
             Psi(config('Psi_Ao'), col) = M(column(config('Psi_x')), column(config('Psi_y')));
