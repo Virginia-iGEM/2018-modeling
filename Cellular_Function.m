@@ -2,7 +2,7 @@
 %Quorum Sensing 
 %Model of Population Activation
 
-function [ddt] = Function(c)
+function [ddt] = Cellular_Function(c)
 
 %{
 Function Module
@@ -34,10 +34,6 @@ Vector "c" contains state information of one cell
 %c(23) = Y|mrna
 %}
 
-%Transcription bias towards lsrA-side of lsr
-%TODO: REVISIT HOW TO FIT THIS IN
-B = 1.225; 
-
 %Rates of Reactions/Transport
 k_AoP = 1;
 k_AoB = 1;
@@ -58,24 +54,32 @@ k_T = 1;    d_T = 1;
 k_X = 1;    d_X = 1;
 k_Y = 1;    d_Y = 1;
 
+
+%Relationships between transcription constants
+b_RK = 1;
+b_BF = 1;
+%Transcription bias towards lsrA-side of lsr
+B = 1.225; 
+
+
 %These have relationships between each other that have not been considered with the 1's
 %Translation and degradation of mRNAs (from natural plasmid)
-k_B_mrna = 1;d_B_mrna = 1; 
-k_F_mrna = 1;d_F_mrna = 1;
-             d_G_mrna = 1;
-k_K_mrna = 1;d_K_mrna = 1;
-k_P_mrna = 1;d_P_mrna = 1;
-k_R_mrna = 1;d_R_mrna = 1;
-             d_T_mrna = 1;
-k_X_mrna = 1;d_X_mrna = 1;
-k_Y_mrna = 1;d_Y_mrna = 1;
+k_B_mrna = 1;               d_B_mrna = 1; 
+k_F_mrna = b_BF*k_B_mrna;   d_F_mrna = 1;
+                            d_G_mrna = 1;
+k_K_mrna = b_RK*k_R_mrna;   d_K_mrna = 1;
+k_P_mrna = 1;               d_P_mrna = 1;
+k_R_mrna = k_B_mrna/B;      d_R_mrna = 1;
+                            d_T_mrna = 1;
+k_X_mrna = 1;               d_X_mrna = 1;
+k_Y_mrna = 1;               d_Y_mrna = 1;
 
 %Synthetic plasmid parameters for Transcription
 kp_B_mrna = 1;
 kp_F_mrna = 1;
 kp_G_mrna = 1;
 kp_K_mrna = 1;
-kp_T_mrna = 1;
+kp_T_mrna = k_B_mrna;
 kp_X_mrna = 1;
 kp_Y_mrna = 1;
 
@@ -102,19 +106,19 @@ ddt(3,1) = k_AiK*c(12)*c(4) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
 ddt(4,1) = k_XS*c(20) - k_AiK*c(12)*c(4) - k_AiY*c(22)*c(4) + k_AoP*c(14)*c(5) + k_AoB*c(6)*c(5);
 ddt(5,1) = k_AiY*c(22)*c(4) - k_AoP*c(14)*c(5) - k_AoB*c(6)*c(5);
 ddt(6,1) = k_B*c(7) - d_B*c(6);
-ddt(7,1) = k_B_mrna*(r_R^2/(r_R^2 + c(16)^2)) - c(7)*d_B_mrna + n_2*kp_B_mrna*(c(18)/(r_T*c(18)));
+ddt(7,1) = k_B_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(7)*d_B_mrna + n_2*kp_B_mrna*(c(18)/(r_T*c(18)));
 ddt(8,1) = k_F*c(9) - d_F*c(8);
-ddt(9,1) = k_F_mrna*(r_R^2/(r_R^2 + c(16)^2)) - c(9)*d_F_mrna; %If changing LsrFG in system: + n_2*kp_F_mrna*(c(18)/(r_T*c(18)))
+ddt(9,1) = k_F_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(9)*d_F_mrna; %If changing LsrFG in system: + n_2*kp_F_mrna*(c(18)/(r_T*c(18)))
 ddt(10,1) = k_G*c(11) - d_G*c(10);
 ddt(11,1) = n_2*kp_G_mrna*(c(18)/(r_T*c(18))) - c(11)*d_G_mrna;
 ddt(12,1) = k_K*c(13) - d_K*c(12);
-ddt(13,1) = k_K_mrna*(r_R^2/(r_R^2 + c(16)^2)) - c(13)*d_K_mrna + n_2*kp_K_mrna*(c(18)/(r_T*c(18)));
+ddt(13,1) = k_K_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(13)*d_K_mrna + n_2*kp_K_mrna*(c(18)/(r_T*c(18)));
 ddt(14,1) = 0; %If changing PTS levels: k_P*c(15) - d_P*c(14);
-ddt(15,1) = 0; %If changing PTS mRNA levela: k_P_mrna*(r_R^2/(r_R^2 + c(16)^2)) - c(15)*d_P_mrna + n_2*kp_P_mrna*(c(18)/(r_T*c(18)));
+ddt(15,1) = 0; %If changing PTS mRNA levela: k_P_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(15)*d_P_mrna + n_2*kp_P_mrna*(c(18)/(r_T*c(18)));
 ddt(16,1) = k_R*c(17) - d_R*c(16) - k_ApR*c(16)*c(3);
-ddt(17,1) = (n_1 + 1)*k_R_mrna*(r_R^2/(r_R^2 + c(16)^2)) - c(17)*d_R_mrna;
+ddt(17,1) = (n_1+1)*k_R_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(17)*d_R_mrna;
 ddt(18,1) = k_T*c(19) - d_T*c(18);
-ddt(19,1) = (n_1)*k_T_mrna*(r_R^2/(r_R^2 + c(16)^2)) - c(19)*d_T_mrna;
+ddt(19,1) = (n_1)*kp_T_mrna*(r_R^2/(r_R^2 + c(16)^2)) - c(19)*d_T_mrna;
 ddt(20,1) = k_X*c(21) - d_X*c(20);
 ddt(21,1) = n_2*kp_X_mrna*(c(18)/(r_T*c(18))) - c(21)*d_X_mrna;
 ddt(22,1) = k_Y*c(21) - d_Y*c(20);
