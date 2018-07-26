@@ -49,6 +49,9 @@ config('write') = 0;
 % How many times should we write .csv files?
 config('n_writes') = 50;
 
+% Save to cell matrix this many times
+config('n_snapshots') = 100;
+
 % Which rows are the different variables in the cell matrix?o
 config('Psi_x') = 1;    % The row of Psi which contains the x positions of cells
 config('Psi_y') = 2;    % The row of Psi which contains the y position of cells
@@ -80,12 +83,13 @@ function [Psi_snapshots, M_snapshots] = simulate(Psi, M, variables, config)
 
     steps = variables('t_i'):variables('dt'):variables('t_f');
     
-    Psi_snapshots = cell(1, steps);
-    M_snapshots = cell(1, steps);
+    Psi_snapshots = cell(1, config('n_snapshots'));
+    M_snapshots = cell(1, config('n_snapshots'));
 
     writestep = round(size(steps, 2) / config('n_writes')); % Calculates how often to write files
     printstep = round(size(steps, 2) / config('n_prints'));
-
+    snapshotstep = round(size(steps, 2) / config('n_snapshots'));
+    snapshotcounter = 1;
     %%%%%%%%%%%%%%
     % Simulation %
     %%%%%%%%%%%%%%
@@ -98,8 +102,11 @@ function [Psi_snapshots, M_snapshots] = simulate(Psi, M, variables, config)
         if config('print') == 1 && mod(i, printstep) == 0 % If enabled, print snapshots to .csv
             fprintf("Simulation is %d%% done\n", ceil(100 * (t + variables('dt')) / variables('t_f')))
         end
-        Psi_snapshots{i} = Psi;
-        M_snapshots{i} = M;
+        if mod(i, snapshotstep) == 0
+            Psi_snapshots{snapshotcounter} = Psi;
+            M_snapshots{snapshotcounter} = M;
+            snapshotcounter = snapshotcounter + 1;
+        end
         [Psi, M] = mapcell(Psi, M, variables('dt'), config); % Update cell columns and diffusion matrix using cellular model
         M = M + Diffusion(M, variables('d'))*variables('dt');             % Call diffusion solver on M
         for col=1:size(Psi,2) % Send M Ao to Psi to ensure that diffusion changes are saved to cells
