@@ -1,80 +1,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Expected Predefined Functions %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%
+function [Psi_cells, M_cells] = Structure(Psi, M, parameters, config)
+   
+[Psi_cells, M_cells]= Simulate(Psi, M, parameters, config);
+   
+import Diffusion.m.*
+import Cellular_Function.m.*
 
-import Diffusion.m
-import Cellular_Function.m
 
 
-% Simulation %
-
-parameters = containers.Map;
-%%% Cell Matrix %%%
-parameters('n') = 1000;           % Number of Cells
-parameters('m') = 4;              % Number of Parameters for each Cell
-
-%%% Diffusion Matrix %%%
-parameters('w') = 1000;            % Medium/Diffusion Grid Width
-parameters('h') = 1000;            % Medium/Diffusion Grid height
-
-%%% Constants %%%
-
-parameters('t_i') = 0;            % Set initial time to 0
-parameters('t_f') = 10;          % Final time
-parameters('dt') = 0.1;             % Constant timestep 
-parameters('D') = 10^-10;         % Diffusion coefficient
-
-% Settings %
-
-% Config file to be passed into setup and simulate functions
-config = containers.Map;
-% The number of different workers to use for the simulation.
-% This value should be equal to the number of cores, *not* the number of
-% threads you have available. For most consumer computers this is 2-4, for
-% clusters, consult your sysadmin or documentation.
-config('workers') = 4; 
-
-% Should progress reports be printed to console?
-config('print') = 1;
-
-% How many times should we print progress reports?
-config('n_prints') = 4;
-
-% Should .csv files be written to the data folder?
-config('write') = 0;
-
-% How many times should we write .csv files?
-config('n_writes') = 50;
-
-% Save to cell matrix this many times
-config('n_snapshots') = 100;
-
-% Which rows are the different variables in the cell matrix?o
-config('Psi_x') = 1;    % The row of Psi which contains the x positions of cells
-config('Psi_y') = 2;    % The row of Psi which contains the y position of cells
-config('Psi_Ai') = 4;   % The row of Psi which contains the A_o value for cells
-config('Psi_Ao') = 5;   % The row of Psi which contains the A_i value for cells
 
 %%%%%%%%%%%%%%%%%
 % Initial Setup %
 %%%%%%%%%%%%%%%%%
 
-% Temporary setup function
-function [Psi, M] = setup(parameters, config)
-    Psi = ones(parameters('m'), parameters('n'));   % Matrix of cell column vectors with m rows and n columns
-    M = zeros(parameters('w'), parameters('h'));     % w x h discrete diffusion matrix
-
-    % Assign all A_0 in the cell to the initial value in M
-    for col=1:size(Psi, 2)
-        column = Psi(:, col);
-        % Pass in every value of M at (x, y) (row, columns) to the cell
-        Psi(config('Psi_Ao'), col) = M(column(config('Psi_x')), column(config('Psi_y'))); 
-    end
-end
-
-
-
-function [Psi_snapshots, M_snapshots] = SimuPop(Psi, M, parameters, config)
+function [Psi_snapshots, M_snapshots] = Simulate(Psi, M, parameters, config)
 
     %%% Setup parameters needed for snapshot saving %%%
 
@@ -104,8 +46,8 @@ function [Psi_snapshots, M_snapshots] = SimuPop(Psi, M, parameters, config)
             M_snapshots{snapshotcounter} = M;
             snapshotcounter = snapshotcounter + 1;
         end
-        [Psi, M] = mapcell(Psi, M, variables('dt'), config); % Update cell columns and diffusion matrix using cellular model
-        M = M + Diffusion(M, variables('d'))*variables('dt');             % Call diffusion solver on M
+        [Psi, M] = mapcell(Psi, M, parameters('dt'), config); % Update cell columns and diffusion matrix using cellular model
+        M = M + Diffusion(M, parameters('d'))*parameters('dt');             % Call diffusion solver on M
         for col=1:size(Psi,2) % Send M Ao to Psi to ensure that diffusion changes are saved to cells
             column = Psi(:, col);
             Psi(config('Psi_Ao'), col) = M(column(config('Psi_x')), column(config('Psi_y')));
@@ -166,3 +108,4 @@ function m = diff(m, D, dt)
     m = m + 1;
 end
 %}
+end

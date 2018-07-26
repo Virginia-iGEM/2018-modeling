@@ -16,16 +16,16 @@ if ~ismatrix(M)
 end
 
 %initialize variables    
-    [w,h] = size(M);
+    [h,w] = size(M);
     x = 2:w-1;
     y = 2:h-1;
-    dM = zeros(w,h);
+    dM = zeros(h,w);
 %Dirichlet Boundary Conditions
     dM(1,:)= -M(1,:);
     dM(w,:)= -M(w,:);
     dM(:,1)= -M(:,1);
     dM(:,h)= -M(:,h);
 %Explicit Method for Finite Element Diffusion
-    dM(x,y) = (d*(M(x+1,y)-2*M(x,y)+M(x-1,y)))+(d*(M(x,y+1)-2*M(x,y)+M(x,y-1)));
+    dM(y,x) = (d*(M(y+1,x)-2*M(y,x)+M(y-1,x)))+(d*(M(y,x+1)-2*M(y,x)+M(y,x-1)));
 
 end

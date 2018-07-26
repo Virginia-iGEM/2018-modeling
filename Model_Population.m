@@ -12,13 +12,14 @@ Manipulate constants within Cellular_Function to test sensitivity
 
 %}
 %Imports
-import Structure.*
+import SimuPop.*
 import GridView.*
 %----------------------
 
 %Model Parameters
 parameters = containers.Map;
 parameters('n') = 9;                % Number of Cells (needs to be square numer)
+
 parameters('m') = 2+4;              % Number of Parameters for each Cell
 parameter('w') = n;               % Medium/Diffusion Grid Width
 parameters('h') = n;              % Medium/Diffusion Grid height
@@ -32,6 +33,8 @@ parmeters('index') = 0;
 %Configuration Parameters
 config = containers.Map;
 config('workers') = 4; 
+
+config('n_snapshots') = 100;
 
 config('print') = 1;% Should progress reports be printed to console?
 config('n_prints') = 4;% How many times should we print progress reports?
@@ -51,7 +54,7 @@ gm = gmdistribution(1,0.000005);
 
 %Initial Matrices
 Psi = zeros(m,n);
-M = zeros(w,h);
+M = zeros(h,w);
 %------------------------------
 
 %initial c vector
@@ -81,13 +84,20 @@ for i = 1:n
 end
 %--------------------------
 
+%initialize M Matrix
+for i = 1:n
+    x = Psi(1,i);
+    y = Psi(2,i);
+    M(x,y) = Psi(5,i);
+end
+%------------------------
+
 %Simulate
-[Psi_cells, M_cells] = SimuPop(Psi, M, parameters, config);
+[Psi_cells, M_cells] = Structure(Psi, M, parameters, config);
 %-----------------
 
 %Statistically Analyze
-Psi
-M
+
 %Graph
 
 %View

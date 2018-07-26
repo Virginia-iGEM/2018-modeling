@@ -67,7 +67,7 @@ B = 1.225;
 k_B_mrna = 1;               d_B_mrna = 1; 
 k_F_mrna = b_BF*k_B_mrna;   d_F_mrna = 1;
                             d_G_mrna = 1;
-k_K_mrna = b_RK*k_R_mrna;   d_K_mrna = 1;
+k_K_mrna = b_RK*k_B_mrna/B;   d_K_mrna = 1;
 k_P_mrna = 1;               d_P_mrna = 1;
 k_R_mrna = k_B_mrna/B;      d_R_mrna = 1;
                             d_T_mrna = 1;
