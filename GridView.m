@@ -15,6 +15,7 @@ if PSIIndex == 0
     PSISIZE =size(PSI);
     numofcells = PSISIZE(2);
     
+    marksize = 6;
     %Change value of grid to corresponding value in Matrix M.
     for Mcounter = 1:MH*MW
         GRID(Mcounter) = M(Mcounter);
@@ -23,12 +24,14 @@ if PSIIndex == 0
     figure(1);
     imagesc(GRID);
     axis image;
-    colormap parula;
+    colormap winter;
     colorbar;
     hold on;
     
     for Cellcounter = 1:numofcells
-        plot(PSI(1,Cellcounter),PSI(2,Cellcounter), 's')
+        plot(PSI(1,Cellcounter),PSI(2,Cellcounter), 'o',...
+        'MarkerSize',marksize,...        
+        'MarkerEdgeColor','r');
     end
     
 else
@@ -52,14 +55,14 @@ else
     figure(1);
     imagesc(GRID);
     axis image;
-    colormap parula;
+    colormap winter;
     colorbar;
     hold on;
     
     for Hcounter = 1:H
         for Wcounter = 1:W
             if BooleanGrid(Hcounter,Wcounter) == 0
-                plot(Wcounter,Hcounter,'x',...
+                plot(Wcounter,Hcounter,'s',...
                         'MarkerSize',marksize,...
                         'MarkerEdgeColor','w',...
                         'MarkerFaceColor',[1,1,1]);
@@ -67,8 +70,9 @@ else
         end
     end
 end
-% PSI = [ 1 3 5 7; 1 2 4 9; 4 5 9 2]
 
-%M = rand(100)*10;'
+%PSI = [ 10 35 59 79; 19 20 40 92; 4 7 9 2]
+%M = rand(100)*10;
+
 end
 
