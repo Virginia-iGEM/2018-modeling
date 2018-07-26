@@ -26,7 +26,7 @@ Function will calculate and output d/dt for each c(i)
 
 rate_of_AI2_production = 1;
 import_constant = 1;
-AI2P_LsrK_relationship*c(3) = 1;
+AI2P_LsrK_relationship = 1;
 
 
 if ~isvector(c)
