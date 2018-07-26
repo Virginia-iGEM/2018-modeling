@@ -121,6 +121,6 @@ ddt(18,1) = k_T*c(19) - d_T*c(18);
 ddt(19,1) = (n_1)*kp_T_mrna*(r_R^2/(r_R^2 + c(16)^2)) - c(19)*d_T_mrna;
 ddt(20,1) = k_X*c(21) - d_X*c(20);
 ddt(21,1) = n_2*kp_X_mrna*(c(18)/(r_T*c(18))) - c(21)*d_X_mrna;
-ddt(22,1) = k_Y*c(21) - d_Y*c(20);
+ddt(22,1) = k_Y*c(23) - d_Y*c(22);
 ddt(23,1) = n_2*kp_Y_mrna*(c(18)/(r_T*c(18))) - c(23)*d_Y_mrna;
 end
