@@ -26,10 +26,10 @@ Vector "c" contains state information of one cell
 %c(15) = P|mrna
 %c(16) = R
 %c(17) = R|mrna
-%c(20) = T
-%c(21) = T|mrna
-%c(18) = X
-%c(19) = X|mrna
+%c(18) = T
+%c(19) = T|mrna
+%c(20) = X
+%c(21) = X|mrna
 %c(22) = Y
 %c(23) = Y|mrna
 %}
