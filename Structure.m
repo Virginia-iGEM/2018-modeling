@@ -47,7 +47,7 @@ function [Psi_snapshots, M_snapshots] = Simulate(Psi, M, parameters, config)
             snapshotcounter = snapshotcounter + 1;
         end
         [Psi, M] = mapcell(Psi, M, parameters('dt'), config); % Update cell columns and diffusion matrix using cellular model
-        M = M + Diffusion(M, parameters('d'))*parameters('dt');             % Call diffusion solver on M
+        M = M + Diffusion(M, parameters('D'))*parameters('dt');             % Call diffusion solver on M
         for col=1:size(Psi,2) % Send M Ao to Psi to ensure that diffusion changes are saved to cells
             column = Psi(:, col);
             Psi(config('Psi_Ao'), col) = M(column(config('Psi_x')), column(config('Psi_y')));

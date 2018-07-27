@@ -20,9 +20,9 @@ import GridView.*
 parameters = containers.Map;
 parameters('n') = 9;                % Number of Cells (needs to be square numer)
 
-parameters('m') = 2+4;              % Number of Parameters for each Cell
-parameter('w') = n;               % Medium/Diffusion Grid Width
-parameters('h') = n;              % Medium/Diffusion Grid height
+parameters('m') = 23;              % Number of Parameters for each Cell
+parameters('w') = parameters('n');               % Medium/Diffusion Grid Width
+parameters('h') = parameters('n');             % Medium/Diffusion Grid height
 parameters('t_i') = 0;              % Set initial time to 0
 parameters('t_f') = 10;             % Final time
 parameters('dt')= 0.1;              % Constant timestep 
@@ -32,7 +32,7 @@ parmeters('index') = 0;
 
 %Configuration Parameters
 config = containers.Map;
-config('workers') = 4; 
+config('workers') = 0; 
 
 config('n_snapshots') = 100;
 
@@ -53,12 +53,12 @@ gm = gmdistribution(1,0.000005);
 %------------------------------
 
 %Initial Matrices
-Psi = zeros(m,n);
-M = zeros(h,w);
+Psi = zeros(parameters('m'),parameters('n'));
+M = zeros(parameters('h'),parameters('w'));
 %------------------------------
 
 %initial c vector
-c_i = zeros(m,1);
+c_i = zeros(parameters('m'),1);
 c_i(3,1) = 0; %Ap
 c_i(4,1) = 0; %Ai
 c_i(5,1) = 10; %Ao
@@ -67,9 +67,9 @@ c_i(6,1) = 1; %B
 
 %initialize Psi Matrix
 i = 1;
-for x = floor(w/2-sqrt(n)/2):1:floor(w/2+sqrt(n)/2)
-    for y = floor(h/2-sqrt(n)/2):1:floor(h/2+sqrt(n)/2)
-        if i<=n
+for x = floor(w/2-sqrt(parameters('n'))/2):1:floor(w/2+sqrt(parameters('n'))/2)
+    for y = floor(h/2-sqrt(parameters('n'))/2):1:floor(h/2+sqrt(parameters('n'))/2)
+        if i<=parameters('n')
             Psi(1,i) = round(x);
             Psi(2,i) = round(y);
             i = i+1;
@@ -77,15 +77,15 @@ for x = floor(w/2-sqrt(n)/2):1:floor(w/2+sqrt(n)/2)
     end
 end
 
-for i = 1:n
-    for j = 3:m
+for i = 1:parameters('n')
+    for j = 3:parameters('m')
     Psi(j,i) = c_i(j,1)*random(gm);
     end
 end
 %--------------------------
 
 %initialize M Matrix
-for i = 1:n
+for i = 1:parameters('n')
     x = Psi(1,i);
     y = Psi(2,i);
     M(x,y) = Psi(5,i);
@@ -101,5 +101,5 @@ end
 %Graph
 
 %View
-GridView(M_cells,Psi_cells,parameters(index))
+%GridView(M_cells,Psi_cells,parameters(index))
 %----------------

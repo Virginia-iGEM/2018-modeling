@@ -22,9 +22,9 @@ end
     dM = zeros(h,w);
 %Dirichlet Boundary Conditions
     dM(1,:)= -M(1,:);
-    dM(w,:)= -M(w,:);
+    dM(h,:)= -M(h,:);
     dM(:,1)= -M(:,1);
-    dM(:,h)= -M(:,h);
+    dM(:,w)= -M(:,w);
 %Explicit Method for Finite Element Diffusion
     dM(y,x) = (d*(M(y+1,x)-2*M(y,x)+M(y-1,x)))+(d*(M(y,x+1)-2*M(y,x)+M(y,x-1)));
 
