@@ -24,17 +24,17 @@ Function will calculate and output d/dt for each c(i)
  relating how the species concentrations affect each other
 %}
 
-rate_of_AI2_production = 1;
+rate_of_AI2_production = 0.0005;
 import_constant = 1;
 AI2P_LsrK_relationship = 1;
-
+AI2P_degradation = 0.01;
 
 if ~isvector(c)
     error('Input must be a vector')
 end
 ddt = zeros(23,1);
 ddt(4,1) = rate_of_AI2_production + import_constant*c(6);
-ddt(3,1) = ddt(4,1);
+ddt(3,1) = ddt(4,1)-AI2P_degradation*ddt(3,1);
 ddt(5,1) = -import_constant*c(6);
 ddt(6,1) = AI2P_LsrK_relationship*c(3);
 

@@ -15,18 +15,43 @@ Manipulate constants within Cellular_Function to test sensitivity
 import SimuPop.*
 import GridView.*
 %----------------------
+%Variables
+var = containers.Map;
+var('x') = 1;
+var('y') = 2;
+var('Ap') = 3;
+var('Ai') = 4;
+var('Ao') = 5;
+var('B') = 6;
+var('B|mrna') = 7;
+var('F') = 8;
+var('F|mrna') = 9;
+var('G') = 10;
+var('G|mrna') = 11;
+var('K') = 12;
+var('K|mrna') = 13;
+var('P') = 14;
+var('P|mrna') = 15;
+var('R') = 16;
+var('R|mrna') = 17;
+var('T') = 18;
+var('T|mrna') = 19;
+var('X') = 20;
+var('X|mrna') = 21;
+var('Y') = 22;
+var('Y|mrna') = 23;
 
 %Model Parameters
-parameters = containers.Map;
-parameters('n') = 9;                % Number of Cells (needs to be square numer)
+para = containers.Map;
+para('n') = 9;                % Number of Cells (needs to be square numer)
 
-parameters('m') = 23;              % Number of Parameters for each Cell
-parameters('w') = parameters('n');               % Medium/Diffusion Grid Width
-parameters('h') = parameters('n');             % Medium/Diffusion Grid height
-parameters('t_i') = 0;              % Set initial time to 0
-parameters('t_f') = 10;             % Final time
-parameters('dt')= 0.1;              % Constant timestep 
-parameters('D') = 10^-10;           % Diffusion coefficient
+para('m') = 23;              % Number of Parameters for each Cell
+para('w') = para('n')^2;               % Medium/Diffusion Grid Width
+para('h') = para('n')^2;             % Medium/Diffusion Grid height
+para('t_i') = 0;              % Set initial time to 0
+para('t_f') = 10;             % Final time
+para('dt')= 0.1;              % Constant timestep 
+para('D') = 10^-10;           % Diffusion coefficient
 parmeters('index') = 0;
 %--------------------------------------------------------
 
@@ -53,23 +78,23 @@ gm = gmdistribution(1,0.000005);
 %------------------------------
 
 %Initial Matrices
-Psi = zeros(parameters('m'),parameters('n'));
-M = zeros(parameters('h'),parameters('w'));
+Psi = zeros(para('m'),para('n'));
+M = zeros(para('h'),para('w'));
 %------------------------------
 
 %initial c vector
-c_i = zeros(parameters('m'),1);
-c_i(3,1) = 0; %Ap
-c_i(4,1) = 0; %Ai
-c_i(5,1) = 10; %Ao
-c_i(6,1) = 1; %B
+c_i = zeros(para('m'),1);
+for i = 1:para('m')
+    c_i(i,1) = 1;
+end
 %-------------------------
 
 %initialize Psi Matrix
 i = 1;
-for x = floor(w/2-sqrt(parameters('n'))/2):1:floor(w/2+sqrt(parameters('n'))/2)
-    for y = floor(h/2-sqrt(parameters('n'))/2):1:floor(h/2+sqrt(parameters('n'))/2)
-        if i<=parameters('n')
+
+for x = floor(w/2-sqrt(para('n'))/2):1:(floor(w/2+sqrt(para('n')/2))-1)
+    for y = floor(h/2-sqrt(para('n'))/2):1:(floor(h/2+sqrt(para('n'))/2)-1)
+        if i<=para('n')
             Psi(1,i) = round(x);
             Psi(2,i) = round(y);
             i = i+1;
@@ -77,15 +102,15 @@ for x = floor(w/2-sqrt(parameters('n'))/2):1:floor(w/2+sqrt(parameters('n'))/2)
     end
 end
 
-for i = 1:parameters('n')
-    for j = 3:parameters('m')
+for i = 1:para('n')
+    for j = 3:para('m')
     Psi(j,i) = c_i(j,1)*random(gm);
     end
 end
 %--------------------------
 
 %initialize M Matrix
-for i = 1:parameters('n')
+for i = 1:para('n')
     x = Psi(1,i);
     y = Psi(2,i);
     M(x,y) = Psi(5,i);
@@ -93,13 +118,24 @@ end
 %------------------------
 
 %Simulate
-[Psi_cells, M_cells] = Structure(Psi, M, parameters, config);
+[Psi_cells, M_cells] = Structure(Psi, M, para, config);
 %-----------------
 
 %Statistically Analyze
 
 %Graph
-
+Readout = zeros(para('n'),config('n_snapshots'));
+for i = 1:config('n_snapshots')
+    for j = 1:para('n')
+        Readout(j,i) = Psi_cells{i}(var('Ao'),j);
+    end
+end
+t =  1:config('n_snapshots');
+hold on
+for i=1:n
+    plot(t,Readout(i,:));
+end
+hold off
 %View
-%GridView(M_cells,Psi_cells,parameters(index))
+%GridView(M_cells,Psi_cells,para(index))
 %----------------
