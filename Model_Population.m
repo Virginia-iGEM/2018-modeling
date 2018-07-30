@@ -134,11 +134,13 @@ for i = 1:config('n_snapshots')
     end
 end
 t =  1:config('n_snapshots');
+%{
 hold on
-for i=1:n
+for i=1:para('n')
     plot(t,Readout(i,:));
 end
 hold off
+%}
 %View
 %GridView(M_cells,Psi_cells,para(index))
 %----------------
