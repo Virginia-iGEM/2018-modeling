@@ -85,7 +85,7 @@ function [Psi, M] = mapcell(Psi, M, dt, config)
                 for j = 1:parameters('m')
                     if isinf(abs(Psi(j,i)))
                         display(Psi);
-                        exit;
+                        error("infinite value");
                     end
                 end
             end
