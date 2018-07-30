@@ -81,6 +81,14 @@ function [Psi, M] = mapcell(Psi, M, dt, config)
             Psi(:, col) = column + Cellular_Function(column)*dt;
             M(column(config('Psi_x')), column(config('Psi_y'))) = column(config('Psi_Ao'));
             %Psi
+            for i = 1:parameters('n')
+                for j = 1:parameters('m')
+                    if isinf(abs(Psi(j,i)))
+                        display(Psi);
+                        exit;
+                    end
+                end
+            end
         end
     end
 end

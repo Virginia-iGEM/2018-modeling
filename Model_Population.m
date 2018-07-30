@@ -11,12 +11,13 @@ Manipulate Psi and M matricies to test effects of initial conditions:
 Manipulate constants within Cellular_Function to test sensitivity
 
 %}
-
+clf
 %Imports
-import SimuPop.*
+import Structure.*
 import GridView.*
-%----------------------
-%Variables
+%---------------------
+
+%Variable Indices
 var = containers.Map;
 var('x') = 1;
 var('y') = 2;
@@ -51,8 +52,8 @@ para('w') = para('n')^2;               % Medium/Diffusion Grid Width
 para('h') = para('n')^2;             % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
 para('t_f') = 10;             % Final time
-para('dt')= 0.1;              % Constant timestep 
-para('D') = 10^-5;           % Diffusion coefficient
+para('dt')= 0.01;              % Constant timestep 
+para('D') = 0;           % Diffusion coefficient
 parmeters('index') = 0;
 %--------------------------------------------------------
 
@@ -63,7 +64,7 @@ config('workers') = 0;
 config('n_snapshots') = 100;
 
 config('print') = 1;% Should progress reports be printed to console?
-config('n_prints') = 4;% How many times should we print progress reports?
+config('n_prints') = 5;% How many times should we print progress reports?
 
 config('write') = 0; % Should .csv files be written to the data folder?
 config('n_writes') = 50;  % How many times should we write .csv files?
@@ -75,7 +76,7 @@ config('Psi_Ao') = 5;   % The row of Psi which contains the A_i value for cells
 %----------------------------------------------------
 
 %Randomization Distribution
-gm = gmdistribution(1,0.000005);
+gm = gmdistribution(1,0.00000005);
 
 %------------------------------
 
@@ -84,13 +85,38 @@ Psi = zeros(para('m'),para('n'));
 M = zeros(para('h'),para('w'));
 %------------------------------
 
+
 %initial c vector
 c_i = zeros(para('m'),1);
-c_i(var('Ao'),1) = 100; 
+%{
 for i = 1:para('m')
     c_i(i,1) = 1;
 end
-%-------------------------
+%}
+c_i(var('Ap')) = 		10^-20;
+c_i(var('Ai')) = 		10^-20;
+c_i(var('Ao')) = 		100;
+c_i(var('B')) = 		10^-20;
+c_i(var('B|mrna')) = 	10^-20;
+c_i(var('F')) = 		10^-20;
+c_i(var('F|mrna')) = 	10^-20;
+c_i(var('G')) = 		10^-20;
+c_i(var('G|mrna')) = 	10^-20;
+c_i(var('K')) = 		10^-20;
+c_i(var('K|mrna')) = 	10^-20;
+c_i(var('P')) = 		10;
+c_i(var('P|mrna')) = 	10^-20;
+c_i(var('R')) = 		10^10;
+c_i(var('R|mrna')) = 	10^-20;
+c_i(var('T')) = 		10^-20;
+c_i(var('T|mrna')) = 	10^-20;
+c_i(var('X')) = 		10^-20;
+c_i(var('X|mrna')) =    10^-20;
+c_i(var('Y')) = 		10^-20;
+c_i(var('Y|mrna')) = 	10^-20;
+
+%--------------------------
+
 
 %initialize Psi Matrix
 i = 1;
@@ -107,7 +133,7 @@ end
 
 for i = 1:para('n')
     for j = 3:para('m')
-    Psi(j,i) = c_i(j,1);%*random(gm);
+    Psi(j,i) = c_i(j,1)*random(gm);
     end
 end
 %--------------------------
@@ -130,17 +156,16 @@ end
 Readout = zeros(para('n'),config('n_snapshots'));
 for i = 1:config('n_snapshots')
     for j = 1:para('n')
-        Readout(j,i) = Psi_cells{i}(var('T'),j);
+        Readout(j,i) = Psi_cells{i}(var('Ap'),j);
     end
 end
 t =  1:config('n_snapshots');
-%{
+figure(1)
 hold on
 for i=1:para('n')
     plot(t,Readout(i,:));
 end
 hold off
-%}
 %View
 %GridView(M_cells,Psi_cells,para(index))
 %----------------
