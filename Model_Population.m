@@ -11,6 +11,7 @@ Manipulate Psi and M matricies to test effects of initial conditions:
 Manipulate constants within Cellular_Function to test sensitivity
 
 %}
+
 %Imports
 import SimuPop.*
 import GridView.*
@@ -51,7 +52,7 @@ para('h') = para('n')^2;             % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
 para('t_f') = 10;             % Final time
 para('dt')= 0.1;              % Constant timestep 
-para('D') = 10^-10;           % Diffusion coefficient
+para('D') = 10^-5;           % Diffusion coefficient
 parmeters('index') = 0;
 %--------------------------------------------------------
 
@@ -75,6 +76,7 @@ config('Psi_Ao') = 5;   % The row of Psi which contains the A_i value for cells
 
 %Randomization Distribution
 gm = gmdistribution(1,0.000005);
+
 %------------------------------
 
 %Initial Matrices
@@ -84,6 +86,7 @@ M = zeros(para('h'),para('w'));
 
 %initial c vector
 c_i = zeros(para('m'),1);
+c_i(var('Ao'),1) = 100; 
 for i = 1:para('m')
     c_i(i,1) = 1;
 end
@@ -92,8 +95,8 @@ end
 %initialize Psi Matrix
 i = 1;
 
-for x = floor(w/2-sqrt(para('n'))/2):1:(floor(w/2+sqrt(para('n')/2))-1)
-    for y = floor(h/2-sqrt(para('n'))/2):1:(floor(h/2+sqrt(para('n'))/2)-1)
+for x = floor(para('w')/2-sqrt(para('n'))/2):1:(floor(para('w')/2+sqrt(para('n')/2))-1)
+    for y = floor(para('h')/2-sqrt(para('n'))/2):1:(floor(para('h')/2+sqrt(para('n'))/2)-1)
         if i<=para('n')
             Psi(1,i) = round(x);
             Psi(2,i) = round(y);
@@ -104,7 +107,7 @@ end
 
 for i = 1:para('n')
     for j = 3:para('m')
-    Psi(j,i) = c_i(j,1)*random(gm);
+    Psi(j,i) = c_i(j,1);%*random(gm);
     end
 end
 %--------------------------
@@ -127,7 +130,7 @@ end
 Readout = zeros(para('n'),config('n_snapshots'));
 for i = 1:config('n_snapshots')
     for j = 1:para('n')
-        Readout(j,i) = Psi_cells{i}(var('Ao'),j);
+        Readout(j,i) = Psi_cells{i}(var('T'),j);
     end
 end
 t =  1:config('n_snapshots');
