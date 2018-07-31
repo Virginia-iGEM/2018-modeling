@@ -52,7 +52,7 @@ para('w') = para('n')^2;               % Medium/Diffusion Grid Width
 para('h') = para('n')^2;             % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
 para('t_f') = 10;             % Final time
-para('dt')= 0.01;              % Constant timestep 
+para('dt')= 0.001;              % Constant timestep 
 para('D') = 0;           % Diffusion coefficient
 parmeters('index') = 0;
 %--------------------------------------------------------
@@ -94,7 +94,7 @@ for i = 1:para('m')
 end
 %}
 c_i(var('Ap')) = 		0;
-c_i(var('Ai')) = 		0;
+c_i(var('Ai')) = 		1;
 c_i(var('Ao')) = 		100;
 c_i(var('B')) = 		0;
 c_i(var('B|mrna')) = 	0;
@@ -104,7 +104,7 @@ c_i(var('G')) = 		0;
 c_i(var('G|mrna')) = 	0;
 c_i(var('K')) = 		0;
 c_i(var('K|mrna')) = 	0;
-c_i(var('P')) = 		10000;
+c_i(var('P')) = 		10;
 c_i(var('P|mrna')) = 	0;
 c_i(var('R')) = 		0;
 c_i(var('R|mrna')) = 	0;

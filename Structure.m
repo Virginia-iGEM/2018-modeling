@@ -74,28 +74,14 @@ function [Psi, M] = mapcell(Psi, M, dt, config)
         column = Psi(:, col);
         M(column(config('Psi_y')), column(config('Psi_x'))) = column(config('Psi_Ao'));
     end
-    %{
-    else
-        % For a nonparallel simulation we can just do all of this at once
-        for col=1:size(Psi,2)
-            column = Psi(:, col);
-            Psi(:, col) = column + Cellular_Function(column)*dt;
-            M(column(config('Psi_y'),column(config('Psi_x'))) = column(config('Psi_Ao'));
-            %Psi
-            for i = 1:parameters('n')
-                for j = 1:parameters('m')
-                    if isinf(abs(Psi(j,i)))
-                        display(Psi);
-                        error("infinite value");
-                    end
-                end
-=======
-            column = Psi(:, col); % Update column with modified Ao values
-            M(column(config('Psi_x')), column(config('Psi_y'))) = column(config('Psi_Ao'));
-            
+    for i = 1:parameters('n')
+        for j = 1:parameters('m')
+            if isinf(abs(Psi(j,i)))
+                display(Psi);
+                error("infinite value");
+            end
         end
     end
-    %}
 end
 
 % Do nothing for now, will output CSV's later
