@@ -50,7 +50,7 @@ function [Psi_snapshots, M_snapshots] = Simulate(Psi, M, parameters, config)
         M = M + Diffusion(M, parameters('D'))*parameters('dt');             % Call diffusion solver on M
         for col=1:size(Psi,2) % Send M Ao to Psi to ensure that diffusion changes are saved to cells
             column = Psi(:, col);
-            Psi(config('Psi_Ao'), col) = M(column(config('Psi_x')), column(config('Psi_y')));
+            Psi(config('Psi_Ao'), col) = M(column(config('Psi_y')), column(config('Psi_x')));
         end
     end
 
@@ -61,26 +61,24 @@ end
 
 % Run cell function on each column of Psi with paralellization
 function [Psi, M] = mapcell(Psi, M, dt, config)
-    if config('workers') > 0
-        % Parallelized for loop of all independent cell model calculations
-        parfor (col=1:size(Psi,2), config('workers'))
-            Psi(:, col) = Psi(:, col) + Cellular_Function(Psi(:, col))*dt;
-        end
-        % Update m_0's A_0 values for each occupied location. This must be
-        % done outside of parfor as it would otherwise require passing in
-        % m_0 cells, which Matlab does not allow and is very expensive
-        % in terms of overhead.
-        for col=1:size(Psi,2) 
-            column = Psi(:, col);
-            M(column(config('Psi_x')), column(config('Psi_y'))) = column(config('Psi_Ao'));
-        end
-    else
-        % For a nonparallel simulation we can just do all of this at once
-        for col=1:size(Psi,2)
-            column = Psi(:, col);
-            Psi(:, col) = column + Cellular_Function(column)*dt;
-            M(column(config('Psi_x')), column(config('Psi_y'))) = column(config('Psi_Ao'));
-            %Psi
+    % Parallelized for loop of all independent cell model calculations
+    parfor (col=1:size(Psi,2), config('workers'))
+        Psi(:, col) = Psi(:, col) + Cellular_Function(Psi(:, col))*dt;
+    end
+    % Update m_0's A_0 values for each occupied location. This must be
+    % done outside of parfor as it would otherwise require passing in
+    % m_0 cells, which Matlab does not allow and is very expensive
+    % in terms of overhead.
+    for col=1:size(Psi,2) 
+        column = Psi(:, col);
+        M(column(config('Psi_y')), column(config('Psi_x'))) = column(config('Psi_Ao'));
+    end
+    for i = 1:parameters('n')
+        for j = 1:parameters('m')
+            if isinf(abs(Psi(j,i)))
+                display(Psi);
+                error("infinite value");
+            end
         end
     end
 end
