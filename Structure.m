@@ -61,7 +61,6 @@ end
 
 % Run cell function on each column of Psi with paralellization
 function [Psi, M] = mapcell(Psi, M, dt, config)
-    %if config('workers') > 0
     % Parallelized for loop of all independent cell model calculations
     parfor (col=1:size(Psi,2), config('workers'))
         Psi(:, col) = Psi(:, col) + Cellular_Function(Psi(:, col))*dt;
