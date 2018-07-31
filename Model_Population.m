@@ -93,27 +93,27 @@ for i = 1:para('m')
     c_i(i,1) = 1;
 end
 %}
-c_i(var('Ap')) = 		10^-20;
-c_i(var('Ai')) = 		10^-20;
+c_i(var('Ap')) = 		0;
+c_i(var('Ai')) = 		0;
 c_i(var('Ao')) = 		100;
-c_i(var('B')) = 		10^-20;
-c_i(var('B|mrna')) = 	10^-20;
-c_i(var('F')) = 		10^-20;
-c_i(var('F|mrna')) = 	10^-20;
-c_i(var('G')) = 		10^-20;
-c_i(var('G|mrna')) = 	10^-20;
-c_i(var('K')) = 		10^-20;
-c_i(var('K|mrna')) = 	10^-20;
-c_i(var('P')) = 		10;
-c_i(var('P|mrna')) = 	10^-20;
-c_i(var('R')) = 		10^10;
-c_i(var('R|mrna')) = 	10^-20;
-c_i(var('T')) = 		10^-20;
-c_i(var('T|mrna')) = 	10^-20;
-c_i(var('X')) = 		10^-20;
-c_i(var('X|mrna')) =    10^-20;
-c_i(var('Y')) = 		10^-20;
-c_i(var('Y|mrna')) = 	10^-20;
+c_i(var('B')) = 		0;
+c_i(var('B|mrna')) = 	0;
+c_i(var('F')) = 		0;
+c_i(var('F|mrna')) = 	0;
+c_i(var('G')) = 		0;
+c_i(var('G|mrna')) = 	0;
+c_i(var('K')) = 		0;
+c_i(var('K|mrna')) = 	0;
+c_i(var('P')) = 		10000;
+c_i(var('P|mrna')) = 	0;
+c_i(var('R')) = 		0;
+c_i(var('R|mrna')) = 	0;
+c_i(var('T')) = 		0;
+c_i(var('T|mrna')) = 	0;
+c_i(var('X')) = 		0;
+c_i(var('X|mrna')) =    0;
+c_i(var('Y')) = 		0;
+c_i(var('Y|mrna')) = 	0;
 
 %--------------------------
 
@@ -156,7 +156,7 @@ end
 Readout = zeros(para('n'),config('n_snapshots'));
 for i = 1:config('n_snapshots')
     for j = 1:para('n')
-        Readout(j,i) = Psi_cells{i}(var('Ap'),j);
+        Readout(j,i) = Psi_cells{i}(var('Ao'),j);
     end
 end
 t =  1:config('n_snapshots');

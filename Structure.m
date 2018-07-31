@@ -79,7 +79,7 @@ function [Psi, M] = mapcell(Psi, M, dt, config)
         for col=1:size(Psi,2)
             column = Psi(:, col);
             Psi(:, col) = column + Cellular_Function(column)*dt;
-            M(column(config('Psi_x')), column(config('Psi_y'))) = column(config('Psi_Ao'));
+            M(column(config('Psi_y'),column(config('Psi_x'))) = column(config('Psi_Ao'));
             %Psi
             for i = 1:parameters('n')
                 for j = 1:parameters('m')
