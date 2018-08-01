@@ -2,9 +2,9 @@
 % Expected Predefined Functions %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%
-function [Psi_cells, M_cells] = Structure(Psi, M, parameters, config)
+function [Psi_cells, M_cells,time] = Structure(Psi, M, parameters, config)
    
-[Psi_cells, M_cells]= Simulate(Psi, M, parameters, config);
+[Psi_cells, M_cells,time]= Simulate(Psi, M, parameters, config);
    
 import Diffusion.m.*
 import Cellular_Function.m.*
@@ -16,7 +16,7 @@ import Cellular_Function.m.*
 % Initial Setup %
 %%%%%%%%%%%%%%%%%
 
-function [Psi_snapshots, M_snapshots] = Simulate(Psi, M, parameters, config)
+function [Psi_snapshots, M_snapshots,time_] = Simulate(Psi, M, parameters, config)
 
     %%% Setup parameters needed for snapshot saving %%%
 
@@ -24,10 +24,11 @@ function [Psi_snapshots, M_snapshots] = Simulate(Psi, M, parameters, config)
     
     Psi_snapshots = cell(1, config('n_snapshots'));
     M_snapshots = cell(1, config('n_snapshots'));
-
+    time_ = zeros(1,config('n_snapshots'));
+    
     writestep = round(size(steps, 2) / config('n_writes')); % Calculates how often to write files
     printstep = round(size(steps, 2) / config('n_prints'));
-    snapshotstep = round(size(steps, 2) / config('n_snapshots'));
+    snapshotstep = round((size(steps, 2)+1) / config('n_snapshots'));
     snapshotcounter = 1;
     %%%%%%%%%%%%%%
     % Simulation %
@@ -41,9 +42,10 @@ function [Psi_snapshots, M_snapshots] = Simulate(Psi, M, parameters, config)
         if config('print') == 1 && mod(i, printstep) == 0 % If enabled, print snapshots to .csv
             fprintf("Simulation is %d%% done\n", ceil(100 * (t + parameters('dt')) / parameters('t_f')))
         end
-        if mod(i, snapshotstep) == 0
+        if mod(i-1, snapshotstep) == 0 
             Psi_snapshots{snapshotcounter} = Psi;
             M_snapshots{snapshotcounter} = M;
+            time_(1,snapshotcounter) = t;
             snapshotcounter = snapshotcounter + 1;
         end
         [Psi, M] = mapcell(Psi, M, parameters('dt'), config); % Update cell columns and diffusion matrix using cellular model
@@ -73,7 +75,8 @@ function [Psi, M] = mapcell(Psi, M, dt, config)
         column = Psi(:, col);
         M(column(config('Psi_y')), column(config('Psi_x'))) = column(config('Psi_Ao'));
     end
-    for i = 1:parameters('n')
+%{
+for i = 1:parameters('n')
         for j = 1:parameters('m')
             if isinf(abs(Psi(j,i)))
                 display(Psi);
@@ -81,6 +84,8 @@ function [Psi, M] = mapcell(Psi, M, dt, config)
             end
         end
     end
+%}
+ 
 end
 
 % Do nothing for now, will output CSV's later

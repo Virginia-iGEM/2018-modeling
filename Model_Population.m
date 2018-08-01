@@ -46,8 +46,7 @@ var('Y|mrna') = 23;
 
 %Model Parameters
 para = containers.Map;
-para('n') = 9;                % Number of Cells (needs to be square numer)
-
+para('n') = 16;                % Number of Cells (needs to be square numer)
 para('m') = 23;              % Number of Parameters for each Cell
 para('w') = para('n')^2;      % Medium/Diffusion Grid Width
 para('h') = para('n')^2;      % Medium/Diffusion Grid height
@@ -63,7 +62,7 @@ config = containers.Map;
 config('workers') = 8; 
 
 config('n_snapshots') = 100;
-
+config('n_snapshots') = config('n_snapshots') - 1;
 config('print') = 1;% Should progress reports be printed to console?
 config('n_prints') = 5;% How many times should we print progress reports?
 
@@ -91,7 +90,7 @@ end
 %}
 c_i(var('Ap')) = 		0;
 c_i(var('Ai')) = 		0;
-c_i(var('Ao')) = 		10;
+c_i(var('Ao')) = 		0;
 c_i(var('B')) = 		0;
 c_i(var('B|mrna')) = 	0;
 c_i(var('F')) = 		0;
@@ -106,9 +105,9 @@ c_i(var('R')) = 		10;
 c_i(var('R|mrna')) = 	0;
 c_i(var('T')) = 		0;
 c_i(var('T|mrna')) = 	0;
-c_i(var('X')) = 		0;
+c_i(var('X')) = 		1;
 c_i(var('X|mrna')) =    0;
-c_i(var('Y')) = 		100;
+c_i(var('Y')) = 		10;
 c_i(var('Y|mrna')) = 	1;
 
 %--------------------------
@@ -147,7 +146,7 @@ end
 %------------------------
 
 %Simulate
-[Psi_cells, M_cells] = Structure(Psi, M, para, config);
+[Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
 %-----------------
 
 %Statistically Analyze
@@ -158,9 +157,7 @@ Readout2 = zeros(para('n'),config('n_snapshots'));
 Readout3 = zeros(para('n'),config('n_snapshots'));
 for i = 1:config('n_snapshots')
     for j = 1:para('n')
-        Readout1(j,i) = Psi_cells{i}(var('Ai'),j);
-        Readout2(j,i) = Psi_cells{i}(var('Ap'),j);
-        Readout3(j,i) = Psi_cells{i}(var('Ao'),j);
+        Readout1(j,i) = Psi_cells{i}(var('Ao'),j);
     end
 end
 t =  1:config('n_snapshots');
@@ -169,9 +166,9 @@ figure(1)
 for i=1:para('n')
     plot(t,Readout1(i,:));
      hold on
-    plot(t,Readout2(i,:));
-    plot(t,Readout3(i,:));
-    legend('Ai','Ap','Ao')
+    %plot(t,Readout2(i,:));
+    %plot(t,Readout3(i,:));
+    legend('Ao')
 end
 hold off
 %View
