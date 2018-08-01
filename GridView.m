@@ -1,14 +1,19 @@
-function [ X ] = GridView(M,M_cells,Psi,Psi_cells,PSIIndex,ti,tf,n)
+function [ X ] = GridView(M_cells,Psi_cells,PSIIndex,ti,tf,n)
 %Creates a grid based on various elements of PSI or M
-%PSIIndex references ROW in PSI matrix
+%M_cells -> Cell matrix which contains M matrices at different timestamps
+%Psi_Cells -> Cell Matrix which contains Psi matrices at different TS's
+%PSIIndex -> References ROW Element in PSI matrix
+%ti -> Intial timestamp
+%tf -> Final timestamp
+%n -> Number of evenly spaced intervals in slider
 close all;
 
 %Determine number of Cells
-PSISIZE =size(Psi);
+PSISIZE =size(Psi_cells{1});
 numofcells = PSISIZE(2);
 
 %Determine Dim of Media
-MSIZE =size(M);
+MSIZE =size(M_cells{1});
 MH = MSIZE(1);
 MW = MSIZE(2);
 
