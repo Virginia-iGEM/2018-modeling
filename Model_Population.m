@@ -12,6 +12,7 @@ Manipulate constants within Cellular_Function to test sensitivity
 
 %}
 clf
+clear
 %Imports
 import Structure.*
 import GridView.*
@@ -48,18 +49,18 @@ para = containers.Map;
 para('n') = 9;                % Number of Cells (needs to be square numer)
 
 para('m') = 23;              % Number of Parameters for each Cell
-para('w') = para('n')^2;               % Medium/Diffusion Grid Width
-para('h') = para('n')^2;             % Medium/Diffusion Grid height
+para('w') = para('n')^2;      % Medium/Diffusion Grid Width
+para('h') = para('n')^2;      % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
-para('t_f') = 10;             % Final time
-para('dt')= 0.001;              % Constant timestep 
-para('D') = 0;           % Diffusion coefficient
+para('t_f') =  20;             % Final time
+para('dt')= 0.005;            % Constant timestep 
+para('D') = 1;                 % Diffusion coefficient
 parmeters('index') = 0;
 %--------------------------------------------------------
 
 %Configuration Parameters
 config = containers.Map;
-config('workers') = 0; 
+config('workers') = 8; 
 
 config('n_snapshots') = 100;
 
@@ -75,11 +76,6 @@ config('Psi_Ai') = 4;   % The row of Psi which contains the A_o value for cells
 config('Psi_Ao') = 5;   % The row of Psi which contains the A_i value for cells
 %----------------------------------------------------
 
-%Randomization Distribution
-gm = gmdistribution(1,0.00000005);
-
-%------------------------------
-
 %Initial Matrices
 Psi = zeros(para('m'),para('n'));
 M = zeros(para('h'),para('w'));
@@ -94,26 +90,26 @@ for i = 1:para('m')
 end
 %}
 c_i(var('Ap')) = 		0;
-c_i(var('Ai')) = 		1;
-c_i(var('Ao')) = 		100;
+c_i(var('Ai')) = 		0;
+c_i(var('Ao')) = 		10;
 c_i(var('B')) = 		0;
 c_i(var('B|mrna')) = 	0;
 c_i(var('F')) = 		0;
 c_i(var('F|mrna')) = 	0;
 c_i(var('G')) = 		0;
 c_i(var('G|mrna')) = 	0;
-c_i(var('K')) = 		0;
+c_i(var('K')) = 		1;
 c_i(var('K|mrna')) = 	0;
-c_i(var('P')) = 		10;
+c_i(var('P')) = 		1;
 c_i(var('P|mrna')) = 	0;
-c_i(var('R')) = 		0;
+c_i(var('R')) = 		10;
 c_i(var('R|mrna')) = 	0;
 c_i(var('T')) = 		0;
 c_i(var('T|mrna')) = 	0;
 c_i(var('X')) = 		0;
 c_i(var('X|mrna')) =    0;
-c_i(var('Y')) = 		0;
-c_i(var('Y|mrna')) = 	0;
+c_i(var('Y')) = 		100;
+c_i(var('Y|mrna')) = 	1;
 
 %--------------------------
 
@@ -131,6 +127,10 @@ for x = floor(para('w')/2-sqrt(para('n'))/2):1:(floor(para('w')/2+sqrt(para('n')
     end
 end
 
+%Randomization Distribution
+gm = gmdistribution(1,0);
+
+%--------
 for i = 1:para('n')
     for j = 3:para('m')
     Psi(j,i) = c_i(j,1)*random(gm);
@@ -153,17 +153,25 @@ end
 %Statistically Analyze
 
 %Graph
-Readout = zeros(para('n'),config('n_snapshots'));
+Readout1 = zeros(para('n'),config('n_snapshots'));
+Readout2 = zeros(para('n'),config('n_snapshots'));
+Readout3 = zeros(para('n'),config('n_snapshots'));
 for i = 1:config('n_snapshots')
     for j = 1:para('n')
-        Readout(j,i) = Psi_cells{i}(var('Ao'),j);
+        Readout1(j,i) = Psi_cells{i}(var('Ai'),j);
+        Readout2(j,i) = Psi_cells{i}(var('Ap'),j);
+        Readout3(j,i) = Psi_cells{i}(var('Ao'),j);
     end
 end
 t =  1:config('n_snapshots');
 figure(1)
-hold on
+
 for i=1:para('n')
-    plot(t,Readout(i,:));
+    plot(t,Readout1(i,:));
+     hold on
+    plot(t,Readout2(i,:));
+    plot(t,Readout3(i,:));
+    legend('Ai','Ap','Ao')
 end
 hold off
 %View

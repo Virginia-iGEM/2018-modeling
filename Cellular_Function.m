@@ -103,7 +103,7 @@ if ~isvector(c)
     error('Input must be a vector')
 end
 ddt = zeros(23,1);
-ddt(3,1) = 0*(k_AiK*c(12)*c(4) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3)); %tends to go off to negative infinity
+ddt(3,1) = k_AiK*c(12)*c(4) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3); %tends to go off to negative infinity
 ddt(5,1) = k_AiY*c(22)*c(4) - k_AoP*c(14)*c(5) - k_AoB*c(6)*c(5);
 ddt(4,1) = k_XS*c(20) - k_AiK*c(12)*c(4) - ddt(5,1);
 ddt(6,1) = k_B*c(7) - d_B*c(6);
