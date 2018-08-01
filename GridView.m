@@ -2,7 +2,7 @@ function [ X ] = GridView(M_cells,Psi_cells,PSIIndex,ti,tf,n)
 %Creates a grid based on various elements of PSI or M
 %M_cells -> Cell matrix which contains M matrices at different timestamps
 %Psi_Cells -> Cell Matrix which contains Psi matrices at different TS's
-%PSIIndex -> References ROW Element in PSI matrix
+%PSIIndex -> References ROW Element in PSI matrix (0 = M Matrix)
 %ti -> Intial timestamp
 %tf -> Final timestamp
 %n -> Number of evenly spaced intervals in slider
@@ -17,8 +17,9 @@ MSIZE =size(M_cells{1});
 MH = MSIZE(1);
 MW = MSIZE(2);
 
+%If NOT working with M Matrix
 if PSIIndex ~= 0
-    %Intialize Cell GRID
+    %Intialize Cell GRID with 0 matricies
     cellGRID = cell(1,tf);
     for counter = 1:length(cellGRID)
         cellGRID{counter} = zeros(MH,MW);
@@ -27,9 +28,12 @@ if PSIIndex ~= 0
     BooleanGrid = zeros(MH,MW);
 end
 
+%Create figure for slider
 f = figure('visible','off','position',...
     [360 500 600 600]);
 
+%Creates slider whose length is determined by ti/tf and whose step is
+%determined by n
 slider =uicontrol('style','slider','position',[150 60 300 20],...
     'min',ti,...
     'max',tf,...
@@ -37,57 +41,60 @@ slider =uicontrol('style','slider','position',[150 60 300 20],...
     'Value',1,...
     'callback',@callbackfn);
 
+%Writes text onto figure
 text=uicontrol('style','text',...
     'position',[200 30 200 15],'visible','on');
 
-
+%Creates Axes on which to plot
 axes('units','pixels','position',[90 125 450 450]);
 
+%Centers GUI on screen
 movegui(f,'center');
 
+%Allows Figure to be seen
 set(f,'visible','on');
+
+%functions which runs after every change in slider value
     function callbackfn(source,eventdata)
+        
+        %Sets timestamps based on slider value
         timestamp=round(get(slider,'value'));
+        
+        %Displays which timestamp is being used
         set(text,'String',strcat('Now Displaying #',num2str(timestamp)));
+              
+        %If plotting M Matrix
         if PSIIndex ==0
-            %Determine size of the X's
-            marksize = 4.5;
             
             %Change value of grid to corresponding value in Matrix M.
-            imagesc(M_cells{timestamp});
-            axis image;
-            colormap winter;
-            colorbar;
-            hold on;
-            
-            for Cellcounter = 1:numofcells
-                plot(Psi_cells{timestamp}(1,Cellcounter),Psi_cells{timestamp}(2,Cellcounter), '-s',...
-                    'MarkerSize',marksize,...
-                    'MarkerEdgeColor','r');
-            end
+            imagesc(M_cells{timestamp});            
+       
         else
-            marksize = 4.5;
             
-            %Change value of grid at each timestamp to corresponding value in Matrix PSI
+            %Change value of grid at each timestamp to corresponding value in matrix PSI
             for CellNum = 1:numofcells
                 cellGRID{timestamp}(Psi_cells{timestamp}(1,CellNum),Psi_cells{timestamp}(2,CellNum)) = Psi_cells{timestamp}(PSIIndex,CellNum);
-                BooleanGrid(Psi_cells{timestamp}(1,CellNum),Psi_cells{timestamp}(2,CellNum)) = 1;
             end
             imagesc(cellGRID{timestamp});
-            axis image;
-            colormap winter;
-            colorbar;
-            hold on;
-            for Hcounter = 1:MH
-                for Wcounter = 1:MW
-                    if BooleanGrid(Hcounter,Wcounter) == 1
-                        plot(Wcounter,Hcounter,'-s',...
-                            'MarkerSize',marksize,...
-                             'MarkerEdgeColor','red');
-                    end
-                end
-            end
+            
         end
+        
+        %Styling
+        axis image;
+        colormap winter;
+        colorbar;
+        hold on;
+        
+        %Determine size of the squares which mark the cells
+        marksize = 4.5;
+        
+        %Plots Cells onto display
+        for Cellcounter = 1:numofcells
+            plot(Psi_cells{timestamp}(1,Cellcounter),Psi_cells{timestamp}(2,Cellcounter), '-s',...
+                'MarkerSize',marksize,...
+                'MarkerEdgeColor','r');
+        end
+        
     end
 
 end
