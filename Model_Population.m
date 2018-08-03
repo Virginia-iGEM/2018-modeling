@@ -48,8 +48,8 @@ var('Y|mrna') = 23;
 para = containers.Map;
 para('n') = 16;                % Number of Cells (needs to be square numer)
 para('m') = 23;              % Number of Parameters for each Cell
-para('w') = para('n')^2;      % Medium/Diffusion Grid Width
-para('h') = para('n')^2;      % Medium/Diffusion Grid height
+para('w') = round(para('n')^(3/2));      % Medium/Diffusion Grid Width
+para('h') = round(para('n')^(3/2));      % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
 para('t_f') =  20;             % Final time
 para('dt')= 0.005;            % Constant timestep 
@@ -90,7 +90,7 @@ end
 %}
 c_i(var('Ap')) = 		0;
 c_i(var('Ai')) = 		0;
-c_i(var('Ao')) = 		0;
+c_i(var('Ao')) = 		100000000000000000000;
 c_i(var('B')) = 		0;
 c_i(var('B|mrna')) = 	0;
 c_i(var('F')) = 		0;
@@ -171,6 +171,16 @@ for i=1:para('n')
     legend('Ao')
 end
 hold off
-%View
-%GridView(M_cells,Psi_cells,para(index))
+GridView(M_cells,Psi_cells,0,para('t_i'),para('t_f'),config('n_snapshots'));
+%{
+Errors in GridView:
+- PSIIndex = 0 does not appropriately displaya Ao
+- Callback error
+- Bar does not display timestamp
+Comment:
+- Don't do red boxes around cells
+- If Psi ~= 0, only display the cells and immediate surrounding medium
 %----------------
+Unrelated comments:
+Think about spacing cells out, maybe a staggered lattice
+%}

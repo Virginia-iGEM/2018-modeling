@@ -103,30 +103,32 @@ if ~isvector(c)
     error('Input must be a vector')
 end
 ddt = zeros(23,1);
-ddt(3,1) = k_AiK*c(12)*c(4) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3); %tends to go off to negative infinity
+%{
+ddt(3,1) = k_AiK*c(12)*c(4) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
 ddt(5,1) = k_AiY*c(22)*c(4) - k_AoP*c(14)*c(5) - k_AoB*c(6)*c(5);
 ddt(4,1) = k_XS*c(20) - k_AiK*c(12)*c(4) - ddt(5,1);
 ddt(6,1) = k_B*c(7) - d_B*c(6);
-ddt(7,1) = k_B_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(7)*d_B_mrna + n_2*kp_B_mrna*(c(18)/(r_T+c(18)));
+ddt(7,1) = k_B_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(7)*d_B_mrna; %+ n_2*kp_B_mrna*(c(18)/(r_T+c(18)));
 ddt(8,1) = k_F*c(9) - d_F*c(8);
-ddt(9,1) = k_F_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(9)*d_F_mrna; %If changing LsrFG in system: + n_2*kp_F_mrna*(c(18)/(r_T+c(18)))
+ddt(9,1) = k_F_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(9)*d_F_mrna; %+ n_2*kp_F_mrna*(c(18)/(r_T+c(18)))
 ddt(10,1) = k_G*c(11) - d_G*c(10);
 ddt(11,1) = n_2*kp_G_mrna*(c(18)/(r_T+c(18))) - c(11)*d_G_mrna;
 ddt(12,1) = k_K*c(13) - d_K*c(12);
-ddt(13,1) = k_K_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(13)*d_K_mrna + n_2*kp_K_mrna*(c(18)/(r_T+c(18)));
-ddt(14,1) = 0; %If changing PTS levels: k_P*c(15) - d_P*c(14);
-ddt(15,1) = 0; %If changing PTS mRNA levela: k_P_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(15)*d_P_mrna + n_2*kp_P_mrna*(c(18)/(r_T+c(18)));
-ddt(16,1) = 0*(k_R*c(17) - d_R*c(16) - k_ApR*c(16)*c(3)); %also tends to go to inf
+ddt(13,1) = k_K_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(13)*d_K_mrna; %+ n_2*kp_K_mrna*(c(18)/(r_T+c(18)));
+ddt(14,1) = 0 ;%+ k_P*c(15) - d_P*c(14);
+ddt(15,1) = 0 ;%+ k_P_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(15)*d_P_mrna + n_2*kp_P_mrna*(c(18)/(r_T+c(18)));
+ddt(16,1) = 0*(k_R*c(17) - d_R*c(16) - k_ApR*c(16)*c(3));
 ddt(17,1) = (n_1+1)*k_R_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(17)*d_R_mrna;
 ddt(18,1) = k_T*c(19) - d_T*c(18);
 ddt(19,1) = (n_1)*kp_T_mrna*(r_R^2/(r_R^2 + c(16)^2)) - c(19)*d_T_mrna;
 ddt(20,1) = k_X*c(21) - d_X*c(20);
-ddt(21,1) = n_2*kp_X_mrna*(c(18)/(r_T+c(18))) - c(21)*d_X_mrna;
+ddt(21,1) =  - c(21)*d_X_mrna; %+ n_2*kp_X_mrna*(c(18)/(r_T+c(18)));
 ddt(22,1) = k_Y*c(23) - d_Y*c(22);
-ddt(23,1) = n_2*kp_Y_mrna*(c(18)/(r_T+c(18))) - c(23)*d_Y_mrna;
+ddt(23,1) =  - c(23)*d_Y_mrna; %+ n_2*kp_Y_mrna*(c(18)/(r_T+c(18)));
 %{
 if ~isnan(ddt(3,1)) && ~isinf(ddt(3,1))
     ddt
 end
+%}
 %}
 end
