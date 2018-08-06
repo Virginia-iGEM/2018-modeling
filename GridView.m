@@ -20,7 +20,7 @@ MW = MSIZE(2);
 %If NOT working with M Matrix
 if PSIIndex ~= 0
     %Intialize Cell GRID with 0 matricies
-    cellGRID = cell(1,tf);
+    cellGRID = cell(1,length(Psi_cells));
     for counter = 1:length(cellGRID)
         cellGRID{counter} = zeros(MH,MW);
     end
@@ -35,15 +35,15 @@ f = figure('visible','off','position',...
 %Creates slider whose length is determined by ti/tf and whose step is
 %determined by n
 slider =uicontrol('style','slider','position',[150 60 300 20],...
-    'min',ti,...
-    'max',tf,...
+    'min',0,...
+    'max',length(M_cells),...
     'SliderStep', [ (1/n) (2/n)],...
-    'Value',1,...
+    'Value',ti,...
     'callback',@callbackfn);
 
 %Writes text onto figure
 text=uicontrol('style','text',...
-    'position',[200 30 200 15],'visible','on');
+    'position',[175 30 250 15],'visible','on');
 
 %Creates Axes on which to plot
 axes('units','pixels','position',[90 125 450 450]);
@@ -51,8 +51,51 @@ axes('units','pixels','position',[90 125 450 450]);
 %Centers GUI on screen
 movegui(f,'center');
 
+%Determine size of the squares which mark the cells
+marksize = 4.5;
+
 %Allows Figure to be seen
 set(f,'visible','on');
+
+%initializes TS value sets timestamps based on slider value
+timestamp= ti;
+
+if ti == 0
+    timestamp = timestamp+1;
+end
+
+%Displays which timestamp is being used
+set(text,'String',strcat('Now Displaying #',num2str(timestamp),' at time: 0 minutes'));
+
+%If plotting M Matrix
+if PSIIndex ==0
+
+    
+    %Change value of grid to corresponding value in Matrix M.
+    imagesc(M_cells{timestamp});            
+
+else
+
+    %Change value of grid at each timestamp to corresponding value in matrix PSI
+    for CellNum = 1:numofcells
+        cellGRID{timestamp}(Psi_cells{timestamp}(1,CellNum),Psi_cells{timestamp}(2,CellNum)) = Psi_cells{timestamp}(PSIIndex,CellNum);
+    end
+    imagesc(cellGRID{timestamp});
+
+end
+
+%Styling
+axis image;
+colormap winter;
+colorbar;
+hold on;
+
+%Plots Cells onto display
+% for Cellcounter = 1:numofcells
+%     plot(Psi_cells{timestamp}(1,Cellcounter),Psi_cells{timestamp}(2,Cellcounter), '-s',...
+%         'MarkerSize',marksize,...
+%         'MarkerEdgeColor','r');
+% end
 
 %functions which runs after every change in slider value
     function callbackfn(source,eventdata)
@@ -60,8 +103,12 @@ set(f,'visible','on');
         %Sets timestamps based on slider value
         timestamp=round(get(slider,'value'));
         
+        if ti == 0
+            timestamp = timestamp+1;
+        end
+        
         %Displays which timestamp is being used
-        set(text,'String',strcat('Now Displaying #',num2str(timestamp)));
+        set(text,'String',strcat('Now Displaying Frame #',num2str(timestamp),' at time: ',num2str((timestamp/length(M_cells)*tf)),' minutes.'));
               
         %If plotting M Matrix
         if PSIIndex ==0
@@ -79,21 +126,20 @@ set(f,'visible','on');
             
         end
         
+        disp(M_cells{timestamp}(40,39));
+        
         %Styling
         axis image;
         colormap winter;
         colorbar;
         hold on;
-        
-        %Determine size of the squares which mark the cells
-        marksize = 4.5;
-        
+               
         %Plots Cells onto display
-        for Cellcounter = 1:numofcells
-            plot(Psi_cells{timestamp}(1,Cellcounter),Psi_cells{timestamp}(2,Cellcounter), '-s',...
-                'MarkerSize',marksize,...
-                'MarkerEdgeColor','r');
-        end
+%         for Cellcounter = 1:numofcells
+%             plot(Psi_cells{timestamp}(1,Cellcounter),Psi_cells{timestamp}(2,Cellcounter), '-s',...
+%                 'MarkerSize',marksize,...
+%                 'MarkerEdgeColor','r');
+%         end
         
     end
 

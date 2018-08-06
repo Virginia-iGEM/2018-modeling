@@ -174,12 +174,17 @@ hold off
 GridView(M_cells,Psi_cells,0,para('t_i'),para('t_f'),config('n_snapshots'));
 %{
 Errors in GridView:
-- PSIIndex = 0 does not appropriately displaya Ao
-- Callback error
-- Bar does not display timestamp
+- PSIIndex = 0 does not appropriately displaya Ao -> fixed
+- Callback error -> ??????
+- Bar does not display timestamp -> fixed
 Comment:
-- Don't do red boxes around cells
-- If Psi ~= 0, only display the cells and immediate surrounding medium
+- Don't do red boxes around cells -> fixed
+- If Psi ~= 0, only display the cells and immediate surrounding medium ->
+To speed run time?
+What would the other cells be set for?
+This is a combination of M and PSi characteristics... The cell matrix only
+has information within a cell right?
+
 %----------------
 Unrelated comments:
 Think about spacing cells out, maybe a staggered lattice
