@@ -86,7 +86,7 @@ end
 
 %Styling
 axis image;
-colormap winter;
+colormap default;
 colorbar;
 hold on;
 
@@ -130,7 +130,7 @@ hold on;
         
         %Styling
         axis image;
-        colormap winter;
+        colormap default;
         colorbar;
         hold on;
                

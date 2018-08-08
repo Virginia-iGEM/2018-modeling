@@ -110,7 +110,7 @@ c_i(var('X_g')) = 		1;
 c_i(var('X_p')) =       0;
 c_i(var('X_p|mrna')) =    0;
 c_i(var('Y_g')) = 		10;
-c_i(Var('Y_p')) =       0;
+c_i(var('Y_p')) =       0;
 c_i(var('Y_p|mrna')) =    0;
 
 %--------------------------
@@ -174,7 +174,8 @@ for i=1:para('n')
     legend('Ao')
 end
 hold off
-GridView(M_cells,Psi_cells,0,para('t_i'),para('t_f'),config('n_snapshots'));
+figure(2)
+GridView(M_cells,Psi_cells,var('T'),para('t_i'),para('t_f'),config('n_snapshots'));
 %{
 Errors in GridView:
 - PSIIndex = 0 does not appropriately displaya Ao -> fixed

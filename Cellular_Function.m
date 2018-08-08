@@ -104,10 +104,10 @@ Function will calculate and output d/dt for each c(i)
 if ~isvector(c)
     error('Input must be a vector')
 end
-ddt = zeros(23,1);
-%{
+ddt = zeros(25,1);
+
 ddt(3,1) = k_AiK*c(12)*c(4) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
-ddt(5,1) = k_AiY*(c(23)+c(24)*c(4) - k_AoP*c(14)*c(5) - k_AoB*c(6)*c(5);
+ddt(5,1) = k_AiY*(c(23)+c(24))*c(4) - k_AoP*c(14)*c(5) - k_AoB*c(6)*c(5);
 ddt(4,1) = k_XS*(c(20)+c(21)) - k_AiK*c(12)*c(4) - ddt(5,1);
 ddt(6,1) = k_B*c(7) - d_B*c(6);
 ddt(7,1) = k_B_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(7)*d_B_mrna; %+ n_2*kp_B_mrna*(c(18)/(r_T+c(18)));
@@ -134,5 +134,5 @@ if ~isnan(ddt(3,1)) && ~isinf(ddt(3,1))
     ddt
 end
 %}
-%}
+
 end

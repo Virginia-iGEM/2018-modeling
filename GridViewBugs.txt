@@ -1,0 +1,20 @@
+1.
+Error when index is at max:
+
+Error in GridView/callbackfn (line 123)
+                cellGRID{timestamp}(Psi_cells{timestamp}(1,CellNum),Psi_cells{timestamp}(2,CellNum)) =
+                Psi_cells{timestamp}(PSIIndex,CellNum);
+ 
+Error while evaluating UIControl Callback.
+
+
+
+2.
+Change all colormap to default
+
+3.
+MOST IMPORTANT:
+Change scaling of colormap to range from 0 to the MAXIMUM of the variable of interest
+
+
+
