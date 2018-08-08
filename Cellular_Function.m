@@ -28,10 +28,12 @@ Vector "c" contains state information of one cell
 %c(17) = R|mrna
 %c(18) = T
 %c(19) = T|mrna
-%c(20) = X
-%c(21) = X|mrna
-%c(22) = Y
-%c(23) = Y|mrna
+%c(20) = X_g
+%c(21) = X_p
+%c(22) = X_p|mrna
+%c(23) = Y_g
+%c(24) = Y_p
+%c(25) = Y_p|mrna
 %}
 
 %Rates of Reactions/Transport
@@ -105,8 +107,8 @@ end
 ddt = zeros(23,1);
 %{
 ddt(3,1) = k_AiK*c(12)*c(4) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
-ddt(5,1) = k_AiY*c(22)*c(4) - k_AoP*c(14)*c(5) - k_AoB*c(6)*c(5);
-ddt(4,1) = k_XS*c(20) - k_AiK*c(12)*c(4) - ddt(5,1);
+ddt(5,1) = k_AiY*(c(23)+c(24)*c(4) - k_AoP*c(14)*c(5) - k_AoB*c(6)*c(5);
+ddt(4,1) = k_XS*(c(20)+c(21)) - k_AiK*c(12)*c(4) - ddt(5,1);
 ddt(6,1) = k_B*c(7) - d_B*c(6);
 ddt(7,1) = k_B_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(7)*d_B_mrna; %+ n_2*kp_B_mrna*(c(18)/(r_T+c(18)));
 ddt(8,1) = k_F*c(9) - d_F*c(8);
@@ -121,10 +123,12 @@ ddt(16,1) = 0*(k_R*c(17) - d_R*c(16) - k_ApR*c(16)*c(3));
 ddt(17,1) = (n_1+1)*k_R_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(17)*d_R_mrna;
 ddt(18,1) = k_T*c(19) - d_T*c(18);
 ddt(19,1) = (n_1)*kp_T_mrna*(r_R^2/(r_R^2 + c(16)^2)) - c(19)*d_T_mrna;
-ddt(20,1) = k_X*c(21) - d_X*c(20);
-ddt(21,1) =  - c(21)*d_X_mrna; %+ n_2*kp_X_mrna*(c(18)/(r_T+c(18)));
-ddt(22,1) = k_Y*c(23) - d_Y*c(22);
-ddt(23,1) =  - c(23)*d_Y_mrna; %+ n_2*kp_Y_mrna*(c(18)/(r_T+c(18)));
+ddt(20,1) = 0;
+ddt(21,1) = k_X*c(22) - d_X*c(21);
+ddt(22,1) =  - c(22)*d_X_mrna; %+ n_2*kp_X_mrna*(c(18)/(r_T+c(18)));
+ddt(23,1) = 0;
+ddt(24,1) = k_Y*c(25) - d_Y*c(24);
+ddt(25,1) =  - c(25)*d_Y_mrna; %+ n_2*kp_Y_mrna*(c(18)/(r_T+c(18)));
 %{
 if ~isnan(ddt(3,1)) && ~isinf(ddt(3,1))
     ddt

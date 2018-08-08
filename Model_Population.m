@@ -39,15 +39,16 @@ var('R') = 16;
 var('R|mrna') = 17;
 var('T') = 18;
 var('T|mrna') = 19;
-var('X') = 20;
-var('X|mrna') = 21;
-var('Y') = 22;
-var('Y|mrna') = 23;
+var('X_g') = 20;
+var('X_p') = 21;
+var('X_p|mrna') = 22;
+var('Y_g') = 23;
+var('Y_p') = 24;
+var('Y_p|mrna') = 25;
 
-%Model Parameters
 para = containers.Map;
 para('n') = 16;                % Number of Cells (needs to be square numer)
-para('m') = 23;              % Number of Parameters for each Cell
+para('m') = 25;              % Number of Parameters for each Cell
 para('w') = round(para('n')^(3/2));      % Medium/Diffusion Grid Width
 para('h') = round(para('n')^(3/2));      % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
@@ -105,10 +106,12 @@ c_i(var('R')) = 		10;
 c_i(var('R|mrna')) = 	0;
 c_i(var('T')) = 		0;
 c_i(var('T|mrna')) = 	0;
-c_i(var('X')) = 		1;
-c_i(var('X|mrna')) =    0;
-c_i(var('Y')) = 		10;
-c_i(var('Y|mrna')) = 	1;
+c_i(var('X_g')) = 		1;
+c_i(var('X_p')) =       0;
+c_i(var('X_p|mrna')) =    0;
+c_i(var('Y_g')) = 		10;
+c_i(Var('Y_p')) =       0;
+c_i(var('Y_p|mrna')) =    0;
 
 %--------------------------
 
