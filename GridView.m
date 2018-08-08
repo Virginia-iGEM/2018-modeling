@@ -107,7 +107,8 @@ end
 %Styling
 axis image;
 colormap default;
-colorbar('Ticks',round(linspace(0,MaxValue*1.1,5)));
+colorbar;
+caxis([0 MaxValue*1.1]);
 hold on;
 
 %Plots Cells onto display
