@@ -67,12 +67,22 @@ end
 %Displays which timestamp is being used
 set(text,'String',strcat('Now Displaying #',num2str(timestamp),' at time: 0 minutes'));
 
+MaxValue = 0;
+
 %If plotting M Matrix
 if PSIIndex ==0
 
-    
     %Change value of grid to corresponding value in Matrix M.
-    imagesc(M_cells{timestamp});            
+    imagesc(M_cells{timestamp});
+    
+    for i = 1:length(M_cells)
+        
+        ColMaxes= max(M_cells{i});
+        
+        if max(ColMaxes) > MaxValue
+            MaxValue = max(ColMaxes);
+        end
+    end
 
 else
 
@@ -81,13 +91,23 @@ else
         cellGRID{timestamp}(Psi_cells{timestamp}(1,CellNum),Psi_cells{timestamp}(2,CellNum)) = Psi_cells{timestamp}(PSIIndex,CellNum);
     end
     imagesc(cellGRID{timestamp});
+    
+    for i = 1:length(Psi_cells)
+        
+        ColMaxes= max(Psi_cells{i});
+        
+        if max(ColMaxes) > MaxValue
+            MaxValue = max(ColMaxes);
+        end
+    end
 
 end
+
 
 %Styling
 axis image;
 colormap default;
-colorbar;
+colorbar('Ticks',round(linspace(0,MaxValue*1.1,5)));
 hold on;
 
 %Plots Cells onto display
@@ -128,11 +148,11 @@ hold on;
         
         disp(M_cells{timestamp}(40,39));
         
-        %Styling
-        axis image;
-        colormap default;
-        colorbar;
-        hold on;
+%         %Styling
+%         axis image;
+%         colormap default;
+%         colorbar;
+%         hold on;
                
         %Plots Cells onto display
 %         for Cellcounter = 1:numofcells
