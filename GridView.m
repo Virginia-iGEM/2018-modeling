@@ -145,16 +145,7 @@ hold on;
             end
             imagesc(cellGRID{timestamp});
             
-        end
-        
-        disp(M_cells{timestamp}(40,39));
-        
-%         %Styling
-%         axis image;
-%         colormap default;
-%         colorbar;
-%         hold on;
-               
+        end        
         %Plots Cells onto display
 %         for Cellcounter = 1:numofcells
 %             plot(Psi_cells{timestamp}(1,Cellcounter),Psi_cells{timestamp}(2,Cellcounter), '-s',...
@@ -165,5 +156,3 @@ hold on;
     end
 
 end
-
-
