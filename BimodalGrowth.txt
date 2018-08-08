@@ -29,32 +29,28 @@ T: total, integral GFP output at time t
 *)
 
 P[x_,k_,ma_,sa_,mb_,sb_] := (1/Sqrt[2*Pi])*((k/sa)*E^(-(x-ma)^2/(2*sa^2))+((1-k)/sb)*E^(-(x-mb)^2/(2*sb^2)))
-
-G[x_,t_,k_,ma_,sa_,mb_,sb_] := P[x,k,ma,sa,mb,sb]*E^((1-x)*t)
-
 M[t_,k_,ma_,sa_,mb_,sb_] := NIntegrate[E^((1-x1)*t)*P[x1,k,ma,sa,mb,sb],{x1,0,1}]  
+G[x_,t_,k_,ma_,sa_,mb_,sb_] := P[x,k,ma,sa,mb,sb]*E^((1-x)*t)
 nG[x_,t_,k_,ma_,sa_,mb_,sb_] := P[x,k,ma,sa,mb,sb]*E^((1-x)*t)/M[t,k,ma,sa,mb,sb] 
-
+A[t_,k_,ma_,sa_,mb_,sb_ ] := NIntegrate[x2*nG[x2,t,k,ma,sa,mb,sb],{x2,0,1}] 
 S[t_,k_,ma_,sa_,mb_,sb_ ] := NIntegrate[x2*G[x2,t,k,ma,sa,mb,sb],{x2,0,1}]  
-A[x_,t_,k_,ma_,sa_,mb_,sb_ ] := NIntegrate[x2*nG[x2,t,k,ma,sa,mb,sb],{x2,0,1}] 
-
-T[t_,k_,ma_,sa_,mb_,sb_ ] := NIntegrate[S[t2,k,ma,sa,mb,sb],{t2,0,t}]   
-
+Ts[tf_,k_,ma_,sa_,mb_,sb_ ] := NIntegrate[x2*G[x2,t2,k,ma,sa,mb,sb] ,{t2,0,tf},{x2,0,1} ] 
+Ta[tf_,k_,ma_,sa_,mb_,sb_ ] := NIntegrate[x2* P[x2,k,ma,sa,mb,sb]*E^((1-x2)*t2)/(E^((1-x1)*t2)*P[x1,k,ma,sa,mb,sb]),{x1,0,1}   ,{t2,0,tf},{x2,0,1} ]  
 
 
-
-K = 0.5 ;
-
-MA = 0.5;
-
+K = 0.05 ;
+MA = 0.1;
 SA = 0.05;
-
 MB = 0.6;
-
 SB = 0.05;
+Plot[Ta[t1,K,MA,SA,MB,SB ]  ,{t1,0,5},PlotRange->{{0,5},Full}]  
+Plot[P[x1, K,MA,SA,MB,SB ]  ,{x1,0,1},PlotRange->{{0,1},Full}] 
+if[False,
+Animate[DiscretePlot[nG[x1,t1,K,MA,SA,MB,SB  ], {x1,0,1,0.01}, PlotRange->{{0,1},{0,10}},Joined-> True] ,{t1,0,10,0.1},AnimationRunning->False,AnimationRate->1,DefaultDuration->5]
+]
 
+if [False,
+gif = Table[DiscretePlot[nG[x1,t1,K,MA,SA,MB,SB  ], {x1,0,1,0.01}, PlotRange->{{0,1},{0,10}},Joined-> True] , {t1,0,10,1} ];
 
-Plot[P[x1, K,MA,SA,MB,SB ]  ,{x1,0,1},PlotRange->{{0,1},Full}]
-
-
-Animate[DiscretePlot[nG[x1,t1,K,MA,SA,MB,SB  ], {x1,0,1,0.01}, PlotRange->{{0,1},{0,10}},Joined-> True] ,{t1,0,10,0.1},AnimationRunning->False]
+Export["anim.gif", gif,"DisplayDurations" -> 1 ];,
+]
