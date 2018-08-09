@@ -176,8 +176,7 @@ for i=1:para('n')
     %plot(t,Readout3(i,:));
     legend('Ao')
 end
-figure(2)
-%GridView(M_cells,Psi_cells,var('Ao'),para('t_i'),para('t_f'),config('n_snapshots'));
+GridView(M_cells,Psi_cells,var('Ao'),para('t_i'),para('t_f'),config('n_snapshots'));
 hold off
 %{
 Errors in GridView:
