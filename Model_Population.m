@@ -11,7 +11,7 @@ Manipulate Psi and M matricies to test effects of initial conditions:
 Manipulate constants within Cellular_Function to test sensitivity
 
 %}
-clf
+clf('reset')
 clear
 %Imports
 import Structure.*
@@ -47,14 +47,14 @@ var('Y_p') = 24;
 var('Y_p|mrna') = 25;
 
 para = containers.Map;
-para('n') = 16;                % Number of Cells (needs to be square numer)
+para('n') = 64;                % Number of Cells (needs to be square numer)
 para('m') = 25;              % Number of Parameters for each Cell
-para('w') = round(para('n')^(3/2));      % Medium/Diffusion Grid Width
-para('h') = round(para('n')^(3/2));      % Medium/Diffusion Grid height
+para('w') = round(para('n')^(3/4));      % Medium/Diffusion Grid Width
+para('h') = round(para('n')^(3/4));      % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
 para('t_f') =  20;             % Final time
 para('dt')= 0.005;            % Constant timestep 
-para('D') = 1;                 % Diffusion coefficient
+para('D') = 100;                 % Diffusion coefficient
 parmeters('index') = 0;
 %--------------------------------------------------------
 
@@ -91,14 +91,14 @@ end
 %}
 c_i(var('Ap')) = 		10;
 c_i(var('Ai')) = 		0;
-c_i(var('Ao')) = 		10;
-c_i(var('B')) = 		0;
+c_i(var('Ao')) = 		0;
+c_i(var('B')) = 		1;
 c_i(var('B|mrna')) = 	0;
 c_i(var('F')) = 		0;
 c_i(var('F|mrna')) = 	0;
 c_i(var('G')) = 		0;
 c_i(var('G|mrna')) = 	0;
-c_i(var('K')) = 		1;
+c_i(var('K')) = 		10;
 c_i(var('K|mrna')) = 	0;
 c_i(var('P')) = 		1;
 c_i(var('P|mrna')) = 	0;
@@ -106,10 +106,10 @@ c_i(var('R')) = 		10;
 c_i(var('R|mrna')) = 	0;
 c_i(var('T')) = 		0;
 c_i(var('T|mrna')) = 	0;
-c_i(var('X_g')) = 		1;
+c_i(var('X_g')) = 		5;
 c_i(var('X_p')) =       0;
 c_i(var('X_p|mrna')) =    0;
-c_i(var('Y_g')) = 		10;
+c_i(var('Y_g')) = 		1;
 c_i(var('Y_p')) =       0;
 c_i(var('Y_p|mrna')) =    0;
 
@@ -119,8 +119,10 @@ c_i(var('Y_p|mrna')) =    0;
 %initialize Psi Matrix
 i = 1;
 
-for x = floor(para('w')/2-sqrt(para('n'))/2):1:(floor(para('w')/2+sqrt(para('n')/2))-1)
-    for y = floor(para('h')/2-sqrt(para('n'))/2):1:(floor(para('h')/2+sqrt(para('n'))/2)-1)
+%Cells Tightly Packed
+%{
+for x = round(para('w')/2-sqrt(para('n'))/2):1:(round(para('w')/2+sqrt(para('n')/2))-1)
+    for y = round(para('h')/2-sqrt(para('n'))/2):1:(round(para('h')/2+sqrt(para('n'))/2)-1)
         if i<=para('n')
             Psi(1,i) = round(x);
             Psi(2,i) = round(y);
@@ -128,10 +130,24 @@ for x = floor(para('w')/2-sqrt(para('n'))/2):1:(floor(para('w')/2+sqrt(para('n')
         end
     end
 end
+%}
+%-----------------------------------------
+
+%Cells Spaced Out
+
+for x = round(para('w')/2-sqrt(para('n'))/2):1:(round(para('w')/2+sqrt(para('n')/2))-1)
+    for y = round(para('h')/2-sqrt(para('n'))/2):1:(round(para('h')/2+sqrt(para('n'))/2)-1)
+        if i<=para('n')
+            Psi(1,i) = round(2*x-para('w')/2);
+            Psi(2,i) = round(2*y-para('h')/2);
+            i = i+1;
+        end
+    end
+end
+%----------------------------------
 
 %Randomization Distribution
 gm = gmdistribution(1,0);
-
 %--------
 for i = 1:para('n')
     for j = 3:para('m')
@@ -160,7 +176,7 @@ Readout2 = zeros(para('n'),config('n_snapshots'));
 Readout3 = zeros(para('n'),config('n_snapshots'));
 for i = 1:config('n_snapshots')
     for j = 1:para('n')
-        Readout1(j,i) = Psi_cells{i}(var('Ao'),j);
+        Readout1(j,i) = Psi_cells{i}(var('T'),j);
     end
 end
 t =  1:config('n_snapshots');
@@ -176,8 +192,9 @@ for i=1:para('n')
     %plot(t,Readout3(i,:));
     legend('Ao')
 end
-GridView(M_cells,Psi_cells,var('Ao'),para('t_i'),para('t_f'),config('n_snapshots'));
 hold off
+GridView(M_cells,Psi_cells,var('T'),para('t_i'),para('t_f'),config('n_snapshots'));
+
 %{
 Errors in GridView:
 %----------------
