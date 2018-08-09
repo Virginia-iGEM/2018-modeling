@@ -6,7 +6,7 @@ function [ X ] = GridView(M_cells,Psi_cells,PSIIndex,ti,tf,n)
 %ti -> Intial timestamp
 %tf -> Final timestamp
 %n -> Number of evenly spaced intervals in slider
-close all;
+%close all;
 
 %Determine number of Cells
 PSISIZE =size(Psi_cells{1});
@@ -94,9 +94,9 @@ else
     
     for i = 1:length(Psi_cells)
         
-        ColMaxes= max(Psi_cells{i});
+        ColMaxes= max(Psi_cells{i}(PSIIndex,:));
         
-        if max(ColMaxes) > MaxValue
+        if ColMaxes > MaxValue
             MaxValue = max(ColMaxes);
         end
     end
@@ -108,7 +108,12 @@ end
 axis image;
 colormap default;
 colorbar;
-caxis([0 MaxValue*1.1]);
+if MaxValue == 0
+    caxis([0 1]);
+else
+    caxis([0 MaxValue*1.1]);
+end
+
 hold on;
 
 %Plots Cells onto display
@@ -124,7 +129,7 @@ hold on;
         %Sets timestamps based on slider value
         timestamp=round(get(slider,'value'));
         
-        if ti == 0
+        if timestamp == 0
             timestamp = timestamp+1;
         end
         
