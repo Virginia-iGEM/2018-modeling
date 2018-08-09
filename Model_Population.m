@@ -89,9 +89,9 @@ for i = 1:para('m')
     c_i(i,1) = 1;
 end
 %}
-c_i(var('Ap')) = 		0;
+c_i(var('Ap')) = 		10;
 c_i(var('Ai')) = 		0;
-c_i(var('Ao')) = 		100000000000000000000;
+c_i(var('Ao')) = 		10;
 c_i(var('B')) = 		0;
 c_i(var('B|mrna')) = 	0;
 c_i(var('F')) = 		0;
@@ -164,18 +164,21 @@ for i = 1:config('n_snapshots')
     end
 end
 t =  1:config('n_snapshots');
+
+
+
+hold on
 figure(1)
 
 for i=1:para('n')
     plot(t,Readout1(i,:));
-     hold on
     %plot(t,Readout2(i,:));
     %plot(t,Readout3(i,:));
     legend('Ao')
 end
-hold off
 figure(2)
-GridView(M_cells,Psi_cells,var('T'),para('t_i'),para('t_f'),config('n_snapshots'));
+GridView(M_cells,Psi_cells,var('Ao'),para('t_i'),para('t_f'),config('n_snapshots'));
+hold off
 %{
 Errors in GridView:
 %----------------
