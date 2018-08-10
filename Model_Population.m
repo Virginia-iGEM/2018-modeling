@@ -190,12 +190,17 @@ for i=1:para('n')
     plot(t,Readout1(i,:));
     %plot(t,Readout2(i,:));
     %plot(t,Readout3(i,:));
-    legend('Ao')
+    legend('T')
 end
 hold off
 GridView(M_cells,Psi_cells,var('T'),para('t_i'),para('t_f'),config('n_snapshots'));
 
 %{
 Errors in GridView:
+If you run the above code, you can see the level of T in the cells on
+Figure 1, and they do not correspond to the levels shown in gridview.
+
+Additionally, after the 3 second mark or so GridView says there is no T
+anymore, even though there is given figure 1.
 %----------------
 %}
