@@ -39,34 +39,33 @@ Vector "c" contains state information of one cell
 %Rates of Reactions/Transport
 k_AoP = 1;
 k_AoB = 1;
-k_AiK = 1;
+k_M_AiK = 1;
+k_cat_AiK = 1;
 k_AiY = 1;
 k_ApF = 1; 
 k_ApR = 1;
 k_XS = 1;
 
 %Transcription Coefficients
-k_B = 1;    d_B = 10^-5;
-k_F = 1;    d_F = 10^-5;
-k_G = 1;    d_G = 10^-5;
-k_K = 1;    d_K = 10^-5;
-k_P = 1;    d_P = 10^-5;
-k_R = 1;    d_R = 10^-5;
-k_T = 1;    d_T = 10^-5;
-k_X = 1;    d_X = 10^-5;
-k_Y = 1;    d_Y = 10^-5;
+k_B = 0.48;         d_B = 0.02;
+k_F = 2.4657;       d_F = 0.02;
+k_G = 3.02521;      d_G = 0.02;
+k_K = 1.35849;      d_K = 0.02;
+k_P = 0;            d_P = 0.02;
+k_R = 2.26415;      d_R = 0.02;
+k_T = 0.813559;     d_T = 0.02;
+k_X = 0.74;         d_X = 0.02;
+k_Y = 2.0869565;    d_Y = 0.02;
 
 
 %Relationships between transcription constants
 b_RK = 1;
 b_BF = 1;
-%Transcription bias towards lsrA-side of lsr
-B = 1.225; 
-
 
 %These have relationships between each other that have not been considered with the 1's
 %Translation and degradation of mRNAs (from natural plasmid)
-k_B_mrna = 1;               d_B_mrna = 10^-5; 
+%{
+k_B_mrna = 0.16;               d_B_mrna = 10^-5; 
 k_F_mrna = b_BF*k_B_mrna;   d_F_mrna = 10^-5;
                             d_G_mrna = 10^-5;
 k_K_mrna = b_RK*k_B_mrna/B; d_K_mrna = 10^-5;
@@ -75,18 +74,19 @@ k_R_mrna = k_B_mrna/B;      d_R_mrna = 10^-5;
                             d_T_mrna = 10^-5;
 k_X_mrna = 1;               d_X_mrna = 10^-5;
 k_Y_mrna = 1;               d_Y_mrna = 10^-5;
-
+%}
 %Synthetic plasmid parameters for Transcription
-kp_B_mrna = 1;
-kp_F_mrna = 1;
-kp_G_mrna = 1;
-kp_K_mrna = 1;
-kp_T_mrna = k_B_mrna;
-kp_X_mrna = 1;
-kp_Y_mrna = 1;
+kp_B_mrna = 0.573;
+kp_F_mrna = 2.95;
+kp_G_mrna = 3.61;
+kp_K_mrna = 1.62;
+kp_T_mrna = 2*k_B_mrna;
+kp_X_mrna = 5;
+kp_Y_mrna = 2.49;
 
 %Regulation Coefficients
-r_R = 1;
+r_R_B = 0.2
+r_R_R = 0.1;
 r_T = 1;
 
 %Number of Plasmids (1 = LsrR + T7, 2 = All other genes)
@@ -106,13 +106,13 @@ if ~isvector(c)
 end
 ddt = zeros(25,1);
 
-ddt(3,1) = k_AiK*c(12)*c(4) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
+ddt(3,1) = c(12)*c(4)*k_cat_AiK/(k_M_AiK+c(4)) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
 ddt(5,1) = k_AiY*(c(23)+c(24))*c(4) - k_AoP*c(14)*c(5) - k_AoB*c(6)*c(5);
-ddt(4,1) = k_XS*(c(20)+c(21)) - k_AiK*c(12)*c(4) - ddt(5,1);
+ddt(4,1) = k_XS*(c(20)+c(21)) - c(12)*c(4)*k_cat_AiK/(k_M_AiK+c(4)) - ddt(5,1);
 ddt(6,1) = k_B*c(7) - d_B*c(6);
 ddt(7,1) = k_B_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(7)*d_B_mrna; %+ n_2*kp_B_mrna*(c(18)/(r_T+c(18)));
 ddt(8,1) = k_F*c(9) - d_F*c(8);
-ddt(9,1) = k_F_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(9)*d_F_mrna; %+ n_2*kp_F_mrna*(c(18)/(r_T+c(18)))
+ddt(9,1) = k_F_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(9)*d_F_mrna; %+ n_2*kp_F_mrna*(c(18)/(r_T+c(18)));
 ddt(10,1) = k_G*c(11) - d_G*c(10);
 ddt(11,1) =  - c(11)*d_G_mrna ;%+ n_2*kp_G_mrna*(c(18)/(r_T+c(18)));
 ddt(12,1) = k_K*c(13) - d_K*c(12);
