@@ -91,7 +91,7 @@ end
 %}
 c_i(var('Ap')) = 		10;
 c_i(var('Ai')) = 		0;
-c_i(var('Ao')) = 		0;
+c_i(var('Ao')) = 		100000;
 c_i(var('B')) = 		1;
 c_i(var('B|mrna')) = 	0;
 c_i(var('F')) = 		0;

@@ -64,17 +64,17 @@ b_BF = 1;
 
 %These have relationships between each other that have not been considered with the 1's
 %Translation and degradation of mRNAs (from natural plasmid)
-%{
+
 k_B_mrna = 0.16;               d_B_mrna = 10^-5; 
 k_F_mrna = b_BF*k_B_mrna;   d_F_mrna = 10^-5;
                             d_G_mrna = 10^-5;
-k_K_mrna = b_RK*k_B_mrna/B; d_K_mrna = 10^-5;
+k_K_mrna = 1;               d_K_mrna = 10^-5;
 k_P_mrna = 1;               d_P_mrna = 10^-5;
-k_R_mrna = k_B_mrna/B;      d_R_mrna = 10^-5;
+k_R_mrna = ;                 d_R_mrna = 10^-5;
                             d_T_mrna = 10^-5;
 k_X_mrna = 1;               d_X_mrna = 10^-5;
 k_Y_mrna = 1;               d_Y_mrna = 10^-5;
-%}
+
 %Synthetic plasmid parameters for Transcription
 kp_B_mrna = 0.573;
 kp_F_mrna = 2.95;
