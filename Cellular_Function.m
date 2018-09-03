@@ -67,9 +67,9 @@ B = 1.225;
 %These have relationships between each other that have not been considered with the 1's
 %Translation and degradation of mRNAs (from natural plasmid)
 k_B_mrna = 1;               d_B_mrna = 10^-5; 
-k_F_mrna = b_BF*k_B_mrna;   d_F_mrna = 10^-5;
+k_F_mrna = k_B_mrna;        d_F_mrna = 10^-5;
                             d_G_mrna = 10^-5;
-k_K_mrna = b_RK*k_B_mrna/B; d_K_mrna = 10^-5;
+k_K_mrna = 1;               d_K_mrna = 10^-5;
 k_P_mrna = 1;               d_P_mrna = 10^-5;
 k_R_mrna = k_B_mrna/B;      d_R_mrna = 10^-5;
                             d_T_mrna = 10^-5;
@@ -86,7 +86,9 @@ kp_X_mrna = 1;
 kp_Y_mrna = 1;
 
 %Regulation Coefficients
-r_R = 1;
+%Regulation Coefficients
+r_R_B = 0.2;
+r_R_R = 0.1;
 r_T = 1;
 
 %Number of Plasmids (1 = LsrR + T7, 2 = All other genes)
