@@ -37,51 +37,51 @@ Vector "c" contains state information of one cell
 %}
 
 %Rates of Reactions/Transport
-k_AoP = 1;
-k_AoB = 1;
-k_cat_AiK = 1;
+k_AoP = 0.0001;
+k_AoB = 0.0005;
+k_cat_AiK = 456;
 k_M_AiK = 1;
-k_AiY = 1;
-k_ApF = 1; 
-k_ApR = 1;
-k_XS = 1;
+k_AiY = 0.0001;
+k_ApF = 0.019825; 
+k_ApR = 0.05;
+k_XS = 0.486;
 
-%Transcription Coefficients
-k_B = 1;    d_B = 10^-5;
-k_F = 1;    d_F = 10^-5;
-k_G = 1;    d_G = 10^-5;
-k_K = 1;    d_K = 10^-5;
-k_P = 1;    d_P = 10^-5;
-k_R = 1;    d_R = 10^-5;
-k_T = 1;    d_T = 10^-5;
-k_X = 1;    d_X = 10^-5;
-k_Y = 1;    d_Y = 10^-5;
+%Translation Coefficients
+k_B = 0.48;    d_B = 0.02;
+k_F = 2.4657;    d_F = 0.02;
+k_G = 3.02521;    d_G = 0.02;
+k_K = 1.35849;    d_K = 0.02;
+k_P = 1;    d_P = 0.02;
+k_R = 2.26415;    d_R = 0.02;
+k_T = 0.813559;    d_T = 0.02;
+k_X = 4.186;    d_X = 0.02;
+k_Y = 2.0869565;    d_Y = 0.02;
 
 %These have relationships between each other that have not been considered with the 1's
-%Translation and degradation of mRNAs (from natural plasmid)
-k_B_mrna = 1;               d_B_mrna = 10^-5; 
-k_F_mrna = 1;               d_F_mrna = 10^-5;
-                            d_G_mrna = 10^-5;
-k_K_mrna = 1;               d_K_mrna = 10^-5;
-k_P_mrna = 1;               d_P_mrna = 10^-5;
-k_R_mrna = 1;               d_R_mrna = 10^-5;
-                            d_T_mrna = 10^-5;
-k_X_mrna = 1;               d_X_mrna = 10^-5;
-k_Y_mrna = 1;               d_Y_mrna = 10^-5;
+%Transcription and degradation of mRNAs (from natural plasmid)
+k_B_mrna = 0.5497;               d_B_mrna = 0.4; 
+k_F_mrna = 0.46154;               d_F_mrna = 0.4;
+                            d_G_mrna = 0.4;
+k_K_mrna = 0.9906;               d_K_mrna = 0.4;
+k_P_mrna = 1;               d_P_mrna = 0.4;
+k_R_mrna = 2.6415;               d_R_mrna = 0.4;
+                            d_T_mrna = 0.4;
+k_X_mrna = 4.8837;               d_X_mrna = 0.4;
+k_Y_mrna = 2.4348;               d_Y_mrna = 0.4;
 
 %Synthetic plasmid parameters for Transcription
-kp_B_mrna = 1;
-kp_F_mrna = 1;
-kp_G_mrna = 1;
-kp_K_mrna = 1;
-kp_T_mrna = k_B_mrna;
-kp_X_mrna = 1;
-kp_Y_mrna = 1;
+kp_B_mrna = 0.573;
+kp_F_mrna = 2.95;
+kp_G_mrna = 3.61;
+kp_K_mrna = 1.62;
+kp_T_mrna = 0.27119;
+kp_X_mrna = 5.00;
+kp_Y_mrna = 2.49;
 
 %Regulation Coefficients
 r_R_B = 0.2;
 r_R_R = 0.1;
-r_T = 1;
+r_T = 1;    %ToDo: Sensitivity test on this parameter
 
 %Number of Plasmids (1 = LsrR + T7, 2 = All other genes)
 n_1 = 1;
