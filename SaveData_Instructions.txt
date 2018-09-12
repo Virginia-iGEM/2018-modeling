@@ -4,9 +4,9 @@
 
 Add the following line once your simulation loop completes:
 
-SaveData(M_cells, Psi_cells);
+SaveData(M_cells, Psi_cells, time);
 
-This assumes that M_cells and Psi_cells are the variables to be saved and exist.
+This assumes that M_cells, Psi_cells and time are the variables to be saved and exist.
 
 A warning on data usage: If every single useless test simulation is saved and committed to the Git repository, the repository can quickly inflate to several gigabytes (anywhere from a few to a few hundred depending on the size of the simulation). This will both take up a lot of space on your computer, make it so that cloning/pulling/merging/committing to the repository takes several minutes, and may result in an angry email from GitHub.
 
@@ -18,7 +18,7 @@ Note that you can rename and move folders containing saved datasets. Nothing wil
 
 In the Matlab console, type:
 
-SaveData(M_cells, Psi_cells)
+SaveData(M_cells, Psi_cells, time)
 
 ## Loading data
 
