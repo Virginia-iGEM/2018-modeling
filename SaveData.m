@@ -1,15 +1,22 @@
-M_cells_json = jsonencode(M_cells);
-Psi_cells_json = jsonencode(Psi_cells);
+function SaveData(M_cells, Psi_cells, time)
+    % Prep an idiotproof datestring
+    ds = datestr(now, 'dd-mmm-yyyy_HH-MM-SS');
 
-ds = datestr(now, 'dd-mmm-yyyy_HH-MM-SS');
+    % Create directories for data if they don't already exist
+    % May throw warning; doesn't matter.
+    mkdir('data');
+    mkdir(['data/', ds]);
 
-mkdir('data');
-mkdir(['data/', ds]);
+    % Save data to json format for display on the wiki
+    % Package all data in json format
+    json_data = jsonencode(containers.Map( ...
+    {'M_cells', 'Psi_cells', 'time'}, ...
+    {M_cells, Psi_cells, time}));
 
-M_file = fopen(['data/', ds, '/M_cells_', ds, '.json'], 'w');
-Psi_file = fopen(['data/', ds, '/Psi_cells_', ds, '.json'], 'w');
+    % Open json file for writing
+    json_file = fopen(['data/', ds, '/web_data_', ds, '.json'], 'w');
+    fprintf(json_file, json_data);
 
-fprintf(M_file, M_cells_json);  
-fprintf(Psi_file, Psi_cells_json);
-
-save(['data/', ds, '/matlab_data_', ds], 'M_cells', 'Psi_cells');
+    % Save data to .mat format for reloading in matlab
+    save(['data/', ds, '/matlab_data_', ds], 'M_cells', 'Psi_cells');
+end
