@@ -1,4 +1,4 @@
-var_display = 'G';
+var_display = 'Ap';
 
 %Statistically Analyze
 
