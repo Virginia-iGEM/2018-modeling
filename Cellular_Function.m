@@ -79,7 +79,6 @@ kp_X_mrna = 1;
 kp_Y_mrna = 1;
 
 %Regulation Coefficients
-%Regulation Coefficients
 r_R_B = 0.2;
 r_R_R = 0.1;
 r_T = 1;
@@ -104,7 +103,6 @@ ddt = zeros(25,1);
 ddt(3,1) = c(12)*c(4)*k_cat_AiK/(k_M_AiK+c(4)) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
 ddt(5,1) = k_AiY*(c(23)+c(24))*c(4) - k_AoP*c(14)*c(5) - k_AoB*c(6)*c(5);
 ddt(4,1) = k_XS*(c(20)+c(21)) - c(12)*c(4)*k_cat_AiK/(k_M_AiK+c(4)) - ddt(5,1);
-
 ddt(6,1) = k_B*c(7) - d_B*c(6);
 ddt(7,1) = k_B_mrna*(r_R_B^4/(r_R_B^4 + c(16)^4)) - c(7)*d_B_mrna ;%+ n_2*kp_B_mrna*(c(18)/(r_T+c(18)));
 ddt(8,1) = k_F*c(9) - d_F*c(8);
