@@ -49,12 +49,12 @@ var('Y_p') = 24;
 var('Y_p|mrna') = 25;
 
 para = containers.Map;
-para('n') = 64;                % Number of Cells (needs to be square numer)
+para('n') = 16;                % Number of Cells (needs to be square numer)
 para('m') = 25;              % Number of Parameters for each Cell
-para('w') = round(para('n')^(3/4));      % Medium/Diffusion Grid Width
-para('h') = round(para('n')^(3/4));      % Medium/Diffusion Grid height
+para('w') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid Width
+para('h') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
-para('t_f') =  1;             % Final time
+para('t_f') =  100;             % Final time
 para('dt')= 0.001;            % Constant timestep 
 para('D') = 0.1;                 % Diffusion coefficient
 parmeters('index') = 0;
@@ -62,7 +62,7 @@ parmeters('index') = 0;
 
 %Configuration Parameters
 config = containers.Map;
-config('workers') = 8; 
+config('workers') = 16; 
 
 config('n_snapshots') = 100;
 config('n_snapshots') = config('n_snapshots') - 1;
@@ -119,7 +119,7 @@ c_i(var('Y_p|mrna'))= 0;
 
 
 %initialize Psi Matrix
-i = 1;
+iter = 1;
 
 %Cells Tightly Packed
 %{
@@ -137,12 +137,12 @@ end
 
 %Cells Spaced Out
 
-for x = round(para('w')/2-sqrt(para('n'))/2):1:(round(para('w')/2+sqrt(para('n')/2))-1)
-    for y = round(para('h')/2-sqrt(para('n'))/2):1:(round(para('h')/2+sqrt(para('n'))/2)-1)
-        if i<=para('n')
-            Psi(1,i) = round(2*x-para('w')/2);
-            Psi(2,i) = round(2*y-para('h')/2);
-            i = i+1;
+for i = 1:round(sqrt(para('n')))
+    for j = 1:round(sqrt(para('n')))
+        if iter<=para('n')
+            Psi(1,iter) = round(para('w')/2-sqrt(para('n')/2))+2*(i-1);
+            Psi(2,iter) = round(para('h')/2-sqrt(para('n')/2))+2*(j-1);
+            iter = iter+1;
         end
     end
 end
