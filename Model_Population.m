@@ -103,8 +103,7 @@ c_i(var('G|mrna')) = 	0;
 <<<<<<< HEAD
 c_i(var('K')) = 		0.3857258;
 =======
-c_i(var('K')) = 		0.3857258*100; %OR 0.183
->>>>>>> f64041a65b422f53f7ac64c23efe2ac5e6e4e138
+c_i(var('K')) = 		0.3857258; %OR 0.183
 c_i(var('K|mrna')) = 	0.0056787;
 c_i(var('P')) = 		0;
 c_i(var('P|mrna')) = 	0;
@@ -112,22 +111,18 @@ c_i(var('R')) = 		1.7143;
 c_i(var('R|mrna')) = 	0.01514;
 c_i(var('T')) = 		0;
 c_i(var('T|mrna')) = 	0;
-<<<<<<< HEAD
 c_i(var('X_g')) = 		5.85966;
 c_i(var('X_p')) =       0;
 c_i(var('X_p|mrna')) =    0;
 c_i(var('Y_g')) = 		1.4565;
 c_i(var('Y_p')) =       0;
 c_i(var('Y_p|mrna')) =    0;
-
-=======
 c_i(var('X_g')) =       5.85966;
 c_i(var('X_p')) =     0;
 c_i(var('X_p|mrna'))= 0;
 c_i(var('Y_g')) =     1.4565;
 c_i(var('Y_p')) =     0;
 c_i(var('Y_p|mrna'))= 0;
->>>>>>> f64041a65b422f53f7ac64c23efe2ac5e6e4e138
 %--------------------------
 
 
