@@ -49,14 +49,14 @@ var('Y_p') = 24;
 var('Y_p|mrna') = 25;
 
 para = containers.Map;
-para('n') = 16;                % Number of Cells (needs to be square numer)
+para('n') = 4;                % Number of Cells (needs to be square numer)
 para('m') = 25;              % Number of Parameters for each Cell
 para('w') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid Width
 para('h') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
-para('t_f') =  100;             % Final time
-para('dt')= 0.001;            % Constant timestep 
-para('D') = 0.1;                 % Diffusion coefficient
+para('t_f') =  10;             % Final time
+para('dt')= 0.00001;            % Constant timestep 
+para('D') = 0.5*10^(-5);                 % Diffusion coefficient
 parmeters('index') = 0;
 %--------------------------------------------------------
 
@@ -64,8 +64,7 @@ parmeters('index') = 0;
 config = containers.Map;
 config('workers') = 16; 
 
-config('n_snapshots') = 100;
-config('n_snapshots') = config('n_snapshots') - 1;
+config('n_snapshots') = 200;
 config('print') = 1;% Should progress reports be printed to console?
 config('n_prints') = 5;% How many times should we print progress reports?
 
@@ -101,7 +100,7 @@ c_i(var('F')) = 		0.32619;
 c_i(var('F|mrna')) = 	0.002646;
 c_i(var('G')) = 		0;
 c_i(var('G|mrna')) = 	0;
-c_i(var('K')) = 		0.3857258; %OR 0.183
+c_i(var('K')) = 		0.3857258*100; %OR 0.183
 c_i(var('K|mrna')) = 	0.0056787;
 c_i(var('P')) = 		0;
 c_i(var('P|mrna')) = 	0;
