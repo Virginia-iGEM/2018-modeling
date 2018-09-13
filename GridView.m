@@ -1,6 +1,7 @@
 function [ X ] = GridView(M_cells,Psi_cells,PSIIndex,ti,tf,n)
 %Creates a grid based on various elements of PSI or M
 %M_cells -> Cell matrix which contains M matrices at different timestamps
+%(TS)
 %Psi_Cells -> Cell Matrix which contains Psi matrices at different TS's
 %PSIIndex -> References ROW Element in PSI matrix (0 = M Matrix)
 %ti -> Intial timestamp

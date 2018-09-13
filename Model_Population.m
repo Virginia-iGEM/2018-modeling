@@ -147,7 +147,7 @@ end
 %----------------------------------
 
 %Randomization Distribution
-gm = gmdistribution(1,0);
+gm = gmdistribution(1,0.1);
 %--------
 for i = 1:para('n')
     for j = 3:para('m')
@@ -176,7 +176,9 @@ Readout2 = zeros(para('n'),config('n_snapshots'));
 Readout3 = zeros(para('n'),config('n_snapshots'));
 for i = 1:config('n_snapshots')
     for j = 1:para('n')
-        Readout1(j,i) = Psi_cells{i}(var('T'),j);
+    %j is cell, i is AI-2 for certain parameter at a certain timepoint for
+    %a cell
+        Readout1(j,i) = Psi_cells{i}(var('T'),j); %In this case, it's T7; can change
     end
 end
 t =  1:config('n_snapshots');
