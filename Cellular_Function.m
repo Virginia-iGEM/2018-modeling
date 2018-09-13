@@ -11,11 +11,11 @@ Vector "c" contains state information of one cell
 
 %c(1) = x
 %c(2) = y
-%c(3) = Ap OUT FOR TESTING (SHIFT EVRERYTHING UP)
+%c(3) = Ap 
 %c(4) = Ai
 %c(5) = Ao
 %c(6) = B
-%c(7) = B|mrna ALL BELOW OUT FOR TESTING
+%c(7) = B|mrna 
 %c(8) = F 
 %c(9) = F|mrna
 %c(10) = G
@@ -51,7 +51,7 @@ k_B = 0.48;    d_B = 0.02;
 k_F = 2.4657;    d_F = 0.02;
 k_G = 3.02521;    d_G = 0.02;
 k_K = 1.35849;    d_K = 0.02;
-k_P = 1;    d_P = 0.02;
+k_P = 1;    d_P = 0.02; %PTS Levels are considered constant in our model; this isn't used
 k_R = 2.26415;    d_R = 0.02;
 k_T = 0.813559;    d_T = 0.02;
 k_X = 4.186;    d_X = 0.02;
