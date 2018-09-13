@@ -11,6 +11,8 @@ Manipulate Psi and M matricies to test effects of initial conditions:
 Manipulate constants within Cellular_Function to test sensitivity
 
 %}
+
+
 clf('reset')
 clear
 %Imports
@@ -47,23 +49,22 @@ var('Y_p') = 24;
 var('Y_p|mrna') = 25;
 
 para = containers.Map;
-para('n') = 64;                % Number of Cells (needs to be square numer)
+para('n') = 4;                % Number of Cells (needs to be square numer)
 para('m') = 25;              % Number of Parameters for each Cell
-para('w') = round(para('n')^(3/4));      % Medium/Diffusion Grid Width
-para('h') = round(para('n')^(3/4));      % Medium/Diffusion Grid height
+para('w') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid Width
+para('h') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
-para('t_f') =  20;             % Final time
-para('dt')= 0.005;            % Constant timestep 
-para('D') = 100;                 % Diffusion coefficient
+para('t_f') =  10;             % Final time
+para('dt')= 0.001;            % Constant timestep 
+para('D') = 3*10^4;                 % Diffusion coefficient
 parmeters('index') = 0;
 %--------------------------------------------------------
 
 %Configuration Parameters
 config = containers.Map;
-config('workers') = 8; 
+config('workers') = 16; 
 
-config('n_snapshots') = 100;
-config('n_snapshots') = config('n_snapshots') - 1;
+config('n_snapshots') = 200;
 config('print') = 1;% Should progress reports be printed to console?
 config('n_prints') = 5;% How many times should we print progress reports?
 
@@ -89,35 +90,42 @@ for i = 1:para('m')
     c_i(i,1) = 1;
 end
 %}
-c_i(var('Ap')) = 		10;
+
+c_i(var('Ap')) = 		0;
 c_i(var('Ai')) = 		0;
-c_i(var('Ao')) = 		0;
-c_i(var('B')) = 		1;
+c_i(var('Ao')) = 		0.0045;
+c_i(var('B')) = 		0;
 c_i(var('B|mrna')) = 	0;
-c_i(var('F')) = 		0;
-c_i(var('F|mrna')) = 	0;
+c_i(var('F')) = 		0.32619;
+c_i(var('F|mrna')) = 	0.002646;
 c_i(var('G')) = 		0;
 c_i(var('G|mrna')) = 	0;
-c_i(var('K')) = 		10;
-c_i(var('K|mrna')) = 	0;
-c_i(var('P')) = 		1;
+c_i(var('K')) = 		0.3857258;
+c_i(var('K')) = 		0.3857258; %OR 0.183
+c_i(var('K|mrna')) = 	0.0056787;
+c_i(var('P')) = 		0;
 c_i(var('P|mrna')) = 	0;
-c_i(var('R')) = 		10;
-c_i(var('R|mrna')) = 	0;
+c_i(var('R')) = 		1.7143;
+c_i(var('R|mrna')) = 	0.01514;
 c_i(var('T')) = 		0;
 c_i(var('T|mrna')) = 	0;
-c_i(var('X_g')) = 		5;
+c_i(var('X_g')) = 		5.85966;
 c_i(var('X_p')) =       0;
 c_i(var('X_p|mrna')) =    0;
-c_i(var('Y_g')) = 		1;
+c_i(var('Y_g')) = 		1.4565;
 c_i(var('Y_p')) =       0;
 c_i(var('Y_p|mrna')) =    0;
-
+c_i(var('X_g')) =       5.85966;
+c_i(var('X_p')) =     0;
+c_i(var('X_p|mrna'))= 0;
+c_i(var('Y_g')) =     1.4565;
+c_i(var('Y_p')) =     0;
+c_i(var('Y_p|mrna'))= 0;
 %--------------------------
 
 
 %initialize Psi Matrix
-i = 1;
+iter = 1;
 
 %Cells Tightly Packed
 %{
@@ -135,12 +143,12 @@ end
 
 %Cells Spaced Out
 
-for x = round(para('w')/2-sqrt(para('n'))/2):1:(round(para('w')/2+sqrt(para('n')/2))-1)
-    for y = round(para('h')/2-sqrt(para('n'))/2):1:(round(para('h')/2+sqrt(para('n'))/2)-1)
-        if i<=para('n')
-            Psi(1,i) = round(2*x-para('w')/2);
-            Psi(2,i) = round(2*y-para('h')/2);
-            i = i+1;
+for i = 1:round(sqrt(para('n')))
+    for j = 1:round(sqrt(para('n')))
+        if iter<=para('n')
+            Psi(1,iter) = round(para('w')/2-sqrt(para('n')/2))+2*(i-1);
+            Psi(2,iter) = round(para('h')/2-sqrt(para('n')/2))+2*(j-1);
+            iter = iter+1;
         end
     end
 end
@@ -166,6 +174,7 @@ end
 
 %Simulate
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
+<<<<<<< HEAD
 %-----------------
 
 %Statistically Analyze
@@ -206,3 +215,4 @@ Additionally, after the 3 second mark or so GridView says there is no T
 anymore, even though there is given figure 1.
 %----------------
 %}
+

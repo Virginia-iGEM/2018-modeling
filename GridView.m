@@ -9,6 +9,7 @@ function [ X ] = GridView(M_cells,Psi_cells,PSIIndex,ti,tf,n)
 %n -> Number of evenly spaced intervals in slider
 %close all;
 
+AspectsofPsi = {'x','y','Ap','Ai','Ao','B','B|mrna','F','F|mrna','G','G|mrna','K','K|mrna','P','P|mrna','R','R|mrna','T','T|mrna','X_g','X_p','X_p|mrna','Y_g','Y_p','Y_p|mrna'};
 %Determine number of Cells
 PSISIZE =size(Psi_cells{1});
 numofcells = PSISIZE(2);
@@ -45,6 +46,8 @@ slider =uicontrol('style','slider','position',[150 60 300 20],...
 %Writes text onto figure
 text=uicontrol('style','text',...
     'position',[175 30 250 15],'visible','on');
+text2=uicontrol('style','text',...
+    'position',[175 15 250 15],'visible','on');
 
 %Creates Axes on which to plot
 axes('units','pixels','position',[90 125 450 450]);
@@ -68,6 +71,12 @@ end
 %Displays which timestamp is being used
 set(text,'String',strcat('Now Displaying #',num2str(timestamp),' at time: 0 minutes'));
 
+%Displays which aspect of Psi is being displayed
+if PSIIndex ~= 0
+    set(text2,'String',AspectsofPsi(PSIIndex));
+else
+    set(text2,'String','Matrix Diffusion');
+end
 MaxValue = 0;
 
 %If plotting M Matrix
