@@ -45,7 +45,9 @@ function [Psi_snapshots, M_snapshots,time_] = Simulate(Psi, M, parameters, confi
         if mod(i-1, snapshotstep) == 0 
             Psi_snapshots{snapshotcounter} = Psi;
             M_snapshots{snapshotcounter} = M;
-            time_(1,snapshotcounter) = t;
+            if (snapshotcounter <= config('n_snapshots'))
+                time_(1,snapshotcounter) = t;
+            end
             snapshotcounter = snapshotcounter + 1;
         end
         [Psi, M] = mapcell(Psi, M, parameters('dt'), config); % Update cell columns and diffusion matrix using cellular model

@@ -11,6 +11,8 @@ Manipulate Psi and M matricies to test effects of initial conditions:
 Manipulate constants within Cellular_Function to test sensitivity
 
 %}
+
+
 clf('reset')
 clear
 %Imports
@@ -47,23 +49,22 @@ var('Y_p') = 24;
 var('Y_p|mrna') = 25;
 
 para = containers.Map;
-para('n') = 64;                % Number of Cells (needs to be square numer)
+para('n') = 4;                % Number of Cells (needs to be square numer)
 para('m') = 25;              % Number of Parameters for each Cell
-para('w') = round(para('n')^(3/4));      % Medium/Diffusion Grid Width
-para('h') = round(para('n')^(3/4));      % Medium/Diffusion Grid height
+para('w') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid Width
+para('h') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
-para('t_f') =  20;             % Final time
-para('dt')= 0.005;            % Constant timestep 
-para('D') = 100;                 % Diffusion coefficient
+para('t_f') =  10;             % Final time
+para('dt')= 0.00001;            % Constant timestep 
+para('D') = 0.5*10^(-5);                 % Diffusion coefficient
 parmeters('index') = 0;
 %--------------------------------------------------------
 
 %Configuration Parameters
 config = containers.Map;
-config('workers') = 8; 
+config('workers') = 16; 
 
-config('n_snapshots') = 100;
-config('n_snapshots') = config('n_snapshots') - 1;
+config('n_snapshots') = 200;
 config('print') = 1;% Should progress reports be printed to console?
 config('n_prints') = 5;% How many times should we print progress reports?
 
@@ -89,6 +90,7 @@ for i = 1:para('m')
     c_i(i,1) = 1;
 end
 %}
+
 c_i(var('Ap')) = 		0;
 c_i(var('Ai')) = 		0;
 c_i(var('Ao')) = 		0.0045;
@@ -98,7 +100,11 @@ c_i(var('F')) = 		0.32619;
 c_i(var('F|mrna')) = 	0.002646;
 c_i(var('G')) = 		0;
 c_i(var('G|mrna')) = 	0;
+<<<<<<< HEAD
 c_i(var('K')) = 		0.3857258;
+=======
+c_i(var('K')) = 		0.3857258*100; %OR 0.183
+>>>>>>> f64041a65b422f53f7ac64c23efe2ac5e6e4e138
 c_i(var('K|mrna')) = 	0.0056787;
 c_i(var('P')) = 		0;
 c_i(var('P|mrna')) = 	0;
@@ -106,6 +112,7 @@ c_i(var('R')) = 		1.7143;
 c_i(var('R|mrna')) = 	0.01514;
 c_i(var('T')) = 		0;
 c_i(var('T|mrna')) = 	0;
+<<<<<<< HEAD
 c_i(var('X_g')) = 		5.85966;
 c_i(var('X_p')) =       0;
 c_i(var('X_p|mrna')) =    0;
@@ -113,11 +120,19 @@ c_i(var('Y_g')) = 		1.4565;
 c_i(var('Y_p')) =       0;
 c_i(var('Y_p|mrna')) =    0;
 
+=======
+c_i(var('X_g')) =       5.85966;
+c_i(var('X_p')) =     0;
+c_i(var('X_p|mrna'))= 0;
+c_i(var('Y_g')) =     1.4565;
+c_i(var('Y_p')) =     0;
+c_i(var('Y_p|mrna'))= 0;
+>>>>>>> f64041a65b422f53f7ac64c23efe2ac5e6e4e138
 %--------------------------
 
 
 %initialize Psi Matrix
-i = 1;
+iter = 1;
 
 %Cells Tightly Packed
 %{
@@ -135,12 +150,12 @@ end
 
 %Cells Spaced Out
 
-for x = round(para('w')/2-sqrt(para('n'))/2):1:(round(para('w')/2+sqrt(para('n')/2))-1)
-    for y = round(para('h')/2-sqrt(para('n'))/2):1:(round(para('h')/2+sqrt(para('n'))/2)-1)
-        if i<=para('n')
-            Psi(1,i) = round(2*x-para('w')/2);
-            Psi(2,i) = round(2*y-para('h')/2);
-            i = i+1;
+for i = 1:round(sqrt(para('n')))
+    for j = 1:round(sqrt(para('n')))
+        if iter<=para('n')
+            Psi(1,iter) = round(para('w')/2-sqrt(para('n')/2))+2*(i-1);
+            Psi(2,iter) = round(para('h')/2-sqrt(para('n')/2))+2*(j-1);
+            iter = iter+1;
         end
     end
 end
@@ -167,40 +182,3 @@ end
 %Simulate
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
 %-----------------
-
-%Statistically Analyze
-
-%Graph
-Readout1 = zeros(para('n'),config('n_snapshots'));
-Readout2 = zeros(para('n'),config('n_snapshots'));
-Readout3 = zeros(para('n'),config('n_snapshots'));
-for i = 1:config('n_snapshots')
-    for j = 1:para('n')
-        Readout1(j,i) = Psi_cells{i}(var('T'),j);
-    end
-end
-t =  1:config('n_snapshots');
-
-
-
-hold on
-figure(1)
-
-for i=1:para('n')
-    plot(t,Readout1(i,:));
-    %plot(t,Readout2(i,:));
-    %plot(t,Readout3(i,:));
-    legend('T')
-end
-hold off
-GridView(M_cells,Psi_cells,var('T'),para('t_i'),para('t_f'),config('n_snapshots'));
-
-%{
-Errors in GridView:
-If you run the above code, you can see the level of T in the cells on
-Figure 1, and they do not correspond to the levels shown in gridview.
-
-Additionally, after the 3 second mark or so GridView says there is no T
-anymore, even though there is given figure 1.
-%----------------
-%}

@@ -28,7 +28,7 @@ codegen/
 octave-workspace
 
 # Data files
-data/*
+#data/*
 
 # But keep anything placed under 'keep'
 !data/keep/*
