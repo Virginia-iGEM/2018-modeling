@@ -55,7 +55,7 @@ para('w') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid Width
 para('h') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
 para('t_f') =  10;             % Final time
-para('dt')= 0.001;            % Constant timestep 
+para('dt')= 10^(-5);            % Constant timestep 
 para('D') = 3*10^4;                 % Diffusion coefficient
 parmeters('index') = 0;
 %--------------------------------------------------------
@@ -174,7 +174,6 @@ end
 
 %Simulate
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
-<<<<<<< HEAD
 %-----------------
 
 %Statistically Analyze
