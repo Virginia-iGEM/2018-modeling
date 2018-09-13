@@ -55,8 +55,8 @@ para('w') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid Width
 para('h') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
 para('t_f') =  10;             % Final time
-para('dt')= 0.00001;            % Constant timestep 
-para('D') = 0.5*10^(-5);                 % Diffusion coefficient
+para('dt')= 0.001;            % Constant timestep 
+para('D') = 100000*0.5*10^(-5);                 % Diffusion coefficient
 parmeters('index') = 0;
 %--------------------------------------------------------
 
