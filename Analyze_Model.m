@@ -1,10 +1,5 @@
-<<<<<<< HEAD
+
 var_display = 'Ap';
-=======
-clf
-close all
-var_display = 'Ai';
->>>>>>> 60e097f9fe28b62074051ca534753d58a456a82a
 %Statistically Analyze
 %Graph
 Readout1 = zeros(para('n'),config('n_snapshots'));

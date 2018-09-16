@@ -14,15 +14,9 @@ Vector "c" contains state information of one cell
 %c(3) = Ap 
 %c(4) = Ai
 %c(5) = Ao
-<<<<<<< HEAD
 %c(6) = B %LsrACDB
 %c(7) = B|mrna ALL BELOW OUT FOR TESTING
 %c(8) = F %LsrF
-=======
-%c(6) = B
-%c(7) = B|mrna 
-%c(8) = F 
->>>>>>> 047ff1c7b67edb69f3ea97884b4de1d97e4061e3
 %c(9) = F|mrna
 %c(10) = G %sfGFP
 %c(11) = G|mrna
