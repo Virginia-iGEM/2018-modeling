@@ -54,9 +54,9 @@ para('m') = 25;              % Number of Parameters for each Cell
 para('w') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid Width
 para('h') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
-para('t_f') =  75;             % Final time
-para('dt')= 10^(-4);            % Constant timestep 
-para('D') = 1000;                 % Diffusion coefficient
+para('t_f') =  10;             % Final time
+para('dt')= 10^(-5);            % Constant timestep 
+para('D') = 3*10^4;                 % Diffusion coefficient
 parmeters('index') = 0;
 %--------------------------------------------------------
 
@@ -154,7 +154,7 @@ end
 %----------------------------------
 
 %Randomization Distribution
-gm = gmdistribution(1,0);
+gm = gmdistribution(1,0.1);
 %--------
 for i = 1:para('n')
     for j = 3:para('m')
@@ -174,3 +174,43 @@ end
 %Simulate
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
 %-----------------
+
+%Statistically Analyze
+
+%Graph
+Readout1 = zeros(para('n'),config('n_snapshots'));
+Readout2 = zeros(para('n'),config('n_snapshots'));
+Readout3 = zeros(para('n'),config('n_snapshots'));
+for i = 1:config('n_snapshots')
+    for j = 1:para('n')
+    %j is cell, i is AI-2 for certain parameter at a certain timepoint for
+    %a cell
+        Readout1(j,i) = Psi_cells{i}(var('T'),j); %In this case, it's T7; can change
+    end
+end
+t =  1:config('n_snapshots');
+
+
+
+hold on
+figure(1)
+
+for i=1:para('n')
+    plot(t,Readout1(i,:));
+    %plot(t,Readout2(i,:));
+    %plot(t,Readout3(i,:));
+    legend('T')
+end
+hold off
+GridView(M_cells,Psi_cells,var('T'),para('t_i'),para('t_f'),config('n_snapshots'));
+
+%{
+Errors in GridView:
+If you run the above code, you can see the level of T in the cells on
+Figure 1, and they do not correspond to the levels shown in gridview.
+
+Additionally, after the 3 second mark or so GridView says there is no T
+anymore, even though there is given figure 1.
+%----------------
+%}
+
