@@ -14,25 +14,31 @@ Vector "c" contains state information of one cell
 %c(3) = Ap 
 %c(4) = Ai
 %c(5) = Ao
+<<<<<<< HEAD
+%c(6) = B %LsrACDB
+%c(7) = B|mrna ALL BELOW OUT FOR TESTING
+%c(8) = F %LsrF
+=======
 %c(6) = B
 %c(7) = B|mrna 
 %c(8) = F 
+>>>>>>> 047ff1c7b67edb69f3ea97884b4de1d97e4061e3
 %c(9) = F|mrna
-%c(10) = G
+%c(10) = G %sfGFP
 %c(11) = G|mrna
-%c(12) = K
+%c(12) = K %LsrK
 %c(13) = K|mrna
-%c(14) = P
+%c(14) = P %PTS
 %c(15) = P|mrna
-%c(16) = R
+%c(16) = R %LsrR
 %c(17) = R|mrna
-%c(18) = T
+%c(18) = T %T7
 %c(19) = T|mrna
-%c(20) = X_g
-%c(21) = X_p
-%c(22) = X_p|mrna
-%c(23) = Y_g
-%c(24) = Y_p
+%c(20) = X_g %LuxS from genome
+%c(21) = X_p %LuxS from plasmid
+%c(22) = X_p|mrna 
+%c(23) = Y_g %YdgG from genome
+%c(24) = Y_p %YdgG from plasmid
 %c(25) = Y_p|mrna
 %}
 
