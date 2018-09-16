@@ -19,7 +19,7 @@ Rivanna is UVA's high power computing cluster. It has something stupid like over
 
 1. `git clone` any relevant repositories. For modeling, this would be `git clone https://github.com/Virginia-iGEM/2018-modeling`.
 2. `module load matlab`. You have to rerun this any time you logout and log back in.
-3. Run whatever function you want with `matlab -nojvm -nodisplay -nosplash -singleCompThread -r "RunFunction(inputs);exit"`. Note the exit at the end of the input; this is needed to make Matlab exit properly.
+3. `cd` into your repo and run whatever function you want with `matlab -nojvm -nodisplay -nosplash -singleCompThread -r "RunFunction(inputs);exit"`. Note the exit at the end of the input; this is needed to make Matlab exit properly.
 4. This is good for testing, but if your job's gonna last more than one minute, as mentioned above, you should probably kill it before it runs too long. You can test to see if things are working by running a really short job.
 5. Alright, now to run real boy jobs. As you might guess, you can run jobs for longer than a minute; to do this you need to make a batch. I've set up an example batch file named `run.sh` in the modeling folder. Please open it with your favorite text editor (`nano` is foolproof, `vim` or `emacs` if you're feeling ballsy).
 
