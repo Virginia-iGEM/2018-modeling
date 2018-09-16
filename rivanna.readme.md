@@ -70,7 +70,9 @@ Let's go over some important commands; substitute your computing ID any time you
 - To cancel all of your jobs: `scancel -u <computing id>`
 - To cancel a specific job: `scancel <jobid>`
 
-For more complicated job manipulation, such as submitting arbitrary numbers of parallel jobs with different parameters, running interactive jobs, or having jobs dependent on one another, see [Rivanna's article on Slurm](https://arcs.virginia.edu/slurm).
+For more complicated job manipulation, such as submitting many parallel jobs with different parameters, running interactive jobs, or having jobs dependent on one another, see [Rivanna's article on Slurm](https://arcs.virginia.edu/slurm).
+
+In particular, I recommend reading the "Submitting many jobs with job arrays" section for how to run barrage testing for many simulations with different parameters.
 
 ## Resources
 
