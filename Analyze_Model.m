@@ -1,3 +1,5 @@
+clf
+close all
 var_display = 'Ai';
 %Statistically Analyze
 %Graph
@@ -21,4 +23,4 @@ for i=1:para('n')
 end
 hold off
 GridView(M_cells,Psi_cells,0*var(var_display),para('t_i'),para('t_f'),config('n_snapshots'));
-SaveData(M_cells, Psi_cells, time)
+%SaveData(M_cells, Psi_cells, time)

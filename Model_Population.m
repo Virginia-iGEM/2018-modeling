@@ -54,9 +54,9 @@ para('m') = 25;              % Number of Parameters for each Cell
 para('w') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid Width
 para('h') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid height
 para('t_i') = 0;              % Set initial time to 0
-para('t_f') =  10;             % Final time
-para('dt')= 0.001;            % Constant timestep 
-para('D') = 100000*0.5*10^(-5);                 % Diffusion coefficient
+para('t_f') =  75;             % Final time
+para('dt')= 10^(-4);            % Constant timestep 
+para('D') = 1000;                 % Diffusion coefficient
 parmeters('index') = 0;
 %--------------------------------------------------------
 
@@ -100,7 +100,6 @@ c_i(var('F')) = 		0.32619;
 c_i(var('F|mrna')) = 	0.002646;
 c_i(var('G')) = 		0;
 c_i(var('G|mrna')) = 	0;
-c_i(var('K')) = 		0.3857258;
 c_i(var('K')) = 		0.3857258; %OR 0.183
 c_i(var('K|mrna')) = 	0.0056787;
 c_i(var('P')) = 		0;
