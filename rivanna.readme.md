@@ -1,6 +1,6 @@
 # Rivanna Howto
 
-Rivanna is UVA's high power computing cluster. It has something stupid like over 1000 collective CPU cores, and over one petabyte of collective RAM. It goes really fast.
+Rivanna is UVA's high power computing cluster. It has something stupid like over 1000 collective CPU cores, and several terabytes of collective RAM. It goes really fast.
 
 ## How do I access it?
 
