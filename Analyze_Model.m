@@ -1,6 +1,5 @@
-clf
-close all
-var_display = 'Ai';
+
+var_display = 'Ap';
 %Statistically Analyze
 %Graph
 Readout1 = zeros(para('n'),config('n_snapshots'));
@@ -22,5 +21,5 @@ for i=1:para('n')
     legend(var_display)
 end
 hold off
-GridView(M_cells,Psi_cells,0*var(var_display),para('t_i'),para('t_f'),config('n_snapshots'));
+GridView(M_cells,Psi_cells,var(var_display),para('t_i'),para('t_f'),config('n_snapshots'));
 %SaveData(M_cells, Psi_cells, time)
