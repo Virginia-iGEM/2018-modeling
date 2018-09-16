@@ -7,7 +7,7 @@ Rivanna is UVA's high power computing cluster. It has something stupid like over
 1. login with `ssh -Y <computing ID>@rivanna.hpc.virginia.edu`. For example, I would type `ssh -Y dtc9bb@rivanna.hpc.virginia.edu`.
   - This must be done in a terminal with SSH support. Your options are `Git Bash`, which is probably already installed, `Cygwin` if you want a standalone solution, or `WSL` if you're like me and you like Linux but need to use Windows.
   - Alternatively you can use an SSH client like [MobaXTerm](https://mobaxterm.mobatek.net/) or [PuTTy](https://www.putty.org/) if you're some kind of monster that wants to use a GUI... _For accessing a remote **command-line terminal**_. That being said, the former will let you use graphical programs like Matlab via remote X connection. I have not tried this; if you want to, enjoy.
-  - Your password
+  - Your password is your EServices password. I.E. the one you use to log into SIS.
   - Note: If you are off campus, you have to use the [UVA Anywhere VPN](http://its.virginia.edu/vpn/) for security reasons.
 2. Now you're in your home directory. You get 50gb of storage and you can put whatever you want in it. Before we go over what to do next, let's go over what **not** to do:
   - **Do not run jobs for more than a few minutes directly from the terminal.** Why not? Because everyone who is logged into Rivanna uses the same frontend node. So if you run long, CPU-intensive jobs directly from the terminal, you will cause everyone else's terminal to lag. You will occasionally notice your terminal freezing - this isn't because your connection is bad. It's because some asshole undergrad is running their jobs on the frontend node.
@@ -70,7 +70,7 @@ Let's go over some important commands; substitute your computing ID any time you
 - To cancel all of your jobs: `scancel -u <computing id>`
 - To cancel a specific job: `scancel <jobid>`
 
-For more complicated job manipulation, such as submitting arbitrary numbers of jobs, or having jobs dependent on one another, see [Rivanna's article on Slurm](https://arcs.virginia.edu/slurm).
+For more complicated job manipulation, such as submitting arbitrary numbers of parallel jobs with different parameters, running interactive jobs, or having jobs dependent on one another, see [Rivanna's article on Slurm](https://arcs.virginia.edu/slurm).
 
 ## Resources
 
