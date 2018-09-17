@@ -12,8 +12,6 @@ Manipulate constants within Cellular_Function to test sensitivity
 
 %}
 
-
-clf('reset')
 clear
 %Imports
 import Structure.*
