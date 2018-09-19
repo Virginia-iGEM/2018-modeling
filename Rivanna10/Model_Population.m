@@ -63,7 +63,7 @@ var('Y_p|mrna') = 25;
 
 %Configuration Parameters
 config = containers.Map;
-config('workers') = 16; 
+config('workers') = 25; 
 
 config('n_snapshots') = 200;
 config('print') = 1;% Should progress reports be printed to console?

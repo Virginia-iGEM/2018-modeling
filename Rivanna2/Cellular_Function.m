@@ -45,7 +45,7 @@ k_AiK = 0.01;
 k_AiY = 0.0001;
 k_ApF = 0.019825; 
 k_ApR = 0.05;
-k_XS = 0.486;
+k_XS = 0.486/10;
 
 %Translation Coefficients
 k_B = 0.48;    d_B = 0.02;
