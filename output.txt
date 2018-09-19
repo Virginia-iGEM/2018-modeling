@@ -1,0 +1,97 @@
+Wed Sep 19 17:18:48 EDT 2018
+Wed Sep 19 17:18:48 EDT 2018
+Wed Sep 19 17:18:49 EDT 2018
+Wed Sep 19 17:18:49 EDT 2018
+Wed Sep 19 17:18:49 EDT 2018
+Wed Sep 19 17:18:49 EDT 2018
+Wed Sep 19 17:18:49 EDT 2018
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017a (9.2.0.556344) 64-bit (glnxa64)
+                               March 27, 2017
+
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017a (9.2.0.556344) 64-bit (glnxa64)
+                               March 27, 2017
+
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017a (9.2.0.556344) 64-bit (glnxa64)
+                               March 27, 2017
+
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017a (9.2.0.556344) 64-bit (glnxa64)
+                               March 27, 2017
+
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017a (9.2.0.556344) 64-bit (glnxa64)
+                               March 27, 2017
+
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017a (9.2.0.556344) 64-bit (glnxa64)
+                               March 27, 2017
+
+>>                           < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017a (9.2.0.556344) 64-bit (glnxa64)
+                               March 27, 2017
+
+ 
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+ 
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+ 
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+ 
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+ 
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+ 
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+{Undefined function or variable 'Model_Population'.
+} 
+>>  
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+{Undefined function or variable 'Model_Population'.
+} 
+>> {Undefined function or variable 'Model_Population'.
+} 
+>> {Undefined function or variable 'Model_Population'.
+} 
+>> {Undefined function or variable 'Model_Population'.
+} 
+>> {Undefined function or variable 'Model_Population'.
+} 
+>> {Undefined function or variable 'Model_Population'.
+} 
+>> Wed Sep 19 17:18:53 EDT 2018
+Wed Sep 19 17:18:54 EDT 2018
+Wed Sep 19 17:18:54 EDT 2018
+Wed Sep 19 17:18:55 EDT 2018
+Wed Sep 19 17:18:57 EDT 2018
+Wed Sep 19 17:18:57 EDT 2018
+Wed Sep 19 17:18:57 EDT 2018
