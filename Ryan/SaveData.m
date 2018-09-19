@@ -1,6 +1,6 @@
-function SaveData(M_cells, Psi_cells, time)
+function SaveData(M_cells, Psi_cells, time, filename)
     % Prep an idiotproof datestring
-    ds = datestr(now, 'dd-mmm-yyyy_HH-MM-SS');
+    ds = [filename, '_', datestr(now, 'dd-mm_HH')];
 
     % Create directories for data if they don't already exist
     % May throw warning; doesn't matter.
