@@ -121,7 +121,11 @@ colorbar;
 if MaxValue == 0
     caxis([0 1]);
 else
-    caxis([0 MaxValue*1.1]);
+    if (PSIIndex == 0)
+        caxis([Psi_cells{1}(5,2)*0.9 MaxValue*1.1]); 
+    else
+        caxis([0 MaxValue*1.1]);
+    end
 end
 
 hold on;

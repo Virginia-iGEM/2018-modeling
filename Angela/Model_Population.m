@@ -12,13 +12,25 @@ Manipulate constants within Cellular_Function to test sensitivity
 
 %}
 
-
-clf('reset')
+%clear
 clear
 %Imports
 import Structure.*
 import GridView.*
 %---------------------
+
+%Initial Parameters
+para = containers.Map;
+para('n') = 4;                      % Number of Cells (needs to be square number)
+para('m') = 25;                     % Number of Parameters for each Cell
+para('w') = 2*round(para('n')^(3/4));           % Medium/Diffusion Grid Width
+para('h') = 2*round(para('n')^(3/4));           % Medium/Diffusion Grid height
+para('t_i') = 0;           %DEFAULT = 0         % Set initial time to 0
+para('t_f') =  100;         %DEFAULT = 100       % Final time
+para('dt')= 10^(-3);       %DEFAULT = 10^(-5)   % Constant timestep 
+para('D') = 10^2;          %DEFAULT = 10^(5)    % Diffusion coefficient
+parmeters('index') = 0;
+%--------------------------------------------------------
 
 %Variable Indices
 var = containers.Map;
@@ -47,18 +59,7 @@ var('X_p|mrna') = 22;
 var('Y_g') = 23;
 var('Y_p') = 24;
 var('Y_p|mrna') = 25;
-
-para = containers.Map;
-para('n') = 4;                % Number of Cells (needs to be square numer)
-para('m') = 25;              % Number of Parameters for each Cell
-para('w') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid Width
-para('h') = 4*round(para('n')^(3/4));      % Medium/Diffusion Grid height
-para('t_i') = 0;              % Set initial time to 0
-para('t_f') =  50;             % Final time
-para('dt')= 10^(-4);            % Constant timestep 
-para('D') = 1000;                 % Diffusion coefficient
-parmeters('index') = 0;
-%--------------------------------------------------------
+%-------------------------------
 
 %Configuration Parameters
 config = containers.Map;
@@ -104,8 +105,8 @@ c_i(var('K')) = 		0.3857258; %OR 0.183
 c_i(var('K|mrna')) = 	0.0056787;
 c_i(var('P')) = 		0;
 c_i(var('P|mrna')) = 	0;
-c_i(var('R')) = 		1.7143*100;
-c_i(var('R|mrna')) = 	0.01514*100;
+c_i(var('R')) = 		1.7143;
+c_i(var('R|mrna')) = 	0.01514;
 c_i(var('T')) = 		0;
 c_i(var('T|mrna')) = 	0;
 c_i(var('X_g')) = 		5.85966;
@@ -151,7 +152,7 @@ end
 for i = 1:round(sqrt(para('n')))
     for j = 1:round(sqrt(para('n')))
         if iter<=para('n')
-            Psi(1,iter) = round(para('w')/2-sqrt(para('n')/2))+2*(i-1);
+            Psi(1,iter) = round(para('w')/2-sqrt(para('n')/2)+2*(i-1));
             Psi(2,iter) = round(para('h')/2-sqrt(para('n')/2))+2*(j-1);
             iter = iter+1;
         end
@@ -179,45 +180,4 @@ end
 
 %Simulate
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
-<<<<<<< HEAD
-%------------------------
-=======
 %-----------------
-
-%Statistically Analyze
-%Dylan - making graphical representation for the wiki and communicating for
-%other people to understand 
-%Display a lot of data to compare it 
-
-
-%Graph
-Readout1 = zeros(para('n'),config('n_snapshots'));
-Readout2 = zeros(para('n'),config('n_snapshots'));
-Readout3 = zeros(para('n'),config('n_snapshots'));
-for i = 1:config('n_snapshots')
-    for j = 1:para('n')
-    %j is cell, i is AI-2 for certain parameter at a certain timepoint for
-    %a cell
-        Readout1(j,i) = Psi_cells{i}(var('T'),j); %In this case, it's T7; can change
-    end
-end
-t =  1:config('n_snapshots');
-
-
-
-hold on
-figure(1)
-
-for i=1:para('n')
-    plot(t,Readout1(i,:));
-    %plot(t,Readout2(i,:));
-    %plot(t,Readout3(i,:));
-    legend('T')
-end
-hold off
-GridView(M_cells,Psi_cells,var('T'),para('t_i'),para('t_f'),config('n_snapshots'));
-
-%{
-
-%save(['data/', ds, '/matlab_data_', ds], 'M_cells', 'Psi_cells');
-%}

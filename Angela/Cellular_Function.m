@@ -81,7 +81,7 @@ kp_Y_mrna = 2.49;
 
 %Regulation Coefficients
 r_R_B = 0.2;
-r_R_R = 0.1;
+r_R_R = 0.05;
 r_T = 1;    %ToDo: Sensitivity test on this parameter
 
 %Number of Plasmids (1 = LsrR + T7, 2 = All other genes)
@@ -100,7 +100,6 @@ if ~isvector(c)
     error('Input must be a vector')
 end
 ddt = zeros(25,1);
-
 %ddt(3,1) = c(12)*c(4)*k_cat_AiK/(k_M_AiK+c(4)) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
 ddt(3,1) = c(12)*c(4)*k_AiK - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
 ddt(5,1) = k_AiY*(c(23)+c(24))*c(4) - k_AoP*c(14)*c(5) - k_AoB*c(6)*c(5);
@@ -126,10 +125,4 @@ ddt(22,1) =  - c(22)*d_X_mrna ;%+ n_2*kp_X_mrna*(c(18)/(r_T+c(18)));
 ddt(23,1) = 0;
 ddt(24,1) = k_Y*c(25) - d_Y*c(24);
 ddt(25,1) =  - c(25)*d_Y_mrna ;%+ n_2*kp_Y_mrna*(c(18)/(r_T+c(18)));
-%{
-if ~isnan(ddt(3,1)) && ~isinf(ddt(3,1))
-    ddt
-end
-%}
-
 end
