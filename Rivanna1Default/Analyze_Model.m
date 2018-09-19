@@ -1,5 +1,5 @@
 clear Figure1
-var_display = 'Ap';
+var_display = 'K';
 %Statistically Analyze
 %Graph
 Readout1 = zeros(para('n'),config('n_snapshots'));

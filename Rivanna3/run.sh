@@ -10,5 +10,5 @@
 module load matlab
 cd $SLURM_SUBMIT_DIR
 date
-matlab -nojvm -nodisplay -nosplash -singleCompThread -r  "Model_Population('Rivanna1');exit"
+matlab -nojvm -nodisplay -nosplash -singleCompThread -r  "Model_Population('Rivanna3');exit"
 date

@@ -20,13 +20,13 @@ import GridView.*
 
 %Initial Parameters
 para = containers.Map;
-para('n') = 2^2;      %DEFAULT = 64         % Number of Cells (needs to be square number)
+para('n') = 64;      %DEFAULT = 64         % Number of Cells (needs to be square number)
 para('m') = 25;                             % Number of Parameters for each Cell
-para('w') = 2*(ceil(para('n')^(1/2))+ceil(para('n')/10));           % Medium/Diffusion Grid Width
-para('h') = 2*(ceil(para('n')^(1/2))+ceil(para('n')/10));           % Medium/Diffusion Grid height
+para('w') = ceil(2.1*para('n')^(1/2));           % Medium/Diffusion Grid Width
+para('h') = ceil(2.1*para('n')^(1/2));           % Medium/Diffusion Grid height
 para('t_i') = 0;           %DEFAULT = 0         % Set initial time to 0
-para('t_f') =  100;         %DEFAULT = 100       % Final time
-para('dt')= 10^(-3);       %DEFAULT = 10^(-3)   % Constant timestep 
+para('t_f') =  120;         %DEFAULT = 120       % Final time
+para('dt')= 10^(-5);       %DEFAULT = 10^(-5)   % Constant timestep 
 para('D') = 10^3;          %DEFAULT = 10^(3)    % Diffusion coefficient
 %--------------------------------------------------------
 
@@ -150,8 +150,8 @@ end
 for i = 1:round(sqrt(para('n')))
     for j = 1:round(sqrt(para('n')))
         if iter<=para('n')
-            Psi(1,iter) = round(para('w')/2-sqrt(para('n')/2)+2*(i-1))-1;
-            Psi(2,iter) = round(para('h')/2-sqrt(para('n')/2))+2*(j-1)-1;
+            Psi(1,iter) = round(para('w')/2-2*sqrt(para('n')-1)/2+2*(i-1))+1;
+            Psi(2,iter) = round(para('h')/2-2*sqrt(para('n')-1)/2+2*(j-1))+1;
             iter = iter+1;
         end
     end
@@ -179,6 +179,6 @@ end
 %Simulate
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
 %-----------------
-SaveData(M_cells,Psi_cells,time,filename);
+SaveData(M_cells, Psi_cells, time, para, config, var, filename);
 
 end
