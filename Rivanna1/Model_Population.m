@@ -181,3 +181,4 @@ end
 %Simulate
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
 %-----------------
+SaveData(M_cells,Psi_cells,time);
