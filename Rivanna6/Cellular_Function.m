@@ -54,7 +54,7 @@ k_G = 3.02521;    d_G = 0.02;
 k_K = 1.35849;    d_K = 0.02;
 k_P = 1;    d_P = 0.02; %PTS Levels are considered constant in our model; this isn't used
 k_R = 2.26415;    d_R = 0.02;
-k_T = 0.813559;    d_T = 0.02;
+k_T = 0.813559/100;    d_T = 0.02;
 k_X = 4.186;    d_X = 0.02;
 k_Y = 2.0869565;    d_Y = 0.02;
 
