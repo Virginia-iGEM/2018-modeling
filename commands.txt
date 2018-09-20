@@ -1,8 +1,8 @@
 # SLURM
 
-## Run many jobs at once
+## Run a job
 
-echo Rivanna*/run.sh | xargs -n 1 sbatch
+sbatch run.sh
 
 ## Check your running jobs
 
