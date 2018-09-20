@@ -1,5 +1,5 @@
 
-var_display = {'Ap','Ai','R','G'};
+var_display = {'Ap','Ai','Ao','R','K','T','G'};
 bag = {M_cells, Psi_cells, para, config, var, time, var_display};
 
 %Get Readout
@@ -31,7 +31,8 @@ end
 %Display
 PlotData(CellAverage,'Average Cellular Concentration',true,true,false,bag,1);
 PlotData(CellStdDev,'Standard Deviation of Concentration',true,true,false,bag,2);
-PlotData(0,'',false,false,true,bag);
+PlotData(Readout,'CellularConc',false,false,false,bag,3);
+%PlotData(0,'',false,false,true,bag);
 
 function PlotData(data, feature, analyzed, tabs, gridview, bag,fignum) 
 %data must be config('n_snapshots') by length(var_display)
