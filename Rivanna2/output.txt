@@ -9,3 +9,8 @@ Thu Sep 20 10:53:36 EDT 2018
 For online documentation, see http://www.mathworks.com/support
 For product information, visit www.mathworks.com.
  
+Simulation is 100% done
+[Warning: Directory already exists.] 
+[> In SaveData (line 7)
+  In Model_Population (line 182)] 
+Thu Sep 20 10:55:33 EDT 2018
