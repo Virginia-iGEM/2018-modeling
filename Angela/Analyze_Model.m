@@ -1,25 +1,92 @@
-clear Figure1
-var_display = 'K';
-%Statistically Analyze
-%Graph
-Readout1 = zeros(para('n'),config('n_snapshots'));
-Readout2 = zeros(para('n'),config('n_snapshots'));
-Readout3 = zeros(para('n'),config('n_snapshots'));
-for i = 1:config('n_snapshots')
-    for j = 1:para('n')
-        Readout1(j,i) = Psi_cells{i}(var(var_display),j);
+
+var_display = {'Ap','Ai','R','G'};
+bag = {M_cells, Psi_cells, para, config, var, time, var_display};
+
+%Get Readout
+Readout = zeros(para('n'),config('n_snapshots'),length(var_display));
+for t = 1:config('n_snapshots')
+    for c = 1:para('n')
+        for v = 1:length(var_display)
+            Readout(c,t,v) = Psi_cells{t}(var(var_display{v}),c);
+        end
     end
 end
 
-hold on
-figure(1)
-
-for i=1:para('n')
-    plot(time,Readout1(i,:));
-    %plot(t,Readout2(i,:));
-    %plot(t,Readout3(i,:));
-    legend(var_display)
+%Analyze
+CellAverage = zeros(config('n_snapshots'),length(var_display));
+for t = 1:config('n_snapshots')
+    for v = 1:length(var_display)
+         CellAverage(t,v) = mean(Readout(:,t,v));
+    end
 end
-hold off
-GridView(M_cells,Psi_cells,var(var_display),para('t_i'),para('t_f'),config('n_snapshots'));
-%SaveData(M_cells, Psi_cells, time)
+
+CellStdDev = zeros(config('n_snapshots'),length(var_display));
+for t = 1:config('n_snapshots')
+    for v = 1:length(var_display)
+         CellAverage(t,v) = std(Readout(:,t,v));
+    end
+end
+
+
+%Display
+
+PlotData(CellAverage,'Average',true,true,false,bag);
+PlotData(CellStdDev,'Standard Deviation',true,true,false, bag);
+%PlotData(0,'',false,false,true,bag);
+
+function PlotData(data, feature, analyzed, tabs, gridview, bag) 
+%data must be config('n_snapshots') by length(var_display)
+%feature: essentially just figure title
+%gridview: display Gridview
+%tabs: coallate different variables into tabs
+%analyzed: does this data not contain multiple cellular data columns
+M_cells = bag{1};
+Psi_cells = bag{2};
+para = bag{3};
+config = bag{4};
+var = bag{5};
+time = bag{6};
+var_display = bag{7};
+
+if ~gridview
+    if analyzed
+    hold on
+        if ~tabs
+            figure(1)
+            for v = 1:length(var_display)
+                plot(time,data(:,v));
+                title(feature);
+                xlabel('time (min)')
+                ylabel(strcat(var_display{v}, ' (uM)'));
+            end
+            legend(var_display)
+        else
+            tabgp = uitabgroup;
+            for v = 1:length(var_display)
+                tab = uitab(tabgp,'Title',strcat('___',var_display{v},'___'));
+                axes('Parent',tab);
+                plot(time,data(:,v));
+                title(feature);
+                xlabel('time (min)')
+                ylabel(strcat(var_display{v}, ' (uM)'));
+                legend(var_display{v})
+            end
+    
+        end
+        hold off
+    else
+        hold on
+        figure(1)
+        for c = 1:para('n')
+            plot(time,data(c,:,1));
+        end
+        xlabel('time (min)')
+        ylabel(strcat(var_display{1}, ' (uM)'));
+        legend(var_display{1})
+        hold off
+    end
+else
+    GridView(M_cells,Psi_cells,var(var_display{1}),para('t_i'),para('t_f'),config('n_snapshots'));
+end
+
+end

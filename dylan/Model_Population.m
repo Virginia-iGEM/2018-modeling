@@ -11,12 +11,15 @@ Manipulate Psi and M matricies to test effects of initial conditions:
 Manipulate constants within Cellular_Function to test sensitivity
 
 %}
+clear 
+
 %Imports
 import Structure.*
 import GridView.*
 %---------------------
 
 %Initial Parameters
+filename = 'changethisfilename';
 para = containers.Map;
 para('n') = 64;      %DEFAULT = 64         % Number of Cells (needs to be square number)
 para('m') = 25;                             % Number of Parameters for each Cell
@@ -177,4 +180,4 @@ end
 %Simulate
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
 %-----------------
-SaveData(M_cells, Psi_cells, time, para, config, var, filename);
+%SaveData(M_cells, Psi_cells, time, para, config, var, filename);
