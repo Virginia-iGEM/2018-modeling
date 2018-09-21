@@ -1,7 +1,32 @@
+clear;
 
-var_display = {'Ap','Ai','R','G'};
+CORE = 16; %Which Rivanna core do you want to run
+runfeature = 'k\_AYBP*1000';       %What changes are being tested
+var_display = {'Ap','Ai','Ao','R','K','T','G'};   %What variables to display
+
+core = string(CORE);
+directory = split(pwd,'\');
+current = directory{length(directory)};
+
+b = false;
+for i = {'Joseph','Grace','Ryan','Dylan'}
+    if strcmp(i,current)
+        b = true;
+    end
+end
+
+if ~b
+    error('Please work from your name''s directory'); 
+else
+    matfile = dir(strcat(pwd,'\data\Rivanna12*','\*.mat'));
+    load(strcat(matfile.folder,'\',matfile.name));
+end
+
 bag = {M_cells, Psi_cells, para, config, var, time, var_display};
 
+for fignum = 1:10
+    clear figure(fignum)
+end
 %Get Readout
 Readout = zeros(para('n'),config('n_snapshots'),length(var_display));
 for t = 1:config('n_snapshots')
@@ -23,23 +48,24 @@ end
 CellStdDev = zeros(config('n_snapshots'),length(var_display));
 for t = 1:config('n_snapshots')
     for v = 1:length(var_display)
-         CellAverage(t,v) = std(Readout(:,t,v));
+         CellStdDev(t,v) = std(Readout(:,t,v));
     end
 end
 
 
 %Display
-
-PlotData(CellAverage,'Average',true,true,false,bag);
-PlotData(CellStdDev,'Standard Deviation',true,true,false, bag);
+PlotData(CellAverage,strcat('Avg Cell Conc:',{' '},runfeature),true,true,false,bag,1);
+%PlotData(CellStdDev,strcat('Std Dev Conc: ',{' '},runfeature),true,true,false,bag,2);
+%PlotData(Readout,strcat('CellConcs:',{' '},runfeature),false,false,false,bag,3);
 %PlotData(0,'',false,false,true,bag);
 
-function PlotData(data, feature, analyzed, tabs, gridview, bag) 
+function PlotData(data, feature, analyzed, tabs, gridview, bag,fignum) 
 %data must be config('n_snapshots') by length(var_display)
 %feature: essentially just figure title
 %gridview: display Gridview
 %tabs: coallate different variables into tabs
 %analyzed: does this data not contain multiple cellular data columns
+%fignum: keeps successive runs from overwrite each other
 M_cells = bag{1};
 Psi_cells = bag{2};
 para = bag{3};
@@ -50,9 +76,9 @@ var_display = bag{7};
 
 if ~gridview
     if analyzed
-    hold on
+        hold on
+        figure(fignum)
         if ~tabs
-            figure(1)
             for v = 1:length(var_display)
                 plot(time,data(:,v));
                 title(feature);
@@ -76,7 +102,7 @@ if ~gridview
         hold off
     else
         hold on
-        figure(1)
+        figure(fignum)
         for c = 1:para('n')
             plot(time,data(c,:,1));
         end

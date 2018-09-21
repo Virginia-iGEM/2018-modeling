@@ -19,7 +19,7 @@ import GridView.*
 %---------------------
 
 %Initial Parameters
-filename = 'yeet';
+filename = 'temp';
 para = containers.Map;
 para('n') = 9;      %DEFAULT = 64         % Number of Cells (needs to be square number)
 para('m') = 25;                             % Number of Parameters for each Cell
@@ -27,7 +27,7 @@ para('w') = ceil(2.1*para('n')^(1/2));           % Medium/Diffusion Grid Width
 para('h') = ceil(2.1*para('n')^(1/2));           % Medium/Diffusion Grid height
 para('t_i') = 0;           %DEFAULT = 0         % Set initial time to 0
 para('t_f') =  120;         %DEFAULT = 120       % Final time
-para('dt')= 10^(-1);       %DEFAULT = 10^(-5)   % Constant timestep 
+para('dt')= 10^(-5);       %DEFAULT = 10^(-5)   % Constant timestep 
 para('D') = 10^3;          %DEFAULT = 10^(3)    % Diffusion coefficient
 %--------------------------------------------------------
 
