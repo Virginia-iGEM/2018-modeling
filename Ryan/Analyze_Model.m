@@ -56,7 +56,7 @@ end
 PlotData(CellAverage,strcat('Avg Cell Conc:',{' '},runfeature),true,true,false,bag,1);
 %PlotData(CellStdDev,strcat('Std Dev Conc: ',{' '},runfeature),true,true,false,bag,2);
 %PlotData(Readout,strcat('CellConcs:',{' '},runfeature),false,false,false,bag,3);
-%PlotData(0,'',false,false,true,bag);
+PlotData(0,'',false,false,true,bag);
 
 function PlotData(data, feature, analyzed, tabs, gridview, bag,fignum) 
 %data must be config('n_snapshots') by length(var_display)
