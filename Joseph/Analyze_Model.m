@@ -1,10 +1,9 @@
 clear;
 
-CORE = 16; %Which Rivanna core do you want to run
-runfeature = 'k\_AYBP*1000';       %What changes are being tested
+CORE = '16'; %Which Rivanna core do you want to run
+runfeature = 'k\_A(Y/B/P)(*1000)';       %What changes are being tested
 var_display = {'Ap','Ai','Ao','R','K','T','G'};   %What variables to display
 
-core = string(CORE);
 directory = split(pwd,'\');
 current = directory{length(directory)};
 
@@ -18,7 +17,7 @@ end
 if ~b
     error('Please work from your name''s directory'); 
 else
-    matfile = dir(strcat(pwd,'\data\Rivanna12*','\*.mat'));
+    matfile = dir(strcat(pwd,'\data\Rivanna',CORE,'*\*.mat'));
     load(strcat(matfile.folder,'\',matfile.name));
 end
 
@@ -55,6 +54,7 @@ end
 
 %Display
 PlotData(CellAverage,strcat('Avg Cell Conc:',{' '},runfeature),true,true,false,bag,1);
+saveas(figure(1),[pwd '\Analyses\k_A(Y,B,P)(x1000)_Sep20'])
 %PlotData(CellStdDev,strcat('Std Dev Conc: ',{' '},runfeature),true,true,false,bag,2);
 %PlotData(Readout,strcat('CellConcs:',{' '},runfeature),false,false,false,bag,3);
 %PlotData(0,'',false,false,true,bag);
