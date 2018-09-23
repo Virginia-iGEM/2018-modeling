@@ -1,125 +1,184 @@
-%2018 Virginia iGEM 
-%Quorum Sensing 
-%Model of Population Activation
-
-function [ddt] = Cellular_Function(c)
-
 %{
-Function Module
-Input vector "c" is an array of m by 1
-Vector "c" contains state information of one cell
+Virginia iGEM 2018
+Population Model of Quorum Sensing
+Requires:
+    Cellular_Function.m
+    Diffusion.m
+    Structure.m
+    GridView.m
 
-%c(1) = x
-%c(2) = y
-%c(3) = Ap 
-%c(4) = Ai
-%c(5) = Ao
-%c(6) = B %LsrACDB
-%c(7) = B|mrna ALL BELOW OUT FOR TESTING
-%c(8) = F %LsrF
-%c(9) = F|mrna
-%c(10) = G %sfGFP
-%c(11) = G|mrna
-%c(12) = K %LsrK
-%c(13) = K|mrna
-%c(14) = P %PTS
-%c(15) = P|mrna
-%c(16) = R %LsrR
-%c(17) = R|mrna
-%c(18) = T %T7
-%c(19) = T|mrna
-%c(20) = X_g %LuxS from genome
-%c(21) = X_p %LuxS from plasmid
-%c(22) = X_p|mrna 
-%c(23) = Y_g %YdgG from genome
-%c(24) = Y_p %YdgG from plasmid
-%c(25) = Y_p|mrna
+Manipulate Psi and M matricies to test effects of initial conditions:
+Manipulate constants within Cellular_Function to test sensitivity
+
 %}
+function [] = Model_Population(filename)
 
-%Rates of Reactions/Transport
-k_AoP = 0.0001;
-k_AoB = 0.0005;
-k_cat_AiK = 456;
-k_M_AiK = 1000;
-k_AiY = 0.0001;
-k_ApF = 0.019825; 
-k_ApR = 0.05;
-k_XS = 0.486;
+%Imports
+import Structure.*
+import GridView.*
+%---------------------
 
-%Translation Coefficients
-k_B = 0.48;    d_B = 0.02;
-k_F = 2.4657;    d_F = 0.02;
-k_G = 3.02521;    d_G = 0.02;
-k_K = 1.35849;    d_K = 0.02;
-k_P = 1;    d_P = 0.02; %PTS Levels are considered constant in our model; this isn't used
-k_R = 2.26415;    d_R = 0.02;
-k_T = 0.813559;    d_T = 0.02;
-k_X = 4.186;    d_X = 0.02;
-k_Y = 2.0869565;    d_Y = 0.02;
+%Initial Parameters
+para = containers.Map;
+para('n') = 9;      %DEFAULT = 9         % Number of Cells (needs to be square number)
+para('m') = 25;                             % Number of Parameters for each Cell
+para('w') = ceil(2.1*para('n')^(1/2));           % Medium/Diffusion Grid Width
+para('h') = ceil(2.1*para('n')^(1/2));           % Medium/Diffusion Grid height
+para('t_i') = 0;           %DEFAULT = 0         % Set initial time to 0
+para('t_f') =  120;         %DEFAULT = 120       % Final time
+para('dt')= 10^(-5);       %DEFAULT = 10^(-5)   % Constant timestep 
+para('D') = 10^3;          %DEFAULT = 10^(3)    % Diffusion coefficient
+%--------------------------------------------------------
 
-%These have relationships between each other that have not been considered with the 1's
-%Transcription and degradation of mRNAs (from natural plasmid)
-k_B_mrna = 0.5497;               d_B_mrna = 0.4; 
-k_F_mrna = 0.46154;               d_F_mrna = 0.4;
-                            d_G_mrna = 0.4;
-k_K_mrna = 0.9906;               d_K_mrna = 0.4;
-k_P_mrna = 1;               d_P_mrna = 0.4;
-k_R_mrna = 2.6415;               d_R_mrna = 0.4;
-                            d_T_mrna = 0.4;
-k_X_mrna = 4.8837;               d_X_mrna = 0.4;
-k_Y_mrna = 2.4348;               d_Y_mrna = 0.4;
+%Variable Indices
+var = containers.Map;
+var('x') = 1;
+var('y') = 2;
+var('Ap') = 3;
+var('Ai') = 4;
+var('Ao') = 5;
+var('B') = 6;
+var('B|mrna') = 7;
+var('F') = 8;
+var('F|mrna') = 9;
+var('G') = 10;
+var('G|mrna') = 11;
+var('K') = 12;
+var('K|mrna') = 13;
+var('P') = 14;
+var('P|mrna') = 15;
+var('R') = 16;
+var('R|mrna') = 17;
+var('T') = 18;
+var('T|mrna') = 19;
+var('X_g') = 20;
+var('X_p') = 21;
+var('X_p|mrna') = 22;
+var('Y_g') = 23;
+var('Y_p') = 24;
+var('Y_p|mrna') = 25;
+%-------------------------------
 
-%Synthetic plasmid parameters for Transcription
-kp_B_mrna = 0.573;
-kp_F_mrna = 2.95;
-kp_G_mrna = 3.61;
-kp_K_mrna = 1.62;
-kp_T_mrna = 0.27119;
-kp_X_mrna = 5.00;
-kp_Y_mrna = 2.49;
+%Configuration Parameters
+config = containers.Map;
+config('workers') = 27; 
 
-%Regulation Coefficients
-r_R_B = 0.2;
-r_R_R = 0.05;
-r_T = 1;    %ToDo: Sensitivity test on this parameter
+config('n_snapshots') = 200;
+config('print') = 1;% Should progress reports be printed to console?
+config('n_prints') = 5;% How many times should we print progress reports?
 
-%Number of Plasmids (1 = LsrR + T7, 2 = All other genes)
-n_1 = 1;
-n_2 = 1;
+config('write') = 0; % Should .csv files be written to the data folder?
+config('n_writes') = 50;  % How many times should we write .csv files?
 
-%---------------------------
+config('Psi_x') = 1;    % The row of Psi which contains the x positions of cells
+config('Psi_y') = 2;    % The row of Psi which contains the y position of cells
+config('Psi_Ai') = 4;   % The row of Psi which contains the A_o value for cells
+config('Psi_Ao') = 5;   % The row of Psi which contains the A_i value for cells
+%----------------------------------------------------
 
+%Initial Matrices
+Psi = zeros(para('m'),para('n'));
+M = zeros(para('h'),para('w'));
+%------------------------------
+
+
+%initial c vector
+c_i = zeros(para('m'),1);
 %{
-Function will calculate and output d/dt for each c(i)
- d/dt of c(i) will be determined by state of c and differential equations
- relating how the species concentrations affect each other
-%}
-
-if ~isvector(c)
-    error('Input must be a vector')
+for i = 1:para('m')
+    c_i(i,1) = 1;
 end
-ddt = zeros(25,1);
-ddt(3,1) = c(12)*c(4)*k_cat_AiK/(k_M_AiK+c(4)) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
-ddt(5,1) = k_AiY*(c(23)+c(24))*c(4) - k_AoP*c(14)*c(5) - k_AoB*c(6)*c(5);
-ddt(4,1) = k_XS*(c(20)+c(21)) - c(12)*c(4)*k_cat_AiK/(k_M_AiK+c(4)) - ddt(5,1);
-ddt(6,1) = k_B*c(7) - d_B*c(6);
-ddt(7,1) = k_B_mrna*(r_R_B^4/(r_R_B^4 + c(16)^4)) - c(7)*d_B_mrna ;%+ n_2*kp_B_mrna*(c(18)/(r_T+c(18)));
-ddt(8,1) = k_F*c(9) - d_F*c(8);
-ddt(9,1) = k_F_mrna*(r_R_B^4/(r_R_B^4 + c(16)^4)) - c(9)*d_F_mrna ;%+ n_2*kp_F_mrna*(c(18)/(r_T+c(18)))
-ddt(10,1) = k_G*c(11) - d_G*c(10);
-ddt(11,1) =  - c(11)*d_G_mrna + n_2*kp_G_mrna*(c(18)/(r_T+c(18)));
-ddt(12,1) = k_K*c(13) - d_K*c(12);
-ddt(13,1) = k_K_mrna*(r_R_R^4/(r_R_R^4 + c(16)^4)) - c(13)*d_K_mrna ;%+ n_2*kp_K_mrna*(c(18)/(r_T+c(18)));
-ddt(14,1) = 0 ;%+ k_P*c(15) - d_P*c(14);
-ddt(15,1) = 0 ;%+ k_P_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(15)*d_P_mrna + n_2*kp_P_mrna*(c(18)/(r_T+c(18)));
-ddt(16,1) = k_R*c(17) - d_R*c(16) - k_ApR*c(16)*c(3);
-ddt(17,1) = (n_1+1)*k_R_mrna*(r_R_R^4/(r_R_R^4 + c(16)^4)) - c(17)*d_R_mrna;
-ddt(18,1) = k_T*c(19) - d_T*c(18);
-ddt(19,1) = (n_1)*kp_T_mrna*(r_R_B^2/(r_R_B^2 + c(16)^2)) - c(19)*d_T_mrna;
-ddt(20,1) = 0;
-ddt(21,1) = k_X*c(22) - d_X*c(21);
-ddt(22,1) =  - c(22)*d_X_mrna ;%+ n_2*kp_X_mrna*(c(18)/(r_T+c(18)));
-ddt(23,1) = 0;
-ddt(24,1) = k_Y*c(25) - d_Y*c(24);
-ddt(25,1) =  - c(25)*d_Y_mrna ;%+ n_2*kp_Y_mrna*(c(18)/(r_T+c(18)));
+%}
+
+c_i(var('Ap')) = 		0;
+c_i(var('Ai')) = 		0;
+c_i(var('Ao')) = 		0.0045;
+c_i(var('B')) = 		0;
+c_i(var('B|mrna')) = 	0;
+c_i(var('F')) = 		0.32619;
+c_i(var('F|mrna')) = 	0.002646;
+c_i(var('G')) = 		0;
+c_i(var('G|mrna')) = 	0;
+c_i(var('K')) = 		0.3857258; %OR 0.183
+c_i(var('K|mrna')) = 	0.0056787;
+c_i(var('P')) = 		0;
+c_i(var('P|mrna')) = 	0;
+c_i(var('R')) = 		1.7143;
+c_i(var('R|mrna')) = 	0.01514;
+c_i(var('T')) = 		0;
+c_i(var('T|mrna')) = 	0;
+c_i(var('X_g')) = 		5.85966;
+c_i(var('X_p')) =       0;
+c_i(var('X_p|mrna')) =    0;
+c_i(var('Y_g')) = 		1.4565;
+c_i(var('Y_p')) =       0;
+c_i(var('Y_p|mrna')) =    0;
+c_i(var('X_g')) =       5.85966;
+c_i(var('X_p')) =     0;
+c_i(var('X_p|mrna'))= 0;
+c_i(var('Y_g')) =     1.4565;
+c_i(var('Y_p')) =     0;
+c_i(var('Y_p|mrna'))= 0;
+%--------------------------
+
+%Reinitialize M Matrix
+for p = 1:para('h')
+    for q = 1:para('w')
+        M(p,q) = c_i(var('Ao'));
+    end
+end
+
+%initialize Psi Matrix
+iter = 1;
+
+%Cells Tightly Packed
+%{
+for x = round(para('w')/2-sqrt(para('n'))/2):1:(round(para('w')/2+sqrt(para('n')/2))-1)
+    for y = round(para('h')/2-sqrt(para('n'))/2):1:(round(para('h')/2+sqrt(para('n'))/2)-1)
+        if i<=para('n')
+            Psi(1,i) = round(x);
+            Psi(2,i) = round(y);
+            i = i+1;
+        end
+    end
+end
+%}
+%-----------------------------------------
+
+%Cells Spaced Out
+
+for i = 1:round(sqrt(para('n')))
+    for j = 1:round(sqrt(para('n')))
+        if iter<=para('n')
+            Psi(1,iter) = round(para('w')/2-2*sqrt(para('n')-1)/2+2*(i-1))+1;
+            Psi(2,iter) = round(para('h')/2-2*sqrt(para('n')-1)/2+2*(j-1))+1;
+            iter = iter+1;
+        end
+    end
+end
+%----------------------------------
+
+%Randomization Distribution
+gm = gmdistribution(1,0);
+%--------
+for i = 1:para('n')
+    for j = 3:para('m')
+    Psi(j,i) = c_i(j,1)*random(gm);
+    end
+end
+%--------------------------
+
+%initialize M Matrix
+for i = 1:para('n')
+    x = Psi(1,i);
+    y = Psi(2,i);
+    M(x,y) = Psi(5,i);
+end
+%------------------------
+
+%Simulate
+[Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
+%-----------------
+SaveData(M_cells, Psi_cells, time, para, config, var, filename);
+
 end
