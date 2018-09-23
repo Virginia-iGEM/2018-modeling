@@ -81,7 +81,7 @@ kp_Y_mrna = 2.49;
 %Regulation Coefficients
 r_R_B = 0.2;
 r_R_R = 0.05;
-r_T = 1;    %ToDo: Sensitivity test on this parameter
+r_T = 1*100;    %ToDo: Sensitivity test on this parameter
 
 %Number of Plasmids (1 = LsrR + T7, 2 = All other genes)
 n_1 = 1;
