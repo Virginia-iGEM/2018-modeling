@@ -9,3 +9,5 @@ Thu Sep 20 16:29:34 EDT 2018
 For online documentation, see http://www.mathworks.com/support
 For product information, visit www.mathworks.com.
  
+Simulation is 20% done
+slurmstepd: error: *** JOB 2425730 ON udc-ba26-15 CANCELLED AT 2018-09-23T18:29:34 ***
