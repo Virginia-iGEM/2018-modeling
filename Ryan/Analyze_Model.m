@@ -1,6 +1,6 @@
 clear;
 
-CORE = '12'; %Which Rivanna core do you want to run
+CORE = ''; %Which Rivanna core do you want to run
 runfeature = 'f';       %What changes are being tested
 var_display = {'Ap','Ai','Ao','R','K','T','G'};   %What variables to display
 
@@ -17,6 +17,7 @@ end
 if ~b
     error('Please work from your name''s directory'); 
 else
+    fprintf('Loading Data...')
     matfile = dir(strcat(pwd,'\data\Rivanna',CORE,'*\*.mat'));
     load(strcat(matfile.folder,'\',matfile.name));
 end
@@ -37,6 +38,7 @@ for t = 1:config('n_snapshots')
 end
 
 %Analyze
+fprintf('\nAnalyzing...')
 CellAverage = zeros(config('n_snapshots'),length(var_display));
 for t = 1:config('n_snapshots')
     for v = 1:length(var_display)
@@ -53,9 +55,10 @@ end
 
 
 %Display
+fprintf('\nDisplaying...\n');
 PlotData(CellAverage,strcat('Avg Cell Conc:',{' '},runfeature),true,true,false,bag,1);
-%PlotData(CellStdDev,strcat('Std Dev Conc: ',{' '},runfeature),true,true,false,bag,2);
-%PlotData(Readout,strcat('CellConcs:',{' '},runfeature),false,false,false,bag,3);
+PlotData(CellStdDev,strcat('Std Dev Conc: ',{' '},runfeature),true,true,false,bag,2);
+PlotData(Readout,strcat('CellConcs:',{' '},runfeature),false,false,false,bag,3);
 PlotData(0,'',false,false,true,bag);
 
 function PlotData(data, feature, analyzed, tabs, gridview, bag,fignum) 
