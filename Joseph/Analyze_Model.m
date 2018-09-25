@@ -1,8 +1,8 @@
 clear all;
 
-CORE = '01'; %Which Rivanna core do you want to run
-runfeature = 'Control';       %What changes are being tested
-var_display = {'Ap','Ai','Ao','R','K','T','G'};   %What variables to display
+CORE = '09'; %Which Rivanna core do you want to run
+runfeature = 'k\_AiY(x100)';       %What changes are being tested
+var_display = {'Ap','Ai','Ao','R','K','B','T','G'};   %What variables to display
 save = true;
 
 directory = split(pwd,'\');
@@ -58,9 +58,9 @@ end
 %Display
 fprintf('\nDisplaying...\n');
 PlotData(CellAverage,strcat('Avg Cell Conc:',{' '},runfeature),true,true,false,bag,1);
-if save
-    saveas(figure(1),[pwd strcat('\Analyses\',runfeature,'-Sep23')]);
-end
+%if save
+%    saveas(figure(1),[pwd ,'\Analyses\r_T(x100)_Sep23']);
+%end
 %PlotData(CellStdDev,strcat('Std Dev Conc: ',{' '},runfeature),true,true,false,bag,2);
 %PlotData(Readout,strcat('CellConcs:',{' '},runfeature),false,false,false,bag,3);
 %PlotData(0,'',false,false,true,bag);
