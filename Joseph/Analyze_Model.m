@@ -1,6 +1,6 @@
 clear all;
 
-CORE = '09'; %Which Rivanna core do you want to run
+CORE = '01'; %Which Rivanna core do you want to run
 runfeature = 'k\_AiY(x100)';       %What changes are being tested
 var_display = {'Ap','Ai','Ao','R','K','B','T','G'};   %What variables to display
 save = true;
