@@ -1,8 +1,9 @@
-clear;
+clear all;
 
-CORE = ''; %Which Rivanna core do you want to run
-runfeature = 'f';       %What changes are being tested
-var_display = {'Ap','Ai','Ao','R','K','T','G'};   %What variables to display
+CORE = '16'; %Which Rivanna core do you want to run
+runfeature = 'n1024(Ddiv100)';       %What changes are being tested
+var_display = {'Ap','Ai','Ao','R','K','B','T','G',};   %What variables to display
+save = false;
 
 directory = split(pwd,'\');
 current = directory{length(directory)};
@@ -57,9 +58,12 @@ end
 %Display
 fprintf('\nDisplaying...\n');
 PlotData(CellAverage,strcat('Avg Cell Conc:',{' '},runfeature),true,true,false,bag,1);
-PlotData(CellStdDev,strcat('Std Dev Conc: ',{' '},runfeature),true,true,false,bag,2);
-PlotData(Readout,strcat('CellConcs:',{' '},runfeature),false,false,false,bag,3);
-PlotData(0,'',false,false,true,bag);
+if save
+    saveas(figure(1),[pwd strcat('\Analyses\',runfeature,'-Sep23')]);
+end
+%PlotData(CellStdDev,strcat('Std Dev Conc: ',{' '},runfeature),true,true,false,bag,2);
+%PlotData(Readout,strcat('CellConcs:',{' '},runfeature),false,false,false,bag,3);
+%PlotData(0,'',false,false,true,bag);
 
 function PlotData(data, feature, analyzed, tabs, gridview, bag,fignum) 
 %data must be config('n_snapshots') by length(var_display)
