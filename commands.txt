@@ -21,3 +21,7 @@ echo Rivanna{1..8}/Model_Population.m | xargs -n 1 cp Ryan/Model_Population.m
 ## Copy one folder to multiple folders
 
 echo Rivana{1..8} | xargs -n 1 cp Rivanna1Default -T -r
+
+
+456*K*Ai(Ai+1) = 456*0.387258*300/(300+1000) = 40
+0.01*K*Ai = 0.1*0.387258*0.5*300 = 0.58

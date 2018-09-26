@@ -92,7 +92,7 @@ end
 
 c_i(var('Ap')) = 		0;
 c_i(var('Ai')) = 		0;
-c_i(var('Ao')) = 		0.0045;
+c_i(var('Ao')) = 		0;
 c_i(var('B')) = 		0;
 c_i(var('B|mrna')) = 	0;
 c_i(var('F')) = 		0.32619;
