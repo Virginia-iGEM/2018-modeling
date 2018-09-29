@@ -11,3 +11,10 @@ For product information, visit www.mathworks.com.
  
 Simulation is 20% done
 Simulation is 40% done
+Simulation is 61% done
+Simulation is 80% done
+Simulation is 100% done
+[Warning: Directory already exists.] 
+[> In SaveData (line 7)
+  In Model_Population (line 182)] 
+Sat Sep 29 08:16:05 EDT 2018
