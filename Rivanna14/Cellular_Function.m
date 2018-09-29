@@ -37,15 +37,14 @@ Vector "c" contains state information of one cell
 %}
 
 %Rates of Reactions/Transport
-k_AoP = 0.0001*10;
+k_AoP = 0.0001;
 k_AoB = 0.0005*10;
-k_AiK = 0.01;
-%k_cat_AiK = 456;
-%k_M_AiK = 1;
-k_AiY = 0.0001*10;
+k_cat_AiK = 456;
+k_M_AiK = 1000;
+k_AiY = 0.0001;
 k_ApF = 0.019825; 
 k_ApR = 0.05;
-k_XS = 0.486;
+k_XS = 0.486/100;
 
 %Translation Coefficients
 k_B = 0.48;    d_B = 0.02;
@@ -100,11 +99,9 @@ if ~isvector(c)
     error('Input must be a vector')
 end
 ddt = zeros(25,1);
-%ddt(3,1) = c(12)*c(4)*k_cat_AiK/(k_M_AiK+c(4)) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
-ddt(3,1) = c(12)*c(4)*k_AiK - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
+ddt(3,1) = c(12)*c(4)*k_cat_AiK/(k_M_AiK+c(4)) - k_ApR*c(16)*c(3) - k_ApF*c(8)*c(3);
 ddt(5,1) = k_AiY*(c(23)+c(24))*c(4) - k_AoP*c(14)*c(5) - k_AoB*c(6)*c(5);
-%ddt(4,1) = k_XS*(c(20)+c(21)) - c(12)*c(4)*k_cat_AiK/(k_M_AiK+c(4)) - ddt(5,1);
-ddt(4,1) = k_XS*(c(20)+c(21)) - c(12)*c(4)*k_AiK - ddt(5,1);
+ddt(4,1) = k_XS*(c(20)+c(21)) - c(12)*c(4)*k_cat_AiK/(k_M_AiK+c(4)) - ddt(5,1);
 ddt(6,1) = k_B*c(7) - d_B*c(6);
 ddt(7,1) = k_B_mrna*(r_R_B^4/(r_R_B^4 + c(16)^4)) - c(7)*d_B_mrna ;%+ n_2*kp_B_mrna*(c(18)/(r_T+c(18)));
 ddt(8,1) = k_F*c(9) - d_F*c(8);

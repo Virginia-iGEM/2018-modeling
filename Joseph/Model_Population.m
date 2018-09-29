@@ -19,9 +19,9 @@ import GridView.*
 %---------------------
 
 %Initial Parameters
-filename = 'changethisfilename';
+filename = 'temp';
 para = containers.Map;
-para('n') = 64;      %DEFAULT = 64         % Number of Cells (needs to be square number)
+para('n') = 9;      %DEFAULT = 64         % Number of Cells (needs to be square number)
 para('m') = 25;                             % Number of Parameters for each Cell
 para('w') = ceil(2.1*para('n')^(1/2));           % Medium/Diffusion Grid Width
 para('h') = ceil(2.1*para('n')^(1/2));           % Medium/Diffusion Grid height
@@ -160,7 +160,7 @@ end
 %----------------------------------
 
 %Randomization Distribution
-gm = gmdistribution(1,0);
+gm = gmdistribution(1,0.01);
 %--------
 for i = 1:para('n')
     for j = 3:para('m')
@@ -180,4 +180,4 @@ end
 %Simulate
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
 %-----------------
-%SaveData(M_cells, Psi_cells, time, para, config, var, filename);
+SaveData(M_cells, Psi_cells, time, para, config, var, filename);

@@ -1,10 +1,10 @@
-clear;
+clear all;
 
-CORE = 16; %Which Rivanna core do you want to run
-runfeature = 'k\_AYBP*1000';       %What changes are being tested
-var_display = {'Ap','Ai','Ao','R','K','T','G'};   %What variables to display
+CORE = '12'; %Which Rivanna core do you want to run
+runfeature = 'R12: kYdiv1000\_kXdiv10';       %What changes are being tested
+var_display = {'Ap','Ai','Ao','R','K','B','T','G',};   %What variables to display
+save = false;
 
-core = string(CORE);
 directory = split(pwd,'\');
 current = directory{length(directory)};
 
@@ -18,7 +18,8 @@ end
 if ~b
     error('Please work from your name''s directory'); 
 else
-    matfile = dir(strcat(pwd,'\data\Rivanna12*','\*.mat'));
+    fprintf('Loading Data...')
+    matfile = dir(strcat(pwd,'\data\Rivanna',CORE,'*\*.mat'));
     load(strcat(matfile.folder,'\',matfile.name));
 end
 
@@ -38,6 +39,7 @@ for t = 1:config('n_snapshots')
 end
 
 %Analyze
+fprintf('\nAnalyzing...')
 CellAverage = zeros(config('n_snapshots'),length(var_display));
 for t = 1:config('n_snapshots')
     for v = 1:length(var_display)
@@ -54,7 +56,11 @@ end
 
 
 %Display
+fprintf('\nDisplaying...\n');
 PlotData(CellAverage,strcat('Avg Cell Conc:',{' '},runfeature),true,true,false,bag,1);
+if save
+    saveas(figure(1),[pwd strcat('\Analyses\',runfeature,'-Sep23')]);
+end
 %PlotData(CellStdDev,strcat('Std Dev Conc: ',{' '},runfeature),true,true,false,bag,2);
 %PlotData(Readout,strcat('CellConcs:',{' '},runfeature),false,false,false,bag,3);
 %PlotData(0,'',false,false,true,bag);
