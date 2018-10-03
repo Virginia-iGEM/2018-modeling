@@ -99,8 +99,8 @@ c_i(var('F')) = 		0.32619;
 c_i(var('F|mrna')) = 	0.002646;
 c_i(var('G')) = 		0;
 c_i(var('G|mrna')) = 	0;
-c_i(var('K')) = 		0.3857258/10; %OR 0.183
-c_i(var('K|mrna')) = 	0.0056787/10;
+c_i(var('K')) = 		0.3857258; %OR 0.183
+c_i(var('K|mrna')) = 	0.0056787;
 c_i(var('P')) = 		0;
 c_i(var('P|mrna')) = 	0;
 c_i(var('R')) = 		1.7143;
@@ -113,12 +113,6 @@ c_i(var('X_p|mrna')) =    0;
 c_i(var('Y_g')) = 		1.4565;
 c_i(var('Y_p')) =       0;
 c_i(var('Y_p|mrna')) =    0;
-c_i(var('X_g')) =       5.85966;
-c_i(var('X_p')) =     0;
-c_i(var('X_p|mrna'))= 0;
-c_i(var('Y_g')) =     1.4565;
-c_i(var('Y_p')) =     0;
-c_i(var('Y_p|mrna'))= 0;
 %--------------------------
 
 %Reinitialize M Matrix
