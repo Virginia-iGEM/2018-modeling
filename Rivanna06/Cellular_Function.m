@@ -44,7 +44,7 @@ k_M_AiK = 1000;
 k_AiY = 0.0001;
 k_ApF = 0.019825; 
 k_ApR = 0.05;
-k_XS = 1.2e-4;
+k_XS = 0.486;
 
 %Translation Coefficients
 k_B = 0.48;    d_B = 0.02;
@@ -52,7 +52,7 @@ k_F = 2.4657;    d_F = 0.02;
 k_G = 3.02521;    d_G = 0.02;
 k_K = 1.35849;    d_K = 0.02;
 k_P = 1;    d_P = 0.02; %PTS Levels are considered constant in our model; this isn't used
-k_R = 2.26415;    d_R = 0.02/10;
+k_R = 2.26415;    d_R = 0.02;
 k_T = 0.813559;    d_T = 0.02;
 k_X = 4.186;    d_X = 0.02;
 k_Y = 2.0869565;    d_Y = 0.02;
