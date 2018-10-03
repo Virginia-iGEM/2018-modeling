@@ -113,12 +113,6 @@ c_i(var('X_p|mrna')) =    0;
 c_i(var('Y_g')) = 		1.4565;
 c_i(var('Y_p')) =       0;
 c_i(var('Y_p|mrna')) =    0;
-c_i(var('X_g')) =       5.85966;
-c_i(var('X_p')) =     0;
-c_i(var('X_p|mrna'))= 0;
-c_i(var('Y_g')) =     1.4565;
-c_i(var('Y_p')) =     0;
-c_i(var('Y_p|mrna'))= 0;
 %--------------------------
 
 %Reinitialize M Matrix
