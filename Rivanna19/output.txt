@@ -1,0 +1,17 @@
+Mon Oct  1 19:26:02 EDT 2018
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017a (9.2.0.556344) 64-bit (glnxa64)
+                               March 27, 2017
+
+ 
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+Simulation is 20% done
+Simulation is 40% done
+Simulation is 60% done
+Simulation is 80% done
+Simulation is 100% done
+Mon Oct  1 22:42:49 EDT 2018

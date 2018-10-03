@@ -1,7 +1,7 @@
 clear all;
 
-CORE = '12'; %Which Rivanna core do you want to run
-runfeature = 'R12: kYdiv1000\_kXdiv10';       %What changes are being tested
+CORE = '19'; %Which Rivanna core do you want to run
+runfeature = 'kXS/100';       %What changes are being tested
 var_display = {'Ap','Ai','Ao','R','K','B','T','G',};   %What variables to display
 save = false;
 
@@ -118,7 +118,7 @@ if ~gridview
         hold off
     end
 else
-    GridView(M_cells,Psi_cells,var(var_display{1}),para('t_i'),para('t_f'),config('n_snapshots'));
+    GridView(M_cells,Psi_cells,0*var(var_display{1}),para('t_i'),para('t_f'),config('n_snapshots'));
 end
 
 end
