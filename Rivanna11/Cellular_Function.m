@@ -41,10 +41,10 @@ k_AoP = 0.0001;
 k_AoB = 0.0005;
 k_cat_AiK = 456;
 k_M_AiK = 1000;
-k_AiY = 0.0001;
+k_AiY = 0.0001*100;
 k_ApF = 0.019825; 
 k_ApR = 0.05;
-k_XS = 0.486;
+k_XS = 0.486/500;
 
 %Translation Coefficients
 k_B = 0.48;    d_B = 0.02;
@@ -81,7 +81,7 @@ kp_Y_mrna = 2.49;
 %Regulation Coefficients
 r_R_B = 0.2;
 r_R_R = 0.05;
-r_T = 100;
+r_T = 100*8
 
 %Number of Plasmids (1 = LsrR + T7, 2 = All other genes)
 n_1 = 1;
