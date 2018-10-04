@@ -1,7 +1,7 @@
 clear all;
 
-CORE = '19'; %Which Rivanna core do you want to run
-runfeature = 'kXS/100';       %What changes are being tested
+CORE = '21'; %Which Rivanna core do you want to run
+runfeature = 'Ki/100\_Kimrna/100';       %What changes are being tested
 var_display = {'Ap','Ai','Ao','R','K','B','T','G',};   %What variables to display
 save = false;
 
