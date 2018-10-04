@@ -44,7 +44,7 @@ k_M_AiK = 1000;
 k_AiY = 0.0001*5;
 k_ApF = 0.019825; 
 k_ApR = 0.05;
-k_XS = 0.486;
+k_XS = 0.486/10;
 
 %Translation Coefficients
 k_B = 0.48;    d_B = 0.02;
@@ -62,7 +62,7 @@ k_Y = 2.0869565;    d_Y = 0.02;
 k_B_mrna = 0.5497;               d_B_mrna = 0.4; 
 k_F_mrna = 0.46154;               d_F_mrna = 0.4;
                             d_G_mrna = 0.4;
-k_K_mrna = 0.9906;               d_K_mrna = 0.4;
+k_K_mrna = 0.9906/100;               d_K_mrna = 0.4;
 k_P_mrna = 1;               d_P_mrna = 0.4;
 k_R_mrna = 2.6415;               d_R_mrna = 0.4;
                             d_T_mrna = 0.4;
@@ -80,7 +80,7 @@ kp_Y_mrna = 2.49;
 
 %Regulation Coefficients
 r_R_B = 0.2;
-r_R_R = 0.05;
+r_R_R = 0.05*7;
 r_T = 100;
 
 %Number of Plasmids (1 = LsrR + T7, 2 = All other genes)

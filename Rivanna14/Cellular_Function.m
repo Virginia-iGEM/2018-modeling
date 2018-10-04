@@ -62,7 +62,7 @@ k_Y = 2.0869565;    d_Y = 0.02;
 k_B_mrna = 0.5497;               d_B_mrna = 0.4; 
 k_F_mrna = 0.46154;               d_F_mrna = 0.4;
                             d_G_mrna = 0.4;
-k_K_mrna = 0.9906;               d_K_mrna = 0.4;
+k_K_mrna = 0.9906*10;               d_K_mrna = 0.4;
 k_P_mrna = 1;               d_P_mrna = 0.4;
 k_R_mrna = 2.6415;               d_R_mrna = 0.4;
                             d_T_mrna = 0.4;
