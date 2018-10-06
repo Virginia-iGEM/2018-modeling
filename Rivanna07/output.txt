@@ -1,4 +1,4 @@
-Thu Oct  4 19:34:24 EDT 2018
+Sat Oct  6 01:51:54 EDT 2018
 
                             < M A T L A B (R) >
                   Copyright 1984-2017 The MathWorks, Inc.
@@ -11,7 +11,7 @@ For product information, visit www.mathworks.com.
  
 Simulation is 20% done
 Simulation is 40% done
-Simulation is 60% done
+Simulation is 61% done
 Simulation is 80% done
 Simulation is 100% done
-Thu Oct  4 22:44:41 EDT 2018
+Sat Oct  6 09:48:07 EDT 2018
