@@ -9,3 +9,9 @@ Sat Oct  6 15:00:10 EDT 2018
 For online documentation, see http://www.mathworks.com/support
 For product information, visit www.mathworks.com.
  
+Simulation is 20% done
+Simulation is 40% done
+Simulation is 61% done
+Simulation is 80% done
+Simulation is 100% done
+Sat Oct  6 22:06:28 EDT 2018
