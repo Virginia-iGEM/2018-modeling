@@ -41,10 +41,10 @@ k_AoP = 0.0001;
 k_AoB = 0.0005;
 k_cat_AiK = 456;
 k_M_AiK = 1000;
-k_AiY = 0.0001*5*100;
+k_AiY = 0.0001*50;
 k_ApF = 0.019825; 
-k_ApR = 0.05;
-k_XS = (0.482/2)/100;
+k_ApR = 0.05/10;
+k_XS = 0.486/2;
 
 %Translation Coefficients
 k_B = 0.48;    d_B = 0.02;
@@ -62,7 +62,7 @@ k_Y = 2.0869565;    d_Y = 0.02;
 k_B_mrna = 0.5497;               d_B_mrna = 0.4; 
 k_F_mrna = 0.46154;               d_F_mrna = 0.4;
                             d_G_mrna = 0.4;
-k_K_mrna = 0.9906;               d_K_mrna = 0.4;
+k_K_mrna = 0.9906*5;               d_K_mrna = 0.4;
 k_P_mrna = 1;               d_P_mrna = 0.4;
 k_R_mrna = 2.6415;               d_R_mrna = 0.4;
                             d_T_mrna = 0.4;
