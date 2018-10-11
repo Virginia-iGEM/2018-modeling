@@ -22,7 +22,7 @@ M: normalization function for growth : for visualizing relative distribution
 nG: normalized growth of P over time : relative distribution : area = 1
 
 S: total rate of GFP production in the colony at time t
-A: average rate of GFP production among cells at time t
+A: average rate of GFP production in the cells at time t
 T: total, integral GFP output at time t
 
 -------------------------------
