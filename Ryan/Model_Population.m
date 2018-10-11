@@ -23,12 +23,12 @@ filename = 'temp';
 para = containers.Map;
 para('n') = 9;      %DEFAULT = 64         % Number of Cells (needs to be square number)
 para('m') = 25;                             % Number of Parameters for each Cell
-para('w') = ceil(2.1*para('n')^(1/2));           % Medium/Diffusion Grid Width
-para('h') = ceil(2.1*para('n')^(1/2));           % Medium/Diffusion Grid height
+para('w') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid Width
+para('h') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid height
 para('t_i') = 0;           %DEFAULT = 0         % Set initial time to 0
-para('t_f') =  120;         %DEFAULT = 120       % Final time
-para('dt')= 10^(-5);       %DEFAULT = 10^(-5)   % Constant timestep 
-para('D') = 10^3;          %DEFAULT = 10^(3)    % Diffusion coefficient
+para('t_f') =  1;         %DEFAULT = 120       % Final time
+para('dt')= 10^(-4);       %DEFAULT = 10^(-5)   % Constant timestep 
+para('D') = 1000;          %DEFAULT = 10^(3)    % Diffusion coefficient
 %--------------------------------------------------------
 
 %Variable Indices
@@ -92,8 +92,8 @@ end
 %}
 
 c_i(var('Ap')) = 		0;
-c_i(var('Ai')) = 		0;
-c_i(var('Ao')) = 		0.0045;
+c_i(var('Ai')) = 		10;
+c_i(var('Ao')) = 		1;
 c_i(var('B')) = 		0;
 c_i(var('B|mrna')) = 	0;
 c_i(var('F')) = 		0.32619;
@@ -117,7 +117,7 @@ c_i(var('Y_p|mrna')) =    0;
 c_i(var('X_g')) =       5.85966;
 c_i(var('X_p')) =     0;
 c_i(var('X_p|mrna'))= 0;
-c_i(var('Y_g')) =     1.4565;
+c_i(var('Y_g')) =     1.4565*1000;
 c_i(var('Y_p')) =     0;
 c_i(var('Y_p|mrna'))= 0;
 %--------------------------
@@ -144,10 +144,19 @@ for x = round(para('w')/2-sqrt(para('n'))/2):1:(round(para('w')/2+sqrt(para('n')
     end
 end
 %}
+for i = 1:round(sqrt(para('n')))
+    for j = 1:round(sqrt(para('n')))
+        if iter<=para('n')
+            Psi(1,iter) = round(para('w')/2-sqrt(para('n')-1)/2+(i-1))+1;
+            Psi(2,iter) = round(para('h')/2-sqrt(para('n')-1)/2+(j-1))+1;
+            iter = iter+1;
+        end
+    end
+end
 %-----------------------------------------
 
 %Cells Spaced Out
-
+%{
 for i = 1:round(sqrt(para('n')))
     for j = 1:round(sqrt(para('n')))
         if iter<=para('n')
@@ -157,10 +166,11 @@ for i = 1:round(sqrt(para('n')))
         end
     end
 end
+%}
 %----------------------------------
 
 %Randomization Distribution
-gm = gmdistribution(1,0.01);
+gm = gmdistribution(1,0.00001);
 %--------
 for i = 1:para('n')
     for j = 3:para('m')
@@ -180,4 +190,4 @@ end
 %Simulate
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
 %-----------------
-SaveData(M_cells, Psi_cells, time, para, config, var, filename);
+GridView(M_cells,Psi_cells,0,para('t_i'),para('t_f'),config('n_snapshots'))

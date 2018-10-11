@@ -41,10 +41,10 @@ k_AoP = 0.0001;
 k_AoB = 0.0005;
 k_cat_AiK = 456;
 k_M_AiK = 1000;
-k_AiY = 0.0001;
+k_AiY = 0.0001*50;
 k_ApF = 0.019825; 
-k_ApR = 0.05;
-k_XS = 0.486;
+k_ApR = 0.05/10;
+k_XS = 0.486/2;
 
 %Translation Coefficients
 k_B = 0.48;    d_B = 0.02;
@@ -52,7 +52,7 @@ k_F = 2.4657;    d_F = 0.02;
 k_G = 3.02521;    d_G = 0.02;
 k_K = 1.35849;    d_K = 0.02;
 k_P = 1;    d_P = 0.02; %PTS Levels are considered constant in our model; this isn't used
-k_R = 2.26415;    d_R = 0.02;
+k_R = 2.26415;    d_R = 0.02/2;
 k_T = 0.813559;    d_T = 0.02;
 k_X = 4.186;    d_X = 0.02;
 k_Y = 2.0869565;    d_Y = 0.02;
@@ -62,7 +62,7 @@ k_Y = 2.0869565;    d_Y = 0.02;
 k_B_mrna = 0.5497;               d_B_mrna = 0.4; 
 k_F_mrna = 0.46154;               d_F_mrna = 0.4;
                             d_G_mrna = 0.4;
-k_K_mrna = 0.9906;               d_K_mrna = 0.4;
+k_K_mrna = 0.9906*5;               d_K_mrna = 0.4;
 k_P_mrna = 1;               d_P_mrna = 0.4;
 k_R_mrna = 2.6415;               d_R_mrna = 0.4;
                             d_T_mrna = 0.4;
@@ -109,7 +109,7 @@ ddt(9,1) = k_F_mrna*(r_R_B^4/(r_R_B^4 + c(16)^4)) - c(9)*d_F_mrna ;%+ n_2*kp_F_m
 ddt(10,1) = k_G*c(11) - d_G*c(10);
 ddt(11,1) =  - c(11)*d_G_mrna + n_2*kp_G_mrna*(c(18)/(r_T+c(18)));
 ddt(12,1) = k_K*c(13) - d_K*c(12);
-ddt(13,1) = k_K_mrna*(r_R_R^4/(r_R_R^4 + c(16)^4)) - c(13)*d_K_mrna ;%+ n_2*kp_K_mrna*(c(18)/(r_T+c(18)));
+ddt(13,1) = k_K_mrna*(r_R_R^4/(r_R_R^4 + c(16)^4)) - c(13)*d_K_mrna + n_2*kp_K_mrna*(c(18)/(r_T+c(18)));
 ddt(14,1) = 0 ;%+ k_P*c(15) - d_P*c(14);
 ddt(15,1) = 0 ;%+ k_P_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(15)*d_P_mrna + n_2*kp_P_mrna*(c(18)/(r_T+c(18)));
 ddt(16,1) = k_R*c(17) - d_R*c(16) - k_ApR*c(16)*c(3);
