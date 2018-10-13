@@ -47,6 +47,7 @@ k_ApR = 0.05/10;
 k_XS = 0.486/2;
 
 %Translation Coefficients
+%Change all of them proportionally - *10 decrease and decrease
 k_B = 0.48;    d_B = 0.02;
 k_F = 2.4657;    d_F = 0.02;
 k_G = 3.02521;    d_G = 0.02;
