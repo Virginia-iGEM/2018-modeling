@@ -21,12 +21,12 @@ end
     y = 2:h-1;
     dM = zeros(h,w);
 %Dirichlet Boundary Conditions
-%{
+
     dM(1,:)= -M(1,:);
     dM(h,:)= -M(h,:);
     dM(:,1)= -M(:,1);
     dM(:,w)= -M(:,w);
-%}
+
 
     
 %Explicit Method for Finite Element Diffusion
@@ -38,12 +38,12 @@ end
     newM(h,:)= M(h-1,:);
     newM(:,1)= M(:,2);
     newM(:,w)= M(:,w-1);
-    %}
+    %}%{
     dM(1,:) = M(2,:) - M(1,:);
     dM(h,:)= M(h-1,:) - M(h,:);
     dM(:,1)= M(:,2) - M(:,1);
     dM(:,w)= M(:,w-1) - M(:,w);
-    
+    %}
     
     
 end

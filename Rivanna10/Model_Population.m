@@ -95,8 +95,8 @@ c_i(var('Ai')) = 		0;
 c_i(var('Ao')) = 		0;
 c_i(var('B')) = 		0;
 c_i(var('B|mrna')) = 	0;
-c_i(var('F')) = 		0.32619*4;
-c_i(var('F|mrna')) = 	0.002646*4;
+c_i(var('F')) = 		0.32619*6;
+c_i(var('F|mrna')) = 	0.002646*6;
 c_i(var('G')) = 		0;
 c_i(var('G|mrna')) = 	0;
 c_i(var('K')) = 		0.183/200; %OR 0.3857258
@@ -168,6 +168,9 @@ for i = 1:para('n')
     M(x,y) = Psi(5,i);
 end
 %------------------------
+
+Psi(1,1) = 2;
+Psi(1,2) = 2;
 
 %Simulate
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);

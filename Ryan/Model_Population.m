@@ -21,7 +21,7 @@ import GridView.*
 %Initial Parameters
 filename = 'temp';
 para = containers.Map;
-para('n') = 9;      %DEFAULT = 64         % Number of Cells (needs to be square number)
+para('n') = 1;      %DEFAULT = 64         % Number of Cells (needs to be square number)
 para('m') = 25;                             % Number of Parameters for each Cell
 para('w') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid Width
 para('h') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid height
@@ -147,8 +147,8 @@ end
 for i = 1:round(sqrt(para('n')))
     for j = 1:round(sqrt(para('n')))
         if iter<=para('n')
-            Psi(1,iter) = round(para('w')/2-sqrt(para('n')-1)/2+(i-1))+1;
-            Psi(2,iter) = round(para('h')/2-sqrt(para('n')-1)/2+(j-1))+1;
+            Psi(1,iter) = floor(para('w')/2-sqrt(para('n')-1)/2+(i-1))+1;
+            Psi(2,iter) = floor(para('h')/2-sqrt(para('n')-1)/2+(j-1))+1;
             iter = iter+1;
         end
     end
