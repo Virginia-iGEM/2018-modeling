@@ -38,19 +38,19 @@ Vector "c" contains state information of one cell
 
 %Rates of Reactions/Transport
 k_AoP = 0.0001;
-k_AoB = 0.0005;
-k_cat_AiK = 456;
+k_AoB = 0.0005*1000;
+k_cat_AiK = 456/2;
 k_M_AiK = 1000;
-k_AiY = 0.0001*50;
+k_AiY = 0.0001*500;
 k_ApF = 0.019825; 
 k_ApR = 0.05/10;
 k_XS = 0.486/2;
 
 %Translation Coefficients
-k_B = 0.48;    d_B = 0.02;
+k_B = 0.48;    d_B = 0.02/100;
 k_F = 2.4657;    d_F = 0.02;
 k_G = 3.02521;    d_G = 0.02;
-k_K = 1.35849;    d_K = 0.02;
+k_K = 1.35849;    d_K = 0.02/10;
 k_P = 1;    d_P = 0.02; %PTS Levels are considered constant in our model; this isn't used
 k_R = 2.26415;    d_R = 0.02/2;
 k_T = 0.813559;    d_T = 0.02;
@@ -59,10 +59,10 @@ k_Y = 2.0869565;    d_Y = 0.02;
 
 %These have relationships between each other that have not been considered with the 1's
 %Transcription and degradation of mRNAs (from natural plasmid)
-k_B_mrna = 0.5497;               d_B_mrna = 0.4; 
+k_B_mrna = 0.5497;               d_B_mrna = 0.4/100; 
 k_F_mrna = 0.46154;               d_F_mrna = 0.4;
                             d_G_mrna = 0.4;
-k_K_mrna = 0.9906*5;               d_K_mrna = 0.4;
+k_K_mrna = 0.9906*5;               d_K_mrna = 0.4/10;
 k_P_mrna = 1;               d_P_mrna = 0.4;
 k_R_mrna = 2.6415;               d_R_mrna = 0.4;
                             d_T_mrna = 0.4;
@@ -115,10 +115,10 @@ ddt(15,1) = 0 ;%+ k_P_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(15)*d_P_mrna + n_2*kp_P
 ddt(16,1) = k_R*c(17) - d_R*c(16) - k_ApR*c(16)*c(3);
 ddt(17,1) = (n_1+1)*k_R_mrna*(r_R_R^4/(r_R_R^4 + c(16)^4)) - c(17)*d_R_mrna;
 ddt(18,1) = k_T*c(19) - d_T*c(18);
-ddt(19,1) = (n_1)*kp_T_mrna*(r_R_B^2/(r_R_B^2 + c(16)^2)) - c(19)*d_T_mrna;
+ddt(19,1) = (n_1)*kp_T_mrna*(r_R_B^4/(r_R_B^4 + c(16)^4)) - c(19)*d_T_mrna;
 ddt(20,1) = 0;
 ddt(21,1) = k_X*c(22) - d_X*c(21);
-ddt(22,1) =  - c(22)*d_X_mrna + n_2*kp_X_mrna*(c(18)/(r_T+c(18)));
+ddt(22,1) =  - c(22)*d_X_mrna ;%+ n_2*kp_X_mrna*(c(18)/(r_T+c(18)));
 ddt(23,1) = 0;
 ddt(24,1) = k_Y*c(25) - d_Y*c(24);
 ddt(25,1) =  - c(25)*d_Y_mrna ;%+ n_2*kp_Y_mrna*(c(18)/(r_T+c(18)));

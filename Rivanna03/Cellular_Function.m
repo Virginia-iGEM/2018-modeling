@@ -38,10 +38,10 @@ Vector "c" contains state information of one cell
 
 %Rates of Reactions/Transport
 k_AoP = 0.0001;
-k_AoB = 0.0005;
-k_cat_AiK = 456;
+k_AoB = 0.0005*1000;
+k_cat_AiK = 456/10;
 k_M_AiK = 1000;
-k_AiY = 0.0001*50*5;
+k_AiY = 0.0001*500;
 k_ApF = 0.019825; 
 k_ApR = 0.05/10;
 k_XS = 0.486/2;
@@ -115,7 +115,7 @@ ddt(15,1) = 0 ;%+ k_P_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(15)*d_P_mrna + n_2*kp_P
 ddt(16,1) = k_R*c(17) - d_R*c(16) - k_ApR*c(16)*c(3);
 ddt(17,1) = (n_1+1)*k_R_mrna*(r_R_R^4/(r_R_R^4 + c(16)^4)) - c(17)*d_R_mrna;
 ddt(18,1) = k_T*c(19) - d_T*c(18);
-ddt(19,1) = (n_1)*kp_T_mrna*(r_R_B^2/(r_R_B^2 + c(16)^2)) - c(19)*d_T_mrna;
+ddt(19,1) = (n_1)*kp_T_mrna*(r_R_B^4/(r_R_B^4 + c(16)^4)) - c(19)*d_T_mrna;
 ddt(20,1) = 0;
 ddt(21,1) = k_X*c(22) - d_X*c(21);
 ddt(22,1) =  - c(22)*d_X_mrna ;%+ n_2*kp_X_mrna*(c(18)/(r_T+c(18)));
