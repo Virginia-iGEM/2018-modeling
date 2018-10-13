@@ -1,8 +1,8 @@
 clear all;
 
-CORE = '04'; %Which Rivanna core do you want to run
-runfeature = 'kAB*10';       %What changes are being tested
-var_display = {'Ap','Ai','Ao','R','K','B','T','G',};   %What variables to display
+CORE = '17'; %Which Rivanna core do you want to run
+runfeature = '';       %What changes are being tested
+var_display = {'Ap','Ai','Ao','R','K','B','T','G','F'};   %What variables to display
 save = false;
 
 directory = split(pwd,'\');
