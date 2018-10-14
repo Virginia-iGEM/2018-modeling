@@ -43,7 +43,7 @@ k_cat_AiK = 456;
 k_M_AiK = 1000;
 k_AiY = 0.0001*1000;
 k_ApF = 0.019825; 
-k_ApR = 0.05/10;
+k_ApR = 0.05/2;
 k_XS = (0.486/3);
 
 %Translation Coefficients
