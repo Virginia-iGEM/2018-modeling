@@ -38,10 +38,10 @@ Vector "c" contains state information of one cell
 
 %Rates of Reactions/Transport
 k_AoP = 0.0001;
-k_AoB = 0.0005*10000;
+k_AoB = 0.0005*6000;
 k_cat_AiK = 456;
 k_M_AiK = 1000;
-k_AiY = 0.0001*5000;
+k_AiY = 0.0001*3000;
 k_ApF = 0.019825; 
 k_ApR = 0.05/2;
 k_XS = (0.486/3);

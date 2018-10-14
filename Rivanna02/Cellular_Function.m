@@ -38,10 +38,10 @@ Vector "c" contains state information of one cell
 
 %Rates of Reactions/Transport
 k_AoP = 0.0001;
-k_AoB = 0.0005*2000;
+k_AoB = 0.0005*6000;
 k_cat_AiK = 456;
 k_M_AiK = 1000;
-k_AiY = 0.0001*1000;
+k_AiY = 0.0001*3000;
 k_ApF = 0.019825; 
 k_ApR = 0.05/2;
 k_XS = (0.486/3);
@@ -84,7 +84,7 @@ r_R_R = 0.05;
 r_T = 100;
 
 %Number of Plasmids (1 = LsrR + T7, 2 = All other genes)
-n_1 = 1;
+n_1 = 5;
 n_2 = 1;
 
 %---------------------------

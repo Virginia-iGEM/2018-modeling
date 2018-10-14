@@ -1,4 +1,4 @@
-%2018 Virginia iGEM 
+r%2018 Virginia iGEM 
 %Quorum Sensing 
 %Model of Population Activation
 
@@ -38,10 +38,10 @@ Vector "c" contains state information of one cell
 
 %Rates of Reactions/Transport
 k_AoP = 0.0001;
-k_AoB = 0.0005*10000;
+k_AoB = 0.0005*6000;
 k_cat_AiK = 456;
 k_M_AiK = 1000;
-k_AiY = 0.0001*5000;
+k_AiY = 0.0001*3000;
 k_ApF = 0.019825; 
 k_ApR = 0.05/2;
 k_XS = (0.486/3);
@@ -85,7 +85,7 @@ r_T = 100;
 
 %Number of Plasmids (1 = LsrR + T7, 2 = All other genes)
 n_1 = 1;
-n_2 = 1;
+n_2 = 5;
 
 %---------------------------
 
@@ -118,7 +118,7 @@ ddt(18,1) = k_T*c(19) - d_T*c(18);
 ddt(19,1) = (n_1)*kp_T_mrna*(r_R_B^4/(r_R_B^4 + c(16)^4)) - c(19)*d_T_mrna;
 ddt(20,1) = 0;
 ddt(21,1) = k_X*c(22) - d_X*c(21);
-ddt(22,1) =  - c(22)*d_X_mrna ;%+ n_2*kp_X_mrna*(c(18)/(r_T+c(18)));
+ddt(22,1) =  - c(22)*d_X_mrna + n_2*kp_X_mrna*(c(18)/(r_T+c(18)));
 ddt(23,1) = 0;
 ddt(24,1) = k_Y*c(25) - d_Y*c(24);
 ddt(25,1) =  - c(25)*d_Y_mrna ;%+ n_2*kp_Y_mrna*(c(18)/(r_T+c(18)));

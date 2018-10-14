@@ -20,26 +20,30 @@ end
     x = 2:w-1;
     y = 2:h-1;
     dM = zeros(h,w);
+%Dirichlet Boundary Conditions
+%{
+    dM(1,:)= -M(1,:);
+    dM(h,:)= -M(h,:);
+    dM(:,1)= -M(:,1);
+    dM(:,w)= -M(:,w);
+%}
 
     
 %Explicit Method for Finite Element Diffusion
     dM(y,x) = (d*(M(y+1,x)-2*M(y,x)+M(y-1,x)))+(d*(M(y,x+1)-2*M(y,x)+M(y,x-1)));
 
-%Dirichlet Boundary Conditions
-    dM(1,:)= -M(1,:);
-    dM(h,:)= -M(h,:);
-    dM(:,1)= -M(:,1);
-    dM(:,w)= -M(:,w);
-
-    
 %Neumann Boundary Condition
-
 %{
+    newM(1,:)= M(2,:);
+    newM(h,:)= M(h-1,:);
+    newM(:,1)= M(:,2);
+    newM(:,w)= M(:,w-1);
+    %}
     dM(1,:) = M(2,:) - M(1,:);
     dM(h,:)= M(h-1,:) - M(h,:);
     dM(:,1)= M(:,2) - M(:,1);
     dM(:,w)= M(:,w-1) - M(:,w);
     
-    %}
+    
     
 end
