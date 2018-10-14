@@ -80,7 +80,7 @@ kp_Y_mrna = 2.49;
 
 %Regulation Coefficients
 r_R_B = 0.2;
-r_R_R = 0.2;
+r_R_R = 0.05*2;
 r_T = 100;
 
 %Number of Plasmids (1 = LsrR + T7, 2 = All other genes)
