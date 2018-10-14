@@ -25,8 +25,8 @@ para('m') = 25;                             % Number of Parameters for each Cell
 para('w') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid Width
 para('h') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid height
 para('t_i') = 0;           %DEFAULT = 0         % Set initial time to 0
-para('t_f') =  400;         %DEFAULT = 120       % Final time
-para('dt')= 10^(-5)*100;       %DEFAULT = 10^(-5)   % Constant timestep 
+para('t_f') =  600;         %DEFAULT = 120       % Final time
+para('dt')= 10^(-5)*25;       %DEFAULT = 10^(-5)   % Constant timestep 
 para('D') = 500;          %DEFAULT = 10^(3)/2    % Diffusion coefficient
 %--------------------------------------------------------
 
@@ -63,7 +63,7 @@ var('Y_p|mrna') = 25;
 config = containers.Map;
 config('workers') = 27; 
 
-config('n_snapshots') = 200;
+config('n_snapshots') = 400;
 config('print') = 1;% Should progress reports be printed to console?
 config('n_prints') = 5;% How many times should we print progress reports?
 
