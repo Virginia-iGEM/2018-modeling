@@ -1,4 +1,4 @@
-r%2018 Virginia iGEM 
+%2018 Virginia iGEM 
 %Quorum Sensing 
 %Model of Population Activation
 
