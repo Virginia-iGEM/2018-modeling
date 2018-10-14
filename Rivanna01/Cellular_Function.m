@@ -43,7 +43,7 @@ k_cat_AiK = 456;
 k_M_AiK = 1000;
 k_AiY = 0.0001*1000;
 k_ApF = 0.019825; 
-k_ApR = 0.05/2;
+k_ApR = 0.05*2;
 k_XS = (0.486/3);
 
 %Translation Coefficients
@@ -52,7 +52,7 @@ k_F = 2.4657/4;    d_F = 0.02;
 k_G = 3.02521;    d_G = 0.02/2;
 k_K = 1.35849;    d_K = 0.02/5;
 k_P = 1;    d_P = 0.02; %PTS Levels are considered constant in our model; this isn't used
-k_R = 2.26415;    d_R = 0.02/2;
+k_R = 2.26415;    d_R = 0.02/5;
 k_T = 0.813559;    d_T = 0.02/2;
 k_X = 4.186;    d_X = 0.02;
 k_Y = 2.0869565;    d_Y = 0.02;
@@ -64,7 +64,7 @@ k_F_mrna = 0.46154/5;               d_F_mrna = 0.4;
                             d_G_mrna = 0.4;
 k_K_mrna = 0.9906;               d_K_mrna = 0.4/5;
 k_P_mrna = 1;               d_P_mrna = 0.4;
-k_R_mrna = 2.6415;               d_R_mrna = 0.4;
+k_R_mrna = 2.6415;               d_R_mrna = 0.4/2;
                             d_T_mrna = 0.4/2;
 k_X_mrna = 4.8837;               d_X_mrna = 0.4;
 k_Y_mrna = 2.4348;               d_Y_mrna = 0.4;
