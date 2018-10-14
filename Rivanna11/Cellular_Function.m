@@ -85,7 +85,7 @@ r_T = 100;
 
 %Number of Plasmids (1 = LsrR + T7, 2 = All other genes)
 n_1 = 1;
-n_2 = 1;
+n_2 = 20;
 
 %---------------------------
 
@@ -121,5 +121,5 @@ ddt(21,1) = k_X*c(22) - d_X*c(21);
 ddt(22,1) =  - c(22)*d_X_mrna ;%+ n_2*kp_X_mrna*(c(18)/(r_T+c(18)));
 ddt(23,1) = 0;
 ddt(24,1) = k_Y*c(25) - d_Y*c(24);
-ddt(25,1) =  - c(25)*d_Y_mrna ;%+ n_2*kp_Y_mrna*(c(18)/(r_T+c(18)));
+ddt(25,1) =  - c(25)*d_Y_mrna + n_2*kp_Y_mrna*(c(18)/(r_T+c(18)));
 end

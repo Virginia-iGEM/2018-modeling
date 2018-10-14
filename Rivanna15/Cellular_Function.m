@@ -85,7 +85,7 @@ r_T = 100;
 
 %Number of Plasmids (1 = LsrR + T7, 2 = All other genes)
 n_1 = 1;
-n_2 = 1;
+n_2 = 20;
 
 %---------------------------
 
@@ -109,7 +109,7 @@ ddt(9,1) = k_F_mrna*(r_R_B^4/(r_R_B^4 + c(16)^4)) - c(9)*d_F_mrna ;%+ n_2*kp_F_m
 ddt(10,1) = k_G*c(11) - d_G*c(10);
 ddt(11,1) =  - c(11)*d_G_mrna + n_2*kp_G_mrna*(c(18)/(r_T+c(18)));
 ddt(12,1) = k_K*c(13) - d_K*c(12);
-ddt(13,1) = k_K_mrna*(r_R_R^4/(r_R_R^4 + c(16)^4)) - c(13)*d_K_mrna ;%+ n_2*kp_K_mrna*(c(18)/(r_T+c(18)));
+ddt(13,1) = k_K_mrna*(r_R_R^4/(r_R_R^4 + c(16)^4)) - c(13)*d_K_mrna + n_2*kp_K_mrna*(c(18)/(r_T+c(18)));
 ddt(14,1) = 0 ;%+ k_P*c(15) - d_P*c(14);
 ddt(15,1) = 0 ;%+ k_P_mrna*(r_R^4/(r_R^4 + c(16)^4)) - c(15)*d_P_mrna + n_2*kp_P_mrna*(c(18)/(r_T+c(18)));
 ddt(16,1) = k_R*c(17) - d_R*c(16) - k_ApR*c(16)*c(3);
@@ -118,7 +118,7 @@ ddt(18,1) = k_T*c(19) - d_T*c(18);
 ddt(19,1) = (n_1)*kp_T_mrna*(r_R_B^4/(r_R_B^4 + c(16)^4)) - c(19)*d_T_mrna;
 ddt(20,1) = 0;
 ddt(21,1) = k_X*c(22) - d_X*c(21);
-ddt(22,1) =  - c(22)*d_X_mrna ;%+ n_2*kp_X_mrna*(c(18)/(r_T+c(18)));
+ddt(22,1) =  - c(22)*d_X_mrna + n_2*kp_X_mrna*(c(18)/(r_T+c(18)));
 ddt(23,1) = 0;
 ddt(24,1) = k_Y*c(25) - d_Y*c(24);
 ddt(25,1) =  - c(25)*d_Y_mrna ;%+ n_2*kp_Y_mrna*(c(18)/(r_T+c(18)));

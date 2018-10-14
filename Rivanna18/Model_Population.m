@@ -20,7 +20,7 @@ import GridView.*
 
 %Initial Parameters
 para = containers.Map;
-para('n') = 1;      %DEFAULT = 9         % Number of Cells (needs to be square number)
+para('n') = 64;      %DEFAULT = 9         % Number of Cells (needs to be square number)
 para('m') = 25;                             % Number of Parameters for each Cell
 para('w') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid Width
 para('h') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid height
@@ -63,7 +63,7 @@ var('Y_p|mrna') = 25;
 config = containers.Map;
 config('workers') = 27; 
 
-config('n_snapshots') = 100;
+config('n_snapshots') = 400;
 config('print') = 1;% Should progress reports be printed to console?
 config('n_prints') = 5;% How many times should we print progress reports?
 
