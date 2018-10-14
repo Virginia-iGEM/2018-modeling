@@ -163,14 +163,13 @@ end
 
 %initialize M Matrix
 for i = 1:para('n')
-    x = Psi(1,i);
-    y = Psi(2,i);
+    Psi(1,i) = 2; %make sure to change this
+    Psi(2,i) = 2; %make sure to change this
+    	x = Psi(1,i);
+	y = Psi(2,i);
     M(x,y) = Psi(5,i);
 end
 %------------------------
-
-Psi(1,1) = 2;
-Psi(1,2) = 2;
 
 %Simulate
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
