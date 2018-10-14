@@ -39,11 +39,11 @@ Vector "c" contains state information of one cell
 %Rates of Reactions/Transport
 k_AoP = 0.0001;
 k_AoB = 0.0005*20000;
-k_cat_AiK = 456;
+k_cat_AiK = 456*2;
 k_M_AiK = 1000;
 k_AiY = 0.0001*10000;
 k_ApF = 0.019825; 
-k_ApR = 0.05/15;
+k_ApR = 0.05/10;
 k_XS = (0.486/3);
 
 %Translation Coefficients
@@ -60,9 +60,9 @@ k_Y = 2.0869565;    d_Y = 0.02;
 %These have relationships between each other that have not been considered with the 1's
 %Transcription and degradation of mRNAs (from natural plasmid)
 k_B_mrna = 0.5497;               d_B_mrna = 0.4/10; 
-k_F_mrna = 0.46154/5;               d_F_mrna = 0.4;
+k_F_mrna = 0.46154/5;               d_F_mrna = 0.4*10;
                             d_G_mrna = 0.4;
-k_K_mrna = 0.9906*10;               d_K_mrna = 0.4/5;
+k_K_mrna = 0.9906;               d_K_mrna = 0.4/5;
 k_P_mrna = 1;               d_P_mrna = 0.4;
 k_R_mrna = 2.6415;               d_R_mrna = 0.4;
                             d_T_mrna = 0.4/2;
