@@ -63,7 +63,7 @@ var('Y_p|mrna') = 25;
 config = containers.Map;
 config('workers') = 27; 
 
-config('n_snapshots') = 200;
+config('n_snapshots') = 100;
 config('print') = 1;% Should progress reports be printed to console?
 config('n_prints') = 5;% How many times should we print progress reports?
 
@@ -99,12 +99,12 @@ c_i(var('F')) = 		0.32619;
 c_i(var('F|mrna')) = 	0.002646;
 c_i(var('G')) = 		0;
 c_i(var('G|mrna')) = 	0;
-c_i(var('K')) = 		0.183/400; %OR 0.3857258
-c_i(var('K|mrna')) = 	0.0056787/400;
+c_i(var('K')) = 		0.183/200; %OR 0.3857258
+c_i(var('K|mrna')) = 	0.0056787/200;
 c_i(var('P')) = 		0;
 c_i(var('P|mrna')) = 	0;
-c_i(var('R')) = 		1.7143*2;
-c_i(var('R|mrna')) = 	0.01514*2;
+c_i(var('R')) = 		1.7143*1.5;
+c_i(var('R|mrna')) = 	0.01514*1.5;
 c_i(var('T')) = 		0;
 c_i(var('T|mrna')) = 	0;
 c_i(var('X_g')) = 		5.85966;
