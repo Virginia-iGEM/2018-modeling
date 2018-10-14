@@ -1,1 +1,12 @@
 Sun Oct 14 01:12:58 EDT 2018
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2017 The MathWorks, Inc.
+                   R2017a (9.2.0.556344) 64-bit (glnxa64)
+                               March 27, 2017
+
+ 
+For online documentation, see http://www.mathworks.com/support
+For product information, visit www.mathworks.com.
+ 
+slurmstepd: error: *** JOB 2567402 ON udc-ba26-10 CANCELLED AT 2018-10-14T01:14:40 ***
