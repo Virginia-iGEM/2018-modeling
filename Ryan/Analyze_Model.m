@@ -1,7 +1,7 @@
 clear all;
 
-CORE = '25'; %Which Rivanna core do you want to run
-runfeature = 'YdgG+LsrFG HC';       %What changes are being tested
+CORE = '26'; %Which Rivanna core do you want to run
+runfeature = 'Single Cell: Dirichlet BC';       %What changes are being tested
 var_display = {'Ap','Ai','Ao','R','K','B','T','G','F','X_p','Y_p'};   %What variables to display
 save = false;
 
@@ -63,7 +63,7 @@ if save
 end
 %PlotData(CellStdDev,strcat('Std Dev Conc: ',{' '},runfeature),true,true,false,bag,2);
 %PlotData(Readout,strcat('CellConcs:',{' '},runfeature),false,false,false,bag,3);
-%PlotData(0,'',false,false,true,bag);
+PlotData(0,'',false,false,true,bag);
 
 function PlotData(data, feature, analyzed, tabs, gridview, bag,fignum) 
 %data must be config('n_snapshots') by length(var_display)
