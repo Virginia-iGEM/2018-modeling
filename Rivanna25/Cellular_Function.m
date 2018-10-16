@@ -85,7 +85,7 @@ r_T = 100;
 
 %Number of Plasmids (1 = LsrR + T7, 2 = All other genes)
 n_1 = 1;
-n_2 = 20;
+n_2 = 1;
 
 %---------------------------
 
