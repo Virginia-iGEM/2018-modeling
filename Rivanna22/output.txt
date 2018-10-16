@@ -11,3 +11,5 @@ For product information, visit www.mathworks.com.
  
 Simulation is 20% done
 Simulation is 40% done
+Simulation is 60% done
+Simulation is 80% done
