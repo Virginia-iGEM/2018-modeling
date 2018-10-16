@@ -20,13 +20,13 @@ import GridView.*
 
 %Initial Parameters
 para = containers.Map;
-para('n') = 1;      %DEFAULT = 9         % Number of Cells (needs to be square number)
+para('n') = 64;      %DEFAULT = 9         % Number of Cells (needs to be square number)
 para('m') = 25;                             % Number of Parameters for each Cell
 para('w') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid Width
 para('h') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid height
 para('t_i') = 0;           %DEFAULT = 0         % Set initial time to 0
 para('t_f') =  480;         %DEFAULT = 120       % Final time
-para('dt')= 10^(-5)*25;       %DEFAULT = 10^(-5)   % Constant timestep 
+para('dt')= 10^(-5)*10;       %DEFAULT = 10^(-5)   % Constant timestep 
 para('D') = 500;          %DEFAULT = 10^(3)/2    % Diffusion coefficient
 %--------------------------------------------------------
 
