@@ -1,4 +1,4 @@
-Sun Oct 14 23:59:28 EDT 2018
+Mon Oct 15 23:42:58 EDT 2018
 
                             < M A T L A B (R) >
                   Copyright 1984-2017 The MathWorks, Inc.
@@ -14,4 +14,7 @@ Simulation is 40% done
 Simulation is 60% done
 Simulation is 80% done
 Simulation is 100% done
-Mon Oct 15 02:23:27 EDT 2018
+[Warning: Directory already exists.] 
+[> In SaveData (line 7)
+  In Model_Population (line 177)] 
+Tue Oct 16 04:59:02 EDT 2018
