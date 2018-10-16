@@ -20,7 +20,7 @@ import GridView.*
 
 %Initial Parameters
 para = containers.Map;
-para('n') = 1024;      %DEFAULT = 9         % Number of Cells (needs to be square number)
+para('n') = 64;      %DEFAULT = 9         % Number of Cells (needs to be square number)
 para('m') = 25;                             % Number of Parameters for each Cell
 para('w') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid Width
 para('h') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid height
