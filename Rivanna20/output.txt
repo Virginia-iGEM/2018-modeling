@@ -13,3 +13,8 @@ Simulation is 20% done
 Simulation is 40% done
 Simulation is 60% done
 Simulation is 80% done
+Simulation is 100% done
+[Warning: Directory already exists.] 
+[> In SaveData (line 7)
+  In Model_Population (line 177)] 
+Tue Oct 16 19:30:28 EDT 2018
