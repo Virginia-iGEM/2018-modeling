@@ -11,7 +11,6 @@ Manipulate Psi and M matricies to test effects of initial conditions:
 Manipulate constants within Cellular_Function to test sensitivity
 
 %}
-function [] = Model_Population(filename)
 
 %Imports
 import Structure.*
@@ -20,13 +19,13 @@ import GridView.*
 
 %Initial Parameters
 para = containers.Map;
-para('n') = 16;      %DEFAULT = 9         % Number of Cells (needs to be square number)
+para('n') = 16;      %DEFAULT = 15         % Number of Cells (needs to be square number)
 para('m') = 25;                             % Number of Parameters for each Cell
 para('w') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid Width
 para('h') = ceil(para('n')^(1/2))+2;           % Medium/Diffusion Grid height
 para('t_i') = 0;           %DEFAULT = 0         % Set initial time to 0
-para('t_f') =  600;         %DEFAULT = 120       % Final time
-para('dt')= 10^(-5)*10;       %DEFAULT = 10^(-5)   % Constant timestep 
+para('t_f') =  600;         %DEFAULT = 600       % Final time
+para('dt')= 10^(-4);       %DEFAULT = 10^(-4)   % Constant timestep 
 para('D') = 500;          %DEFAULT = 10^(3)/2    % Diffusion coefficient
 %--------------------------------------------------------
 
@@ -163,9 +162,7 @@ end
 
 %initialize M Matrix
 for i = 1:para('n')
-    Psi(1,i) = 2; %make sure to change this
-    Psi(2,i) = 2; %make sure to change this
-    	x = Psi(1,i);
+    x = Psi(1,i);
 	y = Psi(2,i);
     M(x,y) = Psi(5,i);
 end
@@ -174,6 +171,4 @@ end
 %Simulate
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
 %-----------------
-SaveData(M_cells, Psi_cells, time, para, config, var, filename);
-
-end
+SaveData(M_cells, Psi_cells, time, para, config, var, filename); 

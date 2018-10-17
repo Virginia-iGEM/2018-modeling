@@ -1,7 +1,7 @@
 clear all;
 
-CORE = '24'; %Which Rivanna core do you want to run
-runfeature = 'YdgG+LsrFG SC';       %What changes are being tested
+CORE = '02'; %Which Rivanna core do you want to run
+runfeature = 'Single Cell: Dirichlet';       %What changes are being tested
 var_display = {'Ap','Ai','Ao','R','K','B','T','G','F','X_p','Y_p'};   %What variables to display
 save = false;
 
@@ -57,13 +57,13 @@ end
 
 %Display
 fprintf('\nDisplaying...\n');
-PlotData(CellAverage,strcat('Avg Cell Conc:',{' '},runfeature),true,true,false,bag,1);
+%PlotData(CellAverage,strcat('Avg Cell Conc:',{' '},runfeature),true,true,false,bag,1);
 if save
     saveas(figure(1),[pwd strcat('\Analyses\',runfeature,'-Sep23')]);
 end
 %PlotData(CellStdDev,strcat('Std Dev Conc: ',{' '},runfeature),true,true,false,bag,2);
 %PlotData(Readout,strcat('CellConcs:',{' '},runfeature),false,false,false,bag,3);
-%PlotData(0,'',false,false,true,bag);
+PlotData(0,'',false,false,true,bag);
 
 function PlotData(data, feature, analyzed, tabs, gridview, bag,fignum) 
 %data must be config('n_snapshots') by length(var_display)
@@ -118,7 +118,7 @@ if ~gridview
         hold off
     end
 else
-    GridView(M_cells,Psi_cells,var(var_display{1}),para('t_i'),para('t_f'),config('n_snapshots'));
+    GridView(M_cells,Psi_cells,0*var(var_display{1}),para('t_i'),para('t_f'),config('n_snapshots'));
 end
 
 end
