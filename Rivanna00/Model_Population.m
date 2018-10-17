@@ -12,6 +12,8 @@ Manipulate constants within Cellular_Function to test sensitivity
 
 %}
 
+function [] = Model_Population(filename)
+
 %Imports
 import Structure.*
 import GridView.*
@@ -172,3 +174,5 @@ end
 [Psi_cells, M_cells,time] = Structure(Psi, M, para, config);
 %-----------------
 SaveData(M_cells, Psi_cells, time, para, config, var, filename); 
+
+end
