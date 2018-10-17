@@ -2,7 +2,7 @@
 # SLURM
 
 ## Run a job
-
+Cel
 sbatch run.sh
 
 ## Check your running jobs
@@ -18,7 +18,7 @@ cp -r Rivanna{1..8}/data/* -t Ryan/data
 ## Make multiple copies of one file in many destinations
 
 echo Rivanna{1..8}/Model_Population.m | xargs -n 1 cp Ryan/Model_Population.m
-
+01
 ## Copy one folder to multiple folders
 
 echo Rivana{1..8} | xargs -n 1 cp Rivanna1Default -T -r
